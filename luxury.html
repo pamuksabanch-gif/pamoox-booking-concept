@@ -3,1087 +3,1262 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Pamoox — Luxury Identity Concept</title>
+<title>Pamoox — Özel Şoför Rezervasyonu</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,200;0,300;0,400;1,200;1,300&family=Jost:wght@200;300;400;500&display=swap" rel="stylesheet">
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,200;0,300;0,400;1,200;1,300&family=Jost:wght@200;300;400;500&display=swap');
-
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 
 :root{
-  --bg:      #07090E;
-  --bg2:     #0C0E18;
-  --bg3:     #131826;
+  /* Palette — ~35% lighter than previous version */
+  --bg:      #111926;
+  --bg2:     #182033;
+  --bg3:     #1F2B3E;
+  --bg4:     #273549;
   --gold:    #B8995A;
-  --goldb:   #D0AF72;
+  --goldb:   #D4B872;
   --golddim: #7A6638;
-  --goldfog: rgba(184,153,90,0.10);
-  --goldbdr: rgba(184,153,90,0.22);
-  --cream:   #EEE9E0;
-  --t2:      #9A9690;
-  --t3:      #555250;
+  --goldfog: rgba(184,153,90,0.07);
+  --goldbdr: rgba(184,153,90,0.20);
+  --cream:   #EDE8DF;
+  --t1:      #E4DED4;
+  --t2:      #8C8880;
+  --t3:      #4E4B47;
+  --line:    rgba(255,255,255,0.055);
   --ff-d:'Cormorant',Georgia,serif;
   --ff-b:'Jost',sans-serif;
 }
 
 body{
-  background:var(--bg);
+  background:#080C15;
   min-height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
   font-family:var(--ff-b);
   font-weight:300;
-  color:var(--cream);
-  display:flex;flex-direction:column;align-items:center;
-  padding:72px 32px 110px;
 }
 
-/* ═══════════════════════════════════════
-   BRAND IDENTITY BLOCK
-═══════════════════════════════════════ */
-.brand-kit{
-  width:100%;max-width:880px;
-  margin-bottom:88px;
-  display:flex;flex-direction:column;gap:52px;
-}
-
-.bk-eyebrow{
-  font-size:8.5px;font-weight:300;letter-spacing:0.34em;text-transform:uppercase;
-  color:var(--golddim);margin-bottom:22px;
-}
-
-/* — Logotype — */
-.bk-logo{display:flex;align-items:flex-start;gap:0;flex-direction:column;}
-.bk-monogram-row{display:flex;align-items:center;gap:16px;margin-bottom:10px;}
-
-.bk-seal{
-  width:48px;height:48px;border-radius:50%;
-  border:0.5px solid var(--goldbdr);
-  background:var(--goldfog);
-  display:flex;align-items:center;justify-content:center;
-  position:relative;flex-shrink:0;
-}
-.bk-seal::before{
-  content:'';position:absolute;inset:-5px;border-radius:50%;
-  border:0.5px solid rgba(184,153,90,0.08);
-}
-.bk-seal-p{
-  font-family:var(--ff-d);font-size:24px;font-weight:300;
-  color:var(--gold);letter-spacing:-0.02em;
-}
-
-.bk-wordmark{
-  font-family:var(--ff-d);font-size:42px;font-weight:200;
-  letter-spacing:0.40em;color:var(--cream);text-transform:uppercase;
-  line-height:1;
-}
-.bk-tagline{
-  font-size:9px;font-weight:300;letter-spacing:0.38em;text-transform:uppercase;
-  color:var(--gold);margin-left:64px;margin-top:2px;opacity:0.75;
-}
-
-/* — Divider — */
-.bk-rule{
-  width:100%;height:0.5px;
-  background:linear-gradient(to right,rgba(184,153,90,0.30),rgba(184,153,90,0.06),transparent);
-}
-
-/* — Color Palette — */
-.bk-palette{display:flex;gap:14px;flex-wrap:wrap;}
-.swatch{display:flex;flex-direction:column;gap:8px;align-items:center;}
-.sw-block{width:54px;height:54px;border-radius:13px;border:0.5px solid rgba(255,255,255,0.06);}
-.sw-name{font-size:8px;font-weight:300;color:var(--t3);letter-spacing:0.08em;}
-.sw-hex{font-size:7.5px;font-weight:300;color:var(--t3);letter-spacing:0.06em;opacity:0.7;}
-
-/* — Typography — */
-.bk-typo{display:flex;gap:48px;align-items:flex-start;flex-wrap:wrap;}
-.bt-col{display:flex;flex-direction:column;gap:6px;}
-.bt-label{font-size:8px;font-weight:400;letter-spacing:0.24em;text-transform:uppercase;color:var(--golddim);margin-bottom:6px;}
-.bt-display{font-family:var(--ff-d);font-size:44px;font-weight:200;color:var(--cream);line-height:1.05;letter-spacing:0.02em;}
-.bt-display-sub{font-family:var(--ff-d);font-size:17px;font-weight:300;color:var(--t2);letter-spacing:0.05em;font-style:italic;}
-.bt-body{font-family:var(--ff-b);font-size:13px;font-weight:300;color:var(--t2);line-height:1.70;max-width:220px;letter-spacing:0.01em;}
-.bt-small{font-family:var(--ff-b);font-size:9px;font-weight:400;letter-spacing:0.22em;text-transform:uppercase;color:var(--t3);}
-.bt-price{font-family:var(--ff-d);font-size:36px;font-weight:200;color:var(--cream);}
-.bt-price span{font-size:16px;color:var(--t2);margin-right:2px;}
-
-/* ═══════════════════════════════════════
-   PAGE & PHONE LAYOUT
-═══════════════════════════════════════ */
-.pg-section-label{
-  font-size:8.5px;font-weight:300;letter-spacing:0.34em;text-transform:uppercase;
-  color:var(--golddim);margin-bottom:36px;align-self:flex-start;
-}
-
-.phones-row{display:flex;gap:36px;align-items:flex-start;justify-content:center;flex-wrap:wrap;}
-.phone-col{display:flex;flex-direction:column;align-items:center;gap:12px;}
-.pcol-lbl{font-size:8px;font-weight:300;letter-spacing:0.24em;text-transform:uppercase;color:var(--t3);}
-
-/* Phone Frame */
+/* ── PHONE FRAME ── */
 .phone{
-  width:356px;height:774px;
+  width:390px;
+  height:844px;
   background:var(--bg);
-  border-radius:54px;
-  border:1.5px solid rgba(255,255,255,0.09);
+  border-radius:52px;
+  position:relative;
+  overflow:hidden;
   box-shadow:
-    inset 0 1px 0 rgba(255,255,255,0.12),
-    inset 0 -1px 0 rgba(255,255,255,0.04),
-    0 0 0 1px rgba(0,0,0,0.68),
-    0 48px 110px rgba(0,0,0,0.72),
-    0 16px 40px rgba(0,0,0,0.52),
-    0 4px 12px rgba(0,0,0,0.40);
-  position:relative;overflow:hidden;flex-shrink:0;
-}
-.phone.tl{transform:perspective(1800px) rotateY(4deg) rotateX(-0.8deg);}
-.phone.tc{transform:perspective(1800px) rotateY(0);}
-.phone.tr{transform:perspective(1800px) rotateY(-4deg) rotateX(-0.8deg);}
-.phone::before{content:'';position:absolute;right:-3px;top:118px;width:3px;height:74px;background:rgba(255,255,255,0.08);border-radius:0 2px 2px 0;box-shadow:0 42px 0 rgba(255,255,255,0.07),0 78px 0 rgba(255,255,255,0.07);}
-.phone::after{content:'';position:absolute;left:-3px;top:150px;width:3px;height:48px;background:rgba(255,255,255,0.08);border-radius:2px 0 0 2px;box-shadow:0 58px 0 rgba(255,255,255,0.07);}
-
-.island{position:absolute;top:12px;left:50%;transform:translateX(-50%);width:118px;height:34px;background:#040508;border-radius:20px;z-index:20;box-shadow:0 0 0 1.5px rgba(255,255,255,0.05),0 2px 8px rgba(0,0,0,0.7);}
-
-.scrn{
-  position:absolute;inset:0;border-radius:52px;overflow:hidden;
-  background:var(--bg);display:flex;flex-direction:column;padding-top:56px;
-}
-.scrn::after{
-  content:'';position:absolute;inset:0;border-radius:52px;
-  background:linear-gradient(142deg,rgba(255,255,255,0.018) 0%,transparent 38%);
-  pointer-events:none;z-index:90;
-}
-
-/* Animations */
-@keyframes fadeUp{from{opacity:0;transform:translateY(9px)}to{opacity:1;transform:translateY(0)}}
-@keyframes draw{from{stroke-dashoffset:340}to{stroke-dashoffset:0}}
-@keyframes glow{0%,100%{opacity:0.55}50%{opacity:1}}
-@keyframes shimmer{0%,100%{opacity:0.5}50%{opacity:0.9}}
-
-.a1{animation:fadeUp .70s cubic-bezier(.22,.9,.36,1) .08s both}
-.a2{animation:fadeUp .70s cubic-bezier(.22,.9,.36,1) .18s both}
-.a3{animation:fadeUp .70s cubic-bezier(.22,.9,.36,1) .28s both}
-.a4{animation:fadeUp .70s cubic-bezier(.22,.9,.36,1) .38s both}
-.a5{animation:fadeUp .70s cubic-bezier(.22,.9,.36,1) .48s both}
-.a6{animation:fadeUp .70s cubic-bezier(.22,.9,.36,1) .58s both}
-
-/* ═══════════════════════════════════════
-   SCREEN 1 — BOOKING OVERVIEW
-═══════════════════════════════════════ */
-.s1{flex:1;display:flex;flex-direction:column;overflow:hidden;}
-
-.s1-top{
-  display:flex;align-items:center;justify-content:space-between;
-  padding:0 22px 14px;flex-shrink:0;
-}
-.s1-wordmark{
-  font-family:var(--ff-d);font-size:16px;font-weight:200;
-  letter-spacing:0.46em;color:var(--cream);text-transform:uppercase;
-}
-.s1-avatar{
-  width:32px;height:32px;border-radius:50%;
-  border:0.5px solid var(--goldbdr);background:var(--bg2);
-  display:flex;align-items:center;justify-content:center;cursor:pointer;
-  box-shadow:0 2px 10px rgba(0,0,0,0.40);transition:border-color .25s;
-}
-.s1-avatar:hover{border-color:rgba(184,153,90,0.44);}
-.s1-avatar svg{stroke:var(--t2);fill:none;stroke-width:1;width:14px;height:14px;}
-
-/* MAP */
-.lux-map{
-  width:100%;height:194px;flex-shrink:0;
-  position:relative;overflow:hidden;
-}
-.lux-map svg{width:100%;height:100%;display:block;}
-.lux-map::after{
-  content:'';position:absolute;bottom:0;left:0;right:0;height:72px;
-  background:linear-gradient(to bottom,transparent,var(--bg));
-  pointer-events:none;
-}
-
-/* Destination row */
-.dest-row{
-  display:flex;align-items:center;gap:12px;
-  padding:11px 22px 11px;
-  border-bottom:0.5px solid rgba(255,255,255,0.055);
-  cursor:pointer;transition:background .20s;flex-shrink:0;
-}
-.dest-row:hover{background:rgba(255,255,255,0.018);}
-.dest-dot-wrap{display:flex;flex-direction:column;align-items:center;gap:0;width:10px;flex-shrink:0;}
-.dest-dot-o{width:7px;height:7px;border-radius:50%;border:1.5px solid rgba(255,255,255,0.30);flex-shrink:0;}
-.dest-dot-line{width:0.5px;height:16px;background:linear-gradient(to bottom,rgba(255,255,255,0.16),rgba(184,153,90,0.42));}
-.dest-dot-d{width:7px;height:7px;border-radius:50%;background:var(--gold);flex-shrink:0;box-shadow:0 0 8px rgba(184,153,90,0.55);}
-
-.dest-info{flex:1;display:flex;flex-direction:column;gap:8px;}
-.dest-addr-block{display:flex;flex-direction:column;gap:1px;}
-.dest-lbl{font-size:7.5px;font-weight:400;letter-spacing:0.20em;text-transform:uppercase;color:var(--t3);font-family:var(--ff-b);}
-.dest-val{font-family:var(--ff-d);font-size:15px;font-weight:300;color:var(--cream);letter-spacing:0.01em;}
-
-.dest-edit{
-  width:28px;height:28px;border-radius:50%;
-  border:0.5px solid rgba(255,255,255,0.09);
-  display:flex;align-items:center;justify-content:center;
-  background:var(--bg2);flex-shrink:0;
-}
-.dest-edit svg{stroke:var(--t3);fill:none;stroke-width:1;width:11px;height:11px;}
-
-/* Class selector */
-.class-strip{
-  display:flex;gap:6px;padding:12px 22px 11px;
-  overflow-x:auto;flex-shrink:0;
-  border-bottom:0.5px solid rgba(255,255,255,0.055);
-}
-.class-strip::-webkit-scrollbar{display:none;}
-
-.cls-tab{
-  display:flex;flex-direction:column;align-items:center;gap:3px;
-  padding:8px 13px;border-radius:11px;
-  border:0.5px solid transparent;cursor:pointer;
-  transition:all .24s;flex-shrink:0;
-}
-.cls-tab:hover{border-color:rgba(255,255,255,0.10);}
-.cls-tab.active{background:var(--goldfog);border-color:var(--goldbdr);}
-.cls-name{font-size:10px;font-weight:400;color:var(--t2);letter-spacing:0.06em;font-family:var(--ff-b);transition:color .24s;}
-.cls-tab.active .cls-name{color:var(--goldb);}
-.cls-price{font-family:var(--ff-d);font-size:12px;font-weight:300;color:var(--t3);transition:color .24s;}
-.cls-tab.active .cls-price{color:var(--gold);}
-.cls-dot{width:3px;height:3px;border-radius:50%;background:transparent;transition:background .24s;}
-.cls-tab.active .cls-dot{background:var(--gold);}
-
-/* Meta strip */
-.meta-strip{
-  display:flex;align-items:center;gap:0;
-  padding:9px 22px 9px;
-  border-bottom:0.5px solid rgba(255,255,255,0.055);
+    0 0 0 1px rgba(255,255,255,0.07),
+    0 30px 80px rgba(0,0,0,0.75),
+    0 8px 24px rgba(0,0,0,0.50);
   flex-shrink:0;
 }
-.meta-item{display:flex;align-items:center;gap:5px;padding:0 14px 0 0;}
-.meta-item:first-child{padding-left:0;}
-.meta-ico svg{stroke:var(--t3);fill:none;stroke-width:1;width:10px;height:10px;}
-.meta-val{font-size:10.5px;font-weight:300;color:var(--t2);font-family:var(--ff-b);letter-spacing:0.01em;}
-.meta-sep{width:0.5px;height:9px;background:rgba(255,255,255,0.09);margin-right:14px;}
 
-/* Book bar */
-.book-bar{
-  display:flex;align-items:center;justify-content:space-between;
-  padding:12px 22px 6px;flex-shrink:0;
+/* Side buttons */
+.phone::before{
+  content:'';
+  position:absolute;
+  left:-3px; top:160px;
+  width:3px; height:36px;
+  background:rgba(255,255,255,0.10);
+  border-radius:2px 0 0 2px;
+  box-shadow:0 52px 0 rgba(255,255,255,0.10), 0 96px 0 rgba(255,255,255,0.10);
 }
-.book-price-lbl{font-size:7.5px;font-weight:400;letter-spacing:0.20em;text-transform:uppercase;color:var(--t3);font-family:var(--ff-b);margin-bottom:2px;}
-.book-price-val{font-family:var(--ff-d);font-size:30px;font-weight:200;color:var(--cream);line-height:1;letter-spacing:0.01em;}
-.book-price-cur{font-size:13px;color:var(--t2);margin-right:2px;}
-
-.book-btn{
-  display:flex;align-items:center;gap:9px;
-  padding:12px 22px;border-radius:50px;
-  background:var(--goldfog);
-  border:0.5px solid rgba(184,153,90,0.42);
-  cursor:pointer;transition:all .26s;
-  box-shadow:0 4px 16px rgba(0,0,0,0.36),0 0 0 rgba(184,153,90,0);
+.phone::after{
+  content:'';
+  position:absolute;
+  right:-3px; top:200px;
+  width:3px; height:60px;
+  background:rgba(255,255,255,0.10);
+  border-radius:0 2px 2px 0;
 }
-.book-btn:hover{background:rgba(184,153,90,0.14);border-color:rgba(184,153,90,0.65);box-shadow:0 4px 16px rgba(0,0,0,0.36),0 0 22px rgba(184,153,90,0.10);}
-.book-btn:active{transform:scale(0.97);}
-.book-btn span{font-family:var(--ff-b);font-size:10.5px;font-weight:400;letter-spacing:0.18em;text-transform:uppercase;color:var(--goldb);}
-.book-btn svg{stroke:var(--gold);fill:none;stroke-width:1;width:11px;height:11px;}
 
-/* ═══════════════════════════════════════
-   BOTTOM NAV
-═══════════════════════════════════════ */
-.bnav{
-  height:66px;flex-shrink:0;
-  display:flex;align-items:center;justify-content:space-around;padding:0 8px 10px;
-  border-top:0.5px solid rgba(255,255,255,0.055);
-  background:rgba(7,9,14,0.96);backdrop-filter:blur(20px);
+/* Dynamic Island */
+.di{
+  position:absolute;
+  top:14px; left:50%;
+  transform:translateX(-50%);
+  width:124px; height:36px;
+  background:#000;
+  border-radius:20px;
+  z-index:200;
 }
-.ni{display:flex;flex-direction:column;align-items:center;gap:4px;cursor:pointer;padding:6px 14px;border-radius:12px;transition:all .24s;}
-.ni svg{stroke:var(--t3);fill:none;stroke-width:1;width:18px;height:18px;transition:stroke .24s;}
-.ni.active svg{stroke:var(--gold);}
-.ni-dot{width:3px;height:3px;border-radius:50%;background:transparent;}
-.ni.active .ni-dot{background:var(--gold);animation:shimmer 2.4s ease-in-out infinite;}
 
-/* ═══════════════════════════════════════
-   SCREEN 2 — JOURNEY DETAILS
-═══════════════════════════════════════ */
-.s2{flex:1;display:flex;flex-direction:column;padding:0 22px 16px;overflow-y:auto;gap:13px;}
-.s2::-webkit-scrollbar{display:none;}
-
-.s2-hdr{display:flex;align-items:center;gap:12px;flex-shrink:0;}
-.s2-back{
-  width:30px;height:30px;border-radius:50%;
-  border:0.5px solid rgba(255,255,255,0.10);
-  display:flex;align-items:center;justify-content:center;
-  cursor:pointer;background:var(--bg2);
-  box-shadow:0 2px 8px rgba(0,0,0,0.36);transition:border-color .24s;
+/* ── SCREEN ── */
+.screen{
+  width:100%; height:100%;
+  overflow-y:auto; overflow-x:hidden;
+  scrollbar-width:none;
 }
-.s2-back:hover{border-color:var(--goldbdr);}
-.s2-back svg{stroke:var(--t2);fill:none;stroke-width:1;width:12px;height:12px;}
-.s2-ttl{font-family:var(--ff-d);font-size:18px;font-weight:200;color:var(--cream);letter-spacing:0.04em;}
-.s2-step{margin-left:auto;font-size:8.5px;font-weight:300;letter-spacing:0.16em;color:var(--golddim);font-family:var(--ff-b);}
+.screen::-webkit-scrollbar{display:none}
 
-.sec-lbl{font-size:7.5px;font-weight:400;letter-spacing:0.26em;text-transform:uppercase;color:var(--golddim);font-family:var(--ff-b);margin-bottom:-7px;}
-
-/* Mini route map */
-.s2-map{
-  border-radius:14px;overflow:hidden;height:94px;flex-shrink:0;
-  background:var(--bg2);border:0.5px solid rgba(255,255,255,0.07);
-  position:relative;
-  box-shadow:0 2px 10px rgba(0,0,0,0.30);
+/* ── STATUS BAR ── */
+.sbar{
+  height:58px;
+  display:flex; align-items:flex-end; justify-content:space-between;
+  padding:0 30px 8px;
+  position:relative; z-index:10;
 }
-.s2-map svg{width:100%;height:100%;display:block;}
-.s2-lbl-o,.s2-lbl-d{position:absolute;font-size:8.5px;color:var(--t2);font-family:var(--ff-b);font-weight:300;letter-spacing:0.10em;text-transform:uppercase;}
-.s2-lbl-o{left:12px;bottom:9px;}
-.s2-lbl-d{right:12px;bottom:9px;text-align:right;}
-
-/* Progress dots */
-.pdots{display:flex;align-items:center;gap:5px;justify-content:center;padding:0;}
-.pdot{width:5px;height:5px;border-radius:50%;background:var(--t3);transition:all .3s;}
-.pdot.active{width:16px;border-radius:3px;background:var(--gold);}
-.pdot.done{background:rgba(255,255,255,0.16);}
-
-/* Journey card */
-.jcard{
-  background:var(--bg2);border-radius:15px;
-  border:0.5px solid rgba(255,255,255,0.07);
-  overflow:hidden;
-  box-shadow:0 2px 10px rgba(0,0,0,0.28),0 8px 24px rgba(0,0,0,0.18);
+.sbar-time{
+  font-family:var(--ff-b);
+  font-size:14px; font-weight:400;
+  color:var(--cream);
+  letter-spacing:0.04em;
 }
-.jcard-ttl{font-size:7.5px;font-weight:400;letter-spacing:0.24em;text-transform:uppercase;color:var(--golddim);font-family:var(--ff-b);padding:11px 14px 10px;border-bottom:0.5px solid rgba(255,255,255,0.055);}
-.jrow{display:flex;align-items:flex-start;gap:11px;padding:11px 14px;border-bottom:0.5px solid rgba(255,255,255,0.045);}
-.jrow:last-child{border-bottom:none;}
-.jrow-ico{
-  width:26px;height:26px;border-radius:8px;
-  background:var(--goldfog);border:0.5px solid var(--goldbdr);
-  display:flex;align-items:center;justify-content:center;
-  flex-shrink:0;margin-top:1px;
+.sbar-icons{display:flex;align-items:center;gap:5px}
+.sbar-icons svg{width:14px;height:14px;stroke:var(--cream);fill:none;stroke-width:1.8}
+
+/* ── HEADER ── */
+.hdr{
+  padding:10px 28px 0;
+  display:flex;
+  align-items:flex-start;
+  justify-content:space-between;
+  margin-bottom:22px;
 }
-.jrow-ico svg{stroke:var(--gold);fill:none;stroke-width:1;width:11px;height:11px;}
-.jrow-content{flex:1;}
-.jrow-lbl{font-size:7.5px;font-weight:400;letter-spacing:0.18em;text-transform:uppercase;color:var(--t3);font-family:var(--ff-b);margin-bottom:2px;}
-.jrow-val{font-size:13px;font-weight:300;color:var(--cream);font-family:var(--ff-b);}
-.jrow-sub{font-size:10px;font-weight:300;color:var(--t2);font-family:var(--ff-b);margin-top:1px;}
-
-/* Driver card */
-.driver-card{
-  background:var(--bg2);border-radius:15px;
-  border:0.5px solid rgba(255,255,255,0.07);
-  padding:13px 14px;display:flex;align-items:center;gap:12px;
-  box-shadow:0 2px 10px rgba(0,0,0,0.28),0 8px 24px rgba(0,0,0,0.18);
+.hdr-left{}
+.brand-eyebrow{
+  font-family:var(--ff-b);
+  font-size:8.5px; font-weight:400;
+  letter-spacing:0.42em;
+  text-transform:uppercase;
+  color:var(--gold);
+  margin-bottom:5px;
 }
-.driver-av{
-  width:46px;height:46px;border-radius:50%;
-  background:var(--bg3);border:0.5px solid var(--goldbdr);
-  display:flex;align-items:center;justify-content:center;flex-shrink:0;
-  position:relative;
+.brand-title{
+  font-family:var(--ff-d);
+  font-size:30px; font-weight:200;
+  color:var(--cream);
+  line-height:1;
+  letter-spacing:0.02em;
 }
-.driver-av svg{stroke:var(--t2);fill:none;stroke-width:0.9;width:20px;height:20px;}
-.driver-verified{
-  position:absolute;bottom:-1px;right:-1px;
-  width:15px;height:15px;border-radius:50%;
-  background:var(--bg);border:1px solid var(--bg);
-  display:flex;align-items:center;justify-content:center;
+.brand-title em{
+  font-style:italic;
+  color:var(--gold);
+  font-weight:200;
 }
-.driver-verified svg{stroke:var(--gold);fill:none;stroke-width:1.3;width:8px;height:8px;}
-.driver-info{flex:1;}
-.driver-name{font-family:var(--ff-d);font-size:16px;font-weight:300;color:var(--cream);margin-bottom:2px;letter-spacing:0.01em;}
-.driver-meta{font-size:10px;font-weight:300;color:var(--t2);font-family:var(--ff-b);display:flex;align-items:center;gap:7px;}
-.driver-stars{display:flex;align-items:center;gap:2px;color:var(--gold);font-size:9.5px;}
-.driver-stars svg{fill:var(--gold);stroke:none;width:8px;height:8px;}
-.driver-car{text-align:right;flex-shrink:0;}
-.driver-car-name{font-family:var(--ff-d);font-size:14px;font-weight:300;color:var(--cream);letter-spacing:0.01em;}
-.driver-car-plate{font-size:8.5px;font-weight:300;color:var(--t3);letter-spacing:0.16em;text-transform:uppercase;font-family:var(--ff-b);margin-top:2px;}
-
-/* Price card */
-.price-card{
-  background:var(--bg2);border-radius:15px;
-  border:0.5px solid rgba(255,255,255,0.07);
-  padding:12px 14px;
-  box-shadow:0 2px 10px rgba(0,0,0,0.28);
-}
-.price-row{display:flex;align-items:center;justify-content:space-between;padding:5px 0;border-bottom:0.5px solid rgba(255,255,255,0.045);}
-.price-row:last-child{border-bottom:none;}
-.pr-lbl{font-size:10px;font-weight:300;color:var(--t2);font-family:var(--ff-b);}
-.pr-val{font-family:var(--ff-d);font-size:13px;font-weight:300;color:var(--cream);}
-.pr-val.total{font-size:20px;font-weight:200;}
-.pr-lbl.total{color:var(--cream);font-weight:400;font-size:10.5px;}
-
-/* CTA */
-.lux-cta{
-  border-radius:50px;padding:13px 24px;
-  background:transparent;border:0.5px solid rgba(184,153,90,0.44);
-  display:flex;align-items:center;justify-content:center;gap:10px;
-  cursor:pointer;flex-shrink:0;transition:all .26s;
-  box-shadow:0 4px 16px rgba(0,0,0,0.38);
-  position:relative;overflow:hidden;
-}
-.lux-cta::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(184,153,90,0.09) 0%,transparent 55%);pointer-events:none;}
-.lux-cta:hover{border-color:rgba(184,153,90,0.70);box-shadow:0 4px 16px rgba(0,0,0,0.38),0 0 24px rgba(184,153,90,0.11);}
-.lux-cta:active{transform:scale(0.98);opacity:.88;}
-.lux-cta span{font-family:var(--ff-b);font-size:10.5px;font-weight:400;letter-spacing:0.22em;text-transform:uppercase;color:var(--goldb);}
-.lux-cta svg{stroke:var(--gold);fill:none;stroke-width:1;width:12px;height:12px;}
-
-/* ═══════════════════════════════════════
-   SCREEN 3 — CONFIRMATION
-═══════════════════════════════════════ */
-.s3{flex:1;display:flex;flex-direction:column;align-items:center;padding:8px 22px 16px;overflow-y:auto;gap:13px;}
-.s3::-webkit-scrollbar{display:none;}
-
-.s3-seal{
-  width:68px;height:68px;border-radius:50%;
-  border:0.5px solid var(--goldbdr);background:var(--goldfog);
-  display:flex;align-items:center;justify-content:center;
-  position:relative;box-shadow:0 0 36px rgba(184,153,90,0.09);
-}
-.s3-seal::before{content:'';position:absolute;inset:-8px;border-radius:50%;border:0.5px solid rgba(184,153,90,0.10);}
-.s3-seal svg{stroke:var(--gold);fill:none;stroke-width:1;width:26px;height:26px;}
-
-.s3-ttl{font-family:var(--ff-d);font-size:22px;font-weight:200;color:var(--cream);letter-spacing:0.08em;text-align:center;}
-.s3-sub{font-size:10px;font-weight:300;color:var(--t2);letter-spacing:0.08em;text-align:center;font-family:var(--ff-b);}
-
-.s3-ref{
-  background:var(--bg2);border-radius:13px;
-  border:0.5px solid rgba(255,255,255,0.07);
-  padding:10px 16px;text-align:center;width:100%;
-  box-shadow:0 2px 8px rgba(0,0,0,0.26);
-}
-.s3-ref-lbl{font-size:7.5px;font-weight:400;letter-spacing:0.24em;text-transform:uppercase;color:var(--t3);font-family:var(--ff-b);margin-bottom:4px;}
-.s3-ref-code{font-family:var(--ff-d);font-size:20px;font-weight:300;color:var(--gold);letter-spacing:0.26em;}
-
-.ccard{background:var(--bg2);border-radius:15px;border:0.5px solid rgba(255,255,255,0.07);padding:12px 14px;width:100%;box-shadow:0 2px 8px rgba(0,0,0,0.25);}
-.ccard-ttl{font-size:7.5px;font-weight:400;letter-spacing:0.24em;text-transform:uppercase;color:var(--golddim);font-family:var(--ff-b);padding-bottom:8px;border-bottom:0.5px solid rgba(255,255,255,0.055);margin-bottom:8px;}
-.crow{display:flex;align-items:center;justify-content:space-between;padding:4px 0;}
-.crow-lbl{font-size:10px;font-weight:300;color:var(--t2);font-family:var(--ff-b);}
-.crow-val{font-family:var(--ff-d);font-size:13px;font-weight:300;color:var(--cream);}
-.crow-val.total{font-size:18px;color:var(--cream);}
-
-.s3-note{font-size:9px;font-weight:300;color:var(--t3);text-align:center;line-height:1.70;letter-spacing:0.04em;font-family:var(--ff-b);padding:0 8px;}
-
-/* Done badges */
-.sdone{background:var(--bg2);border-radius:15px;border:0.5px solid rgba(255,255,255,0.07);padding:11px 14px;width:100%;}
-.sdone-ttl{font-size:7.5px;font-weight:400;letter-spacing:0.24em;text-transform:uppercase;color:var(--golddim);font-family:var(--ff-b);margin-bottom:9px;}
-.sd-row{display:flex;align-items:center;gap:9px;padding:7px 0;border-bottom:0.5px solid rgba(255,255,255,0.042);}
-.sd-row:last-child{border-bottom:none;}
-.sd-chk{
-  width:17px;height:17px;border-radius:50%;
-  background:var(--goldfog);border:0.5px solid var(--goldbdr);
-  display:flex;align-items:center;justify-content:center;flex-shrink:0;
-}
-.sd-chk svg{stroke:var(--gold);fill:none;stroke-width:1.3;width:7px;height:7px;}
-.sd-txt{font-size:11px;font-weight:300;color:var(--t2);font-family:var(--ff-b);}
-.sd-badge{margin-left:auto;font-size:8.5px;color:var(--gold);background:var(--goldfog);border:0.5px solid var(--goldbdr);border-radius:20px;padding:2px 8px;font-family:var(--ff-b);font-weight:300;letter-spacing:0.06em;}
-
-/* ═══════════════════════════════════════
-   OVERLAY / BOTTOM SHEET
-═══════════════════════════════════════ */
-.ov{position:absolute;inset:0;z-index:50;pointer-events:none;border-radius:52px;overflow:hidden;}
-.ov.open{pointer-events:all;}
-.ov-bd{position:absolute;inset:0;background:rgba(4,5,9,0.84);opacity:0;transition:opacity .34s ease;}
-.ov.open .ov-bd{opacity:1;}
-.ov-sh{
-  position:absolute;bottom:0;left:0;right:0;
+.hdr-avatar{
+  width:40px; height:40px;
+  border-radius:50%;
   background:var(--bg2);
-  border-top:0.5px solid rgba(184,153,90,0.20);
-  border-radius:22px 22px 0 0;
-  padding:0 20px 84px;max-height:70%;overflow-y:auto;
-  transform:translateY(110%);transition:transform .46s cubic-bezier(.22,.9,.36,1);
-  box-shadow:0 -10px 44px rgba(0,0,0,0.58),0 -2px 0 rgba(184,153,90,0.06);
+  border:0.5px solid var(--goldbdr);
+  display:flex; align-items:center; justify-content:center;
+  cursor:pointer;
+  margin-top:4px;
+  flex-shrink:0;
 }
-.ov.open .ov-sh{transform:translateY(0);}
-.ov-sh::-webkit-scrollbar{display:none;}
-.sf-handle{width:26px;height:2px;background:rgba(255,255,255,0.10);border-radius:2px;margin:14px auto 20px;}
-.sf-hdr{display:flex;align-items:center;gap:10px;margin-bottom:18px;padding-bottom:13px;border-bottom:0.5px solid rgba(255,255,255,0.055);}
-.sf-hdr-ico{width:28px;height:28px;background:var(--goldfog);border:0.5px solid var(--goldbdr);border-radius:9px;display:flex;align-items:center;justify-content:center;}
-.sf-hdr-ico svg{stroke:var(--gold);fill:none;stroke-width:1;width:12px;height:12px;}
-.sf-hdr-ttl{font-family:var(--ff-b);font-size:10px;font-weight:400;letter-spacing:0.24em;text-transform:uppercase;color:var(--cream);}
-.sf-close{margin-left:auto;width:26px;height:26px;border-radius:50%;border:0.5px solid rgba(255,255,255,0.09);display:flex;align-items:center;justify-content:center;cursor:pointer;background:var(--bg);transition:border-color .2s;}
-.sf-close:hover{border-color:rgba(255,255,255,0.20);}
-.sf-close svg{stroke:var(--t2);fill:none;stroke-width:1.2;width:9px;height:9px;}
-.sf-f{display:flex;flex-direction:column;gap:5px;margin-bottom:12px;}
-.sf-f label{font-size:7.5px;font-weight:400;letter-spacing:0.22em;text-transform:uppercase;color:rgba(184,153,90,0.72);font-family:var(--ff-b);}
+.hdr-avatar svg{width:18px;height:18px;stroke:var(--gold);fill:none;stroke-width:1.2}
+
+/* ── PROGRESS RAIL ── */
+.prog{
+  margin:0 28px 28px;
+  position:relative;
+}
+.prog-track{
+  height:1px;
+  background:rgba(255,255,255,0.07);
+  border-radius:1px;
+  overflow:visible;
+}
+.prog-fill{
+  height:100%;
+  background:linear-gradient(90deg, var(--golddim) 0%, var(--gold) 100%);
+  width:0%;
+  transition:width 0.6s cubic-bezier(0.4,0,0.2,1);
+  border-radius:1px;
+}
+.prog-meta{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-top:7px;
+}
+.prog-txt{
+  font-family:var(--ff-b);
+  font-size:8.5px; font-weight:300;
+  letter-spacing:0.16em;
+  color:var(--t3);
+}
+.prog-count{
+  font-family:var(--ff-d);
+  font-size:13px; font-weight:200;
+  color:var(--t3);
+  letter-spacing:0.06em;
+}
+.prog-count b{color:var(--gold);font-weight:300}
+
+/* ── CHAPTERS ── */
+.chapters{
+  padding:0 20px;
+  display:flex;
+  flex-direction:column;
+  gap:9px;
+}
+
+.chapter{
+  position:relative;
+  background:var(--bg2);
+  border-radius:16px;
+  border:0.5px solid var(--line);
+  padding:18px 18px 18px 20px;
+  display:flex;
+  align-items:center;
+  gap:15px;
+  cursor:pointer;
+  transition:background 0.2s, border-color 0.2s, transform 0.15s;
+  overflow:hidden;
+  -webkit-tap-highlight-color:transparent;
+}
+.chapter::before{
+  content:'';
+  position:absolute;
+  left:0; top:0; bottom:0;
+  width:2.5px;
+  border-radius:2px 0 0 2px;
+  background:rgba(184,153,90,0.16);
+  transition:all 0.5s cubic-bezier(0.4,0,0.2,1);
+}
+.chapter.filled::before{
+  background:linear-gradient(180deg, var(--goldb) 0%, var(--gold) 60%, var(--golddim) 100%);
+}
+.chapter.filled{
+  border-color:rgba(184,153,90,0.14);
+}
+.chapter:active{transform:scale(0.985)}
+
+/* Numeral */
+.ch-num{
+  font-family:var(--ff-d);
+  font-size:30px; font-weight:200;
+  font-style:italic;
+  color:rgba(184,153,90,0.22);
+  line-height:1;
+  min-width:26px;
+  transition:color 0.4s;
+  user-select:none;
+}
+.chapter.filled .ch-num{color:rgba(184,153,90,0.65)}
+
+/* Content */
+.ch-body{flex:1;min-width:0}
+.ch-label{
+  font-family:var(--ff-b);
+  font-size:8px; font-weight:400;
+  letter-spacing:0.32em;
+  text-transform:uppercase;
+  color:var(--t3);
+  margin-bottom:5px;
+  transition:color 0.4s;
+}
+.chapter.filled .ch-label{color:rgba(184,153,90,0.70)}
+.ch-value{
+  font-family:var(--ff-d);
+  font-size:16px; font-weight:300;
+  color:var(--t3);
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  transition:color 0.4s;
+  letter-spacing:0.01em;
+}
+.chapter.filled .ch-value{color:var(--t1)}
+
+/* Icon */
+.ch-ico{
+  width:26px; height:26px;
+  flex-shrink:0;
+  display:flex; align-items:center; justify-content:center;
+}
+.ch-ico .ico-arrow{stroke:rgba(78,75,71,0.8);fill:none;width:14px;height:14px}
+.ch-ico .ico-check{stroke:var(--gold);fill:none;width:15px;height:15px;display:none}
+.chapter.filled .ico-arrow{display:none}
+.chapter.filled .ico-check{display:block}
+
+/* ── CTA BUTTON ── */
+.cta-zone{
+  padding:24px 20px 0;
+  opacity:0;
+  transform:translateY(12px);
+  pointer-events:none;
+  transition:opacity 0.45s ease, transform 0.45s cubic-bezier(0.4,0,0.2,1);
+}
+.cta-zone.on{opacity:1;transform:translateY(0);pointer-events:auto}
+
+.btn-book{
+  width:100%;
+  padding:16px 20px;
+  background:transparent;
+  border:0.5px solid rgba(184,153,90,0.38);
+  border-radius:14px;
+  cursor:pointer;
+  display:flex; align-items:center; justify-content:center; gap:10px;
+  position:relative; overflow:hidden;
+  transition:border-color 0.22s;
+  -webkit-tap-highlight-color:transparent;
+}
+.btn-book::before{
+  content:'';
+  position:absolute; inset:0;
+  background:linear-gradient(145deg, rgba(184,153,90,0.055) 0%, transparent 55%);
+}
+.btn-book:hover{border-color:rgba(184,153,90,0.60)}
+.btn-book:active{opacity:0.85}
+.btn-book-lbl{
+  font-family:var(--ff-b);
+  font-size:10.5px; font-weight:400;
+  letter-spacing:0.28em;
+  text-transform:uppercase;
+  color:var(--goldb);
+  position:relative;
+}
+.btn-book svg{width:13px;height:13px;stroke:var(--gold);fill:none;stroke-width:1.5;position:relative}
+
+/* Footer rule */
+.foot-rule{
+  margin:28px 28px 0;
+  height:0.5px;
+  background:rgba(255,255,255,0.05);
+}
+.foot-note{
+  padding:12px 28px 40px;
+  font-family:var(--ff-b);
+  font-size:8px; font-weight:300;
+  letter-spacing:0.14em;
+  color:var(--t3);
+  text-align:center;
+}
+
+/* ══════════════════════════════════
+   OVERLAYS
+══════════════════════════════════ */
+.ov{
+  position:absolute; inset:0;
+  z-index:60;
+  display:flex; flex-direction:column; justify-content:flex-end;
+  opacity:0; pointer-events:none;
+  transition:opacity 0.28s ease;
+}
+.ov.open{opacity:1;pointer-events:auto}
+
+.ov-bg{
+  position:absolute; inset:0;
+  background:rgba(6,9,15,0.60);
+  backdrop-filter:blur(6px);
+  -webkit-backdrop-filter:blur(6px);
+}
+
+.ov-sheet{
+  position:relative;
+  background:var(--bg2);
+  border-radius:24px 24px 0 0;
+  border-top:0.5px solid rgba(184,153,90,0.18);
+  transform:translateY(100%);
+  transition:transform 0.38s cubic-bezier(0.32,0.72,0,1);
+  max-height:86%;
+  overflow-y:auto;
+  scrollbar-width:none;
+  padding-bottom:36px;
+}
+.ov-sheet::-webkit-scrollbar{display:none}
+.ov.open .ov-sheet{transform:translateY(0)}
+
+/* Handle */
+.ov-handle{padding:14px 0 0;display:flex;justify-content:center}
+.ov-bar{width:34px;height:3px;background:rgba(255,255,255,0.10);border-radius:2px}
+
+/* Sheet header */
+.ov-hdr{
+  display:flex; align-items:center; justify-content:space-between;
+  padding:18px 24px 4px;
+}
+.ov-hdr-l{display:flex;align-items:baseline;gap:11px}
+.ov-chapter-num{
+  font-family:var(--ff-d);
+  font-size:34px; font-weight:200; font-style:italic;
+  color:var(--gold); line-height:1;
+}
+.ov-chapter-lbl{
+  font-family:var(--ff-b);
+  font-size:8px; font-weight:400;
+  letter-spacing:0.32em; text-transform:uppercase;
+  color:var(--t2);
+}
+.ov-x{
+  width:30px; height:30px;
+  background:var(--bg3);
+  border:0.5px solid var(--line);
+  border-radius:50%;
+  display:flex; align-items:center; justify-content:center;
+  cursor:pointer; flex-shrink:0;
+}
+.ov-x svg{width:11px;height:11px;stroke:var(--t2);fill:none;stroke-width:1.8}
+
+/* Divider */
+.ov-rule{
+  height:0.5px;
+  background:rgba(184,153,90,0.12);
+  margin:16px 24px 22px;
+}
+
+/* Sheet body */
+.ov-body{padding:0 24px}
+
+/* ── FORM ELEMENTS ── */
+.sf{margin-bottom:18px}
+.sf:last-child{margin-bottom:0}
+.sf > label{
+  display:block;
+  font-family:var(--ff-b);
+  font-size:8px; font-weight:400;
+  letter-spacing:0.26em; text-transform:uppercase;
+  color:var(--t3);
+  margin-bottom:7px;
+}
 .sf-inp{
-  background:var(--bg);border:0.5px solid rgba(255,255,255,0.09);border-radius:11px;
-  padding:11px 14px;color:var(--cream);font-family:var(--ff-b);font-size:13px;font-weight:300;
-  outline:none;width:100%;transition:border-color .2s;-webkit-appearance:none;
+  width:100%;
+  background:var(--bg3);
+  border:0.5px solid rgba(255,255,255,0.07);
+  border-radius:11px;
+  padding:13px 14px;
+  font-family:var(--ff-d);
+  font-size:16px; font-weight:300;
+  color:var(--cream);
+  outline:none;
+  transition:border-color 0.2s;
+  -webkit-appearance:none;
+  color-scheme:dark;
 }
-.sf-inp:focus{border-color:rgba(184,153,90,0.34);box-shadow:0 0 0 1px rgba(184,153,90,0.07);}
-.sf-inp::placeholder{color:var(--t3);font-weight:300;font-size:12.5px;}
-.sf-ta{resize:none;height:66px;line-height:1.55;}
-.sf-row2{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
-.sf-apply{
-  width:100%;margin-top:12px;border-radius:50px;padding:13px;
-  background:transparent;border:0.5px solid rgba(184,153,90,0.42);
-  cursor:pointer;font-family:var(--ff-b);font-size:10.5px;font-weight:400;
-  letter-spacing:0.22em;text-transform:uppercase;color:var(--goldb);
-  transition:all .24s;position:relative;overflow:hidden;
+.sf-inp::placeholder{color:rgba(78,75,71,0.90); font-weight:300}
+.sf-inp:focus{border-color:rgba(184,153,90,0.30)}
+
+/* Route connector */
+.rc{display:flex;align-items:stretch;gap:14px;margin-bottom:18px}
+.rc-spine{
+  display:flex; flex-direction:column; align-items:center;
+  padding-top:30px;
+  flex-shrink:0;
+  gap:0;
 }
-.sf-apply::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(184,153,90,0.09) 0%,transparent 55%);}
-.sf-apply:hover{border-color:rgba(184,153,90,0.68);}
-.sf-apply:active{transform:scale(0.985);opacity:.88;}
+.rc-dot-a{
+  width:8px; height:8px; border-radius:50%;
+  background:var(--gold);
+  flex-shrink:0;
+}
+.rc-wire{
+  width:1px; flex:1;
+  background:linear-gradient(180deg, rgba(184,153,90,0.40), rgba(184,153,90,0.14));
+  margin:4px 0;
+}
+.rc-dot-b{
+  width:8px; height:8px; border-radius:50%;
+  border:1.5px solid rgba(184,153,90,0.44);
+  flex-shrink:0;
+}
+.rc-fields{flex:1;display:flex;flex-direction:column;gap:10px}
 
-/* Form date chips */
-.sf-dates{display:flex;gap:5px;}
-.date-p{flex:1;text-align:center;padding:8px 2px;background:var(--bg);border:0.5px solid rgba(255,255,255,0.08);border-radius:10px;font-size:10px;font-weight:300;color:var(--t2);cursor:pointer;font-family:var(--ff-b);transition:all .2s;line-height:1.3;}
-.date-p.active{background:var(--goldfog);border-color:rgba(184,153,90,0.32);color:var(--goldb);}
+/* Current location pill */
+.loc-pill{
+  display:flex; align-items:center; gap:10px;
+  background:var(--bg3);
+  border:0.5px solid rgba(255,255,255,0.07);
+  border-radius:11px;
+  padding:13px 14px;
+  cursor:pointer;
+  transition:border-color 0.2s;
+}
+.loc-pill:hover{border-color:rgba(184,153,90,0.24)}
+.loc-dot{width:7px;height:7px;border-radius:50%;background:var(--gold);flex-shrink:0}
+.loc-txt{
+  font-family:var(--ff-d);
+  font-size:16px; font-weight:300;
+  color:var(--cream);
+}
 
-/* Class list in form */
-.sf-class-list{display:flex;flex-direction:column;gap:6px;margin-bottom:10px;}
-.cc{display:flex;align-items:center;gap:12px;padding:11px 13px;background:var(--bg);border:0.5px solid rgba(255,255,255,0.07);border-radius:13px;cursor:pointer;transition:all .22s;}
-.cc:hover{border-color:rgba(255,255,255,0.13);}
-.cc.active{background:var(--goldfog);border-color:rgba(184,153,90,0.28);}
-.cc-ico{width:30px;height:30px;background:rgba(255,255,255,0.04);border:0.5px solid rgba(255,255,255,0.08);border-radius:9px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
-.cc.active .cc-ico{background:var(--goldfog);border-color:var(--goldbdr);}
-.cc-ico svg{stroke:var(--t2);fill:none;stroke-width:1;width:13px;height:13px;}
-.cc.active .cc-ico svg{stroke:var(--gold);}
-.cc-info{flex:1;}
-.cc-name{font-size:12.5px;font-weight:400;color:var(--t2);font-family:var(--ff-b);}
-.cc.active .cc-name{color:var(--cream);}
-.cc-desc{font-size:9px;font-weight:300;color:var(--t3);font-family:var(--ff-b);margin-top:1px;}
-.cc.active .cc-desc{color:var(--t2);}
-.cc-p{font-family:var(--ff-d);font-size:15px;font-weight:300;color:var(--t2);flex-shrink:0;}
-.cc.active .cc-p{color:var(--goldb);}
+/* Date row */
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 
-/* Payment card */
-.card-visual{background:var(--bg3);border:0.5px solid rgba(255,255,255,0.08);border-radius:14px;padding:13px 15px;margin-bottom:12px;height:70px;display:flex;flex-direction:column;justify-content:space-between;box-shadow:0 2px 8px rgba(0,0,0,0.32);}
-.cv-chip{width:22px;height:15px;background:rgba(184,153,90,0.22);border:0.5px solid rgba(184,153,90,0.40);border-radius:3px;}
-.cv-num{font-family:var(--ff-d);font-size:12px;color:var(--t2);letter-spacing:0.16em;}
+/* Passenger counter */
+.pax-box{
+  background:var(--bg3);
+  border:0.5px solid rgba(255,255,255,0.07);
+  border-radius:11px;
+  padding:12px 14px;
+  display:flex; align-items:center; justify-content:space-between;
+}
+.pax-lbl{
+  font-family:var(--ff-b);
+  font-size:11px; font-weight:300;
+  color:var(--t2);
+}
+.pax-ctrl{display:flex;align-items:center;gap:16px}
+.pax-btn{
+  width:28px; height:28px;
+  background:var(--bg4);
+  border:0.5px solid var(--line);
+  border-radius:50%;
+  display:flex; align-items:center; justify-content:center;
+  cursor:pointer; user-select:none;
+  font-size:18px; line-height:1;
+  color:var(--gold);
+  transition:background 0.15s;
+}
+.pax-btn:active{background:rgba(184,153,90,0.12)}
+.pax-num{
+  font-family:var(--ff-d);
+  font-size:20px; font-weight:200;
+  color:var(--cream);
+  min-width:18px; text-align:center;
+}
 
-.reassure{text-align:center;font-size:9px;font-weight:300;color:var(--t3);letter-spacing:0.06em;font-family:var(--ff-b);padding-bottom:10px;flex-shrink:0;opacity:0.78;}
+/* Notes field */
+.sf-ta{
+  width:100%;
+  background:var(--bg3);
+  border:0.5px solid rgba(255,255,255,0.07);
+  border-radius:11px;
+  padding:13px 14px;
+  font-family:var(--ff-d);
+  font-size:15px; font-weight:300;
+  color:var(--cream);
+  outline:none; resize:none;
+  transition:border-color 0.2s;
+  color-scheme:dark;
+}
+.sf-ta::placeholder{color:rgba(78,75,71,0.90)}
+.sf-ta:focus{border-color:rgba(184,153,90,0.30)}
+
+/* Class options */
+.cls-list{display:flex;flex-direction:column;gap:9px}
+.cls-item{
+  display:flex; align-items:center;
+  background:var(--bg3);
+  border:0.5px solid rgba(255,255,255,0.06);
+  border-radius:13px;
+  padding:14px 16px;
+  cursor:pointer;
+  gap:14px;
+  transition:background 0.2s, border-color 0.2s;
+  -webkit-tap-highlight-color:transparent;
+}
+.cls-item.sel{
+  background:rgba(184,153,90,0.05);
+  border-color:rgba(184,153,90,0.32);
+}
+.cls-item:active{opacity:0.8}
+.cls-icon-wrap{
+  width:38px; height:38px;
+  background:var(--bg4);
+  border-radius:9px;
+  display:flex; align-items:center; justify-content:center;
+  flex-shrink:0;
+  transition:background 0.2s;
+}
+.cls-item.sel .cls-icon-wrap{background:rgba(184,153,90,0.10)}
+.cls-icon-wrap svg{width:18px;height:18px;stroke:var(--t3);fill:none;stroke-width:1.2;transition:stroke 0.2s}
+.cls-item.sel .cls-icon-wrap svg{stroke:var(--gold)}
+.cls-meta{flex:1}
+.cls-name{
+  font-family:var(--ff-b);
+  font-size:12px; font-weight:400;
+  color:var(--t2); margin-bottom:2px;
+  transition:color 0.2s;
+}
+.cls-item.sel .cls-name{color:var(--cream)}
+.cls-desc{
+  font-family:var(--ff-b);
+  font-size:9px; font-weight:300;
+  color:var(--t3);
+}
+.cls-price{
+  font-family:var(--ff-d);
+  font-size:17px; font-weight:200;
+  color:var(--t2);
+  transition:color 0.2s;
+  letter-spacing:0.01em;
+}
+.cls-item.sel .cls-price{color:var(--goldb)}
+
+/* Payment card visual */
+.pay-card{
+  background:var(--bg3);
+  border:0.5px solid rgba(184,153,90,0.15);
+  border-radius:16px;
+  padding:20px 20px 18px;
+  margin-bottom:20px;
+  position:relative; overflow:hidden;
+}
+.pay-card::before{
+  content:'';
+  position:absolute;
+  top:-40px; right:-40px;
+  width:120px; height:120px;
+  background:radial-gradient(circle, rgba(184,153,90,0.07) 0%, transparent 65%);
+}
+.pay-chip{
+  width:28px; height:20px;
+  background:linear-gradient(135deg, rgba(184,153,90,0.28), rgba(184,153,90,0.12));
+  border:0.5px solid rgba(184,153,90,0.28);
+  border-radius:4px;
+  margin-bottom:22px;
+}
+.pay-nums{
+  display:flex; gap:10px; margin-bottom:16px;
+}
+.pay-grp{
+  font-family:var(--ff-d);
+  font-size:17px; font-weight:200;
+  color:var(--cream); letter-spacing:0.12em;
+}
+.pay-footer{
+  display:flex; justify-content:space-between; align-items:flex-end;
+}
+.pay-holder{
+  font-family:var(--ff-b);
+  font-size:9px; font-weight:300;
+  letter-spacing:0.18em; text-transform:uppercase;
+  color:var(--t2);
+}
+.pay-exp{
+  font-family:var(--ff-d);
+  font-size:14px; font-weight:200;
+  color:var(--t2);
+}
+
+/* Grid 2-col */
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+
+/* Confirm button in overlay */
+.ov-btn{
+  display:block;
+  width:calc(100% - 48px);
+  margin:22px 24px 0;
+  padding:15px;
+  background:transparent;
+  border:0.5px solid rgba(184,153,90,0.36);
+  border-radius:13px;
+  cursor:pointer;
+  font-family:var(--ff-b);
+  font-size:10px; font-weight:400;
+  letter-spacing:0.30em; text-transform:uppercase;
+  color:var(--goldb);
+  position:relative; overflow:hidden;
+  transition:border-color 0.22s;
+  -webkit-tap-highlight-color:transparent;
+}
+.ov-btn::before{
+  content:'';
+  position:absolute; inset:0;
+  background:linear-gradient(145deg, rgba(184,153,90,0.055), transparent);
+}
+.ov-btn:hover{border-color:rgba(184,153,90,0.58)}
+.ov-btn:active{opacity:0.75}
+
+/* ══════════════════════════════════
+   CONFIRMATION SCREEN
+══════════════════════════════════ */
+.conf-screen{
+  position:absolute; inset:0;
+  background:var(--bg);
+  z-index:90;
+  display:flex; flex-direction:column;
+  align-items:center; justify-content:center;
+  padding:40px;
+  opacity:0; pointer-events:none;
+  transition:opacity 0.55s ease;
+}
+.conf-screen.show{opacity:1;pointer-events:auto}
+
+.conf-seal{
+  width:78px; height:78px;
+  border:0.5px solid rgba(184,153,90,0.36);
+  border-radius:50%;
+  display:flex; align-items:center; justify-content:center;
+  position:relative;
+  margin-bottom:30px;
+}
+.conf-seal::before{
+  content:'';
+  position:absolute; inset:7px;
+  border:0.5px solid rgba(184,153,90,0.16);
+  border-radius:50%;
+}
+.conf-seal svg{width:26px;height:26px;stroke:var(--gold);fill:none;stroke-width:1.2}
+
+.conf-ref{
+  font-family:var(--ff-b);
+  font-size:9px; font-weight:300;
+  letter-spacing:0.38em; text-transform:uppercase;
+  color:var(--gold); margin-bottom:12px;
+}
+.conf-h{
+  font-family:var(--ff-d);
+  font-size:30px; font-weight:200;
+  color:var(--cream); text-align:center;
+  line-height:1.25; margin-bottom:6px;
+}
+.conf-h em{font-style:italic;color:var(--gold)}
+.conf-sub{
+  font-family:var(--ff-b);
+  font-size:10px; font-weight:300;
+  color:var(--t3); letter-spacing:0.14em;
+  margin-bottom:40px;
+}
+
+/* Conf detail strip */
+.conf-details{
+  width:100%;
+  background:var(--bg2);
+  border:0.5px solid var(--line);
+  border-radius:14px;
+  overflow:hidden;
+  margin-bottom:28px;
+}
+.conf-row{
+  display:flex; align-items:center; justify-content:space-between;
+  padding:12px 18px;
+  border-bottom:0.5px solid var(--line);
+}
+.conf-row:last-child{border-bottom:none}
+.conf-row-lbl{
+  font-family:var(--ff-b);
+  font-size:8.5px; font-weight:300;
+  letter-spacing:0.14em;
+  color:var(--t3);
+}
+.conf-row-val{
+  font-family:var(--ff-d);
+  font-size:15px; font-weight:300;
+  color:var(--t1);
+}
+
+.conf-driver{
+  width:100%;
+  background:var(--bg2);
+  border:0.5px solid var(--line);
+  border-radius:14px;
+  padding:16px 18px;
+  display:flex; align-items:center; gap:14px;
+  margin-bottom:28px;
+}
+.conf-driver-avatar{
+  width:44px; height:44px;
+  border-radius:50%;
+  background:var(--bg3);
+  border:0.5px solid var(--goldbdr);
+  display:flex; align-items:center; justify-content:center;
+  flex-shrink:0;
+  overflow:hidden;
+}
+.conf-driver-avatar svg{width:20px;height:20px;stroke:var(--gold);fill:none;stroke-width:1.2}
+.conf-driver-info{flex:1;min-width:0}
+.conf-driver-name{
+  font-family:var(--ff-d);
+  font-size:17px; font-weight:300;
+  color:var(--cream);
+}
+.conf-driver-sub{
+  font-family:var(--ff-b);
+  font-size:9px; font-weight:300;
+  letter-spacing:0.10em;
+  color:var(--t3);
+  margin-top:2px;
+}
+.conf-driver-rating{
+  font-family:var(--ff-d);
+  font-size:15px; font-weight:200;
+  color:var(--gold);
+  display:flex; align-items:center; gap:4px;
+}
+.conf-driver-rating svg{width:11px;height:11px;stroke:var(--gold);fill:rgba(184,153,90,0.35);stroke-width:1.5}
+
+.conf-back{
+  width:100%;
+  padding:14px;
+  background:transparent;
+  border:0.5px solid rgba(184,153,90,0.28);
+  border-radius:12px;
+  cursor:pointer;
+  font-family:var(--ff-b);
+  font-size:9.5px; font-weight:400;
+  letter-spacing:0.24em; text-transform:uppercase;
+  color:var(--t2);
+  transition:all 0.2s;
+}
+.conf-back:hover{border-color:rgba(184,153,90,0.44);color:var(--goldb)}
 </style>
 </head>
 <body>
 
-<!-- ══════════════════════════════════════
-     BRAND IDENTITY BLOCK
-══════════════════════════════════════ -->
-<div class="brand-kit">
+<div class="phone">
+  <div class="di"></div>
 
-  <!-- Logotype -->
-  <div>
-    <p class="bk-eyebrow">Pamoox · Brand Identity · Luxury Chauffeur Concept</p>
-    <div class="bk-logo">
-      <div class="bk-monogram-row">
-        <div class="bk-seal"><span class="bk-seal-p">P</span></div>
-        <div>
-          <div class="bk-wordmark">Pamoox</div>
-        </div>
-      </div>
-      <p class="bk-tagline">Private Chauffeur · Since 2024</p>
-    </div>
-  </div>
+  <!-- ── MAIN SCREEN ── -->
+  <div class="screen" id="mainscreen">
 
-  <div class="bk-rule"></div>
-
-  <!-- Color Palette -->
-  <div>
-    <p class="bk-eyebrow">Colour Palette</p>
-    <div class="bk-palette">
-      <div class="swatch"><div class="sw-block" style="background:#07090E;box-shadow:0 0 0 0.5px rgba(255,255,255,0.14)"></div><div class="sw-name">Midnight</div><div class="sw-hex">#07090E</div></div>
-      <div class="swatch"><div class="sw-block" style="background:#0C0E18"></div><div class="sw-name">Chamber</div><div class="sw-hex">#0C0E18</div></div>
-      <div class="swatch"><div class="sw-block" style="background:#131826"></div><div class="sw-name">Vault</div><div class="sw-hex">#131826</div></div>
-      <div class="swatch"><div class="sw-block" style="background:#B8995A;border-color:rgba(255,255,255,0.10)"></div><div class="sw-name">Patina Gold</div><div class="sw-hex">#B8995A</div></div>
-      <div class="swatch"><div class="sw-block" style="background:#D0AF72;border-color:rgba(255,255,255,0.10)"></div><div class="sw-name">Gold Bright</div><div class="sw-hex">#D0AF72</div></div>
-      <div class="swatch"><div class="sw-block" style="background:#EEE9E0;border-color:rgba(255,255,255,0.10)"></div><div class="sw-name">Cream</div><div class="sw-hex">#EEE9E0</div></div>
-      <div class="swatch"><div class="sw-block" style="background:#9A9690"></div><div class="sw-name">Warm Grey</div><div class="sw-hex">#9A9690</div></div>
-    </div>
-  </div>
-
-  <div class="bk-rule"></div>
-
-  <!-- Typography -->
-  <div>
-    <p class="bk-eyebrow">Typography</p>
-    <div class="bk-typo">
-      <div class="bt-col">
-        <p class="bt-label">Display — Cormorant 200</p>
-        <p class="bt-display">The<br>Appointed<br>Hour.</p>
-        <p class="bt-display-sub">Private Chauffeur Service</p>
-      </div>
-      <div class="bt-col" style="padding-top:8px">
-        <p class="bt-label">Body — Jost 300</p>
-        <p class="bt-body">Your journey begins before you step inside. Every route is confirmed, every detail anticipated.</p>
-        <div style="height:16px"></div>
-        <p class="bt-label">Label — Jost 400 · uppercase</p>
-        <p class="bt-small">Departure · 14:30 · Zürich Flughafen</p>
-        <div style="height:16px"></div>
-        <p class="bt-label">Price — Cormorant 200</p>
-        <p class="bt-price"><span>CHF</span>148</p>
+    <!-- Status bar -->
+    <div class="sbar">
+      <span class="sbar-time">14:28</span>
+      <div class="sbar-icons">
+        <svg viewBox="0 0 24 24"><path d="M1 6l5.5 5.5L12 6l5.5 5.5L23 6"/></svg>
+        <svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/></svg>
+        <svg viewBox="0 0 24 24"><rect x="2" y="10" width="18" height="7" rx="1.5"/><path d="M20 12.5h1a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1h-1"/></svg>
       </div>
     </div>
-  </div>
 
-</div>
+    <!-- Header -->
+    <div class="hdr">
+      <div class="hdr-left">
+        <div class="brand-eyebrow">Özel Şoför</div>
+        <div class="brand-title">Rezerv<em>asyon</em></div>
+      </div>
+      <div class="hdr-avatar">
+        <svg viewBox="0 0 24 24" stroke-width="1.2"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+      </div>
+    </div>
 
-<!-- ══════════════════════════════════════
-     UI SCREENS
-══════════════════════════════════════ -->
-<p class="pg-section-label">UI Screens · Mobile Application</p>
+    <!-- Progress rail -->
+    <div class="prog">
+      <div class="prog-track">
+        <div class="prog-fill" id="prog-fill"></div>
+      </div>
+      <div class="prog-meta">
+        <span class="prog-txt">Rezervasyon adımları</span>
+        <span class="prog-count"><b id="prog-n">0</b> / 4 tamamlandı</span>
+      </div>
+    </div>
 
-<div class="phones-row">
+    <!-- Chapters -->
+    <div class="chapters">
 
-<!-- ══════════════
-     PHONE 1
-══════════════ -->
-<div class="phone-col">
-  <span class="pcol-lbl">Booking Overview</span>
-  <div class="phone tl">
-    <div class="island"></div>
-    <div class="scrn">
-
-      <div class="s1">
-
-        <!-- Top bar -->
-        <div class="s1-top a1">
-          <span class="s1-wordmark">Pamoox</span>
-          <div class="s1-avatar">
-            <svg viewBox="0 0 14 14"><circle cx="7" cy="4.5" r="2.5"/><path d="M2 13c0-2.76 2.24-5 5-5s5 2.24 5 5" stroke-linecap="round"/></svg>
-          </div>
+      <!-- I — ROTA -->
+      <div class="chapter" id="ch-rota" onclick="open_ov('rota')">
+        <div class="ch-num">I</div>
+        <div class="ch-body">
+          <div class="ch-label">Rota</div>
+          <div class="ch-value" id="v-rota">Güzergah belirleyin</div>
         </div>
-
-        <!-- Map -->
-        <div class="lux-map a2">
-          <svg viewBox="0 0 356 194" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
-            <defs>
-              <radialGradient id="mapbg" cx="50%" cy="50%" r="70%">
-                <stop offset="0%" stop-color="#0C0E1A"/>
-                <stop offset="100%" stop-color="#070810"/>
-              </radialGradient>
-              <filter id="glow"><feGaussianBlur stdDeviation="3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
-              <filter id="softglow"><feGaussianBlur stdDeviation="1.8" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
-            </defs>
-            <rect width="356" height="194" fill="url(#mapbg)"/>
-            <!-- City grid — subtle blue-grey streets -->
-            <g stroke="rgba(80,100,160,0.09)" stroke-width="0.5" fill="none">
-              <!-- horizontal streets -->
-              <line x1="0" y1="38" x2="356" y2="38"/>
-              <line x1="0" y1="72" x2="356" y2="76"/>
-              <line x1="0" y1="104" x2="356" y2="108"/>
-              <line x1="0" y1="138" x2="356" y2="142"/>
-              <line x1="0" y1="168" x2="356" y2="172"/>
-              <!-- vertical streets -->
-              <line x1="44" y1="0" x2="44" y2="194"/>
-              <line x1="92" y1="0" x2="94" y2="194"/>
-              <line x1="140" y1="0" x2="142" y2="194"/>
-              <line x1="188" y1="0" x2="190" y2="194"/>
-              <line x1="238" y1="0" x2="240" y2="194"/>
-              <line x1="286" y1="0" x2="288" y2="194"/>
-              <line x1="334" y1="0" x2="336" y2="194"/>
-              <!-- diagonal avenues -->
-              <line x1="0" y1="60" x2="180" y2="0"/>
-              <line x1="80" y1="194" x2="356" y2="30"/>
-              <line x1="180" y1="194" x2="356" y2="80"/>
-            </g>
-            <!-- Major roads — slightly brighter -->
-            <g stroke="rgba(120,140,200,0.14)" stroke-width="1" fill="none">
-              <path d="M0 97 Q90 80 178 97 Q266 114 356 97"/>
-              <path d="M178 0 Q186 97 178 194"/>
-            </g>
-            <!-- Lake Zürich — dark water mass -->
-            <ellipse cx="260" cy="155" rx="88" ry="44" fill="rgba(8,10,22,0.72)" stroke="rgba(80,100,160,0.08)" stroke-width="0.5"/>
-            <!-- Route arc — gold -->
-            <path d="M 68 126 C 110 52, 210 52, 280 88"
-              fill="none" stroke="rgba(184,153,90,0.85)" stroke-width="1.8"
-              stroke-linecap="round"
-              stroke-dasharray="280"
-              style="stroke-dashoffset:280;animation:draw 1.8s cubic-bezier(.4,0,.2,1) .5s forwards"
-              filter="url(#softglow)"/>
-            <!-- Animated dashes on route -->
-            <path d="M 68 126 C 110 52, 210 52, 280 88"
-              fill="none" stroke="rgba(220,185,110,0.28)" stroke-width="3.5"
-              stroke-linecap="round" stroke-dasharray="6 18"
-              style="stroke-dashoffset:280;animation:draw 1.8s cubic-bezier(.4,0,.2,1) .5s forwards"/>
-            <!-- Origin dot -->
-            <circle cx="68" cy="126" r="5.5" fill="rgba(255,255,255,0.05)" stroke="rgba(255,255,255,0.32)" stroke-width="1"/>
-            <circle cx="68" cy="126" r="2.5" fill="rgba(255,255,255,0.72)"/>
-            <!-- Origin pulse ring -->
-            <circle cx="68" cy="126" r="9" fill="none" stroke="rgba(255,255,255,0.08)" stroke-width="0.5" style="animation:glow 2.4s ease-in-out 0s infinite"/>
-            <!-- Destination dot — gold -->
-            <circle cx="280" cy="88" r="6.5" fill="rgba(184,153,90,0.12)" stroke="rgba(184,153,90,0.60)" stroke-width="1.2"/>
-            <circle cx="280" cy="88" r="3" fill="rgba(184,153,90,0.90)"/>
-            <!-- Gold glow on destination -->
-            <circle cx="280" cy="88" r="11" fill="none" stroke="rgba(184,153,90,0.12)" stroke-width="0.5" style="animation:glow 2.4s ease-in-out .4s infinite"/>
-            <!-- Route midpoint pulse -->
-            <circle cx="172" cy="68" r="1.8" fill="rgba(184,153,90,0.55)" style="animation:glow 2s ease-in-out .8s infinite"/>
-            <!-- Labels -->
-            <text x="50" y="144" font-family="'Jost',sans-serif" font-weight="300" font-size="8" fill="rgba(154,150,144,0.75)" letter-spacing="0.8">ZRH</text>
-            <text x="256" y="78" font-family="'Jost',sans-serif" font-weight="300" font-size="8" fill="rgba(154,150,144,0.75)" letter-spacing="0.8">CITY</text>
-          </svg>
+        <div class="ch-ico">
+          <svg class="ico-arrow" viewBox="0 0 24 24" stroke-width="1.6"><path d="M9 18l6-6-6-6"/></svg>
+          <svg class="ico-check" viewBox="0 0 24 24" stroke-width="1.5"><polyline points="20 6 9 17 4 12"/></svg>
         </div>
-
-        <!-- Destination block -->
-        <div class="dest-row a3" onclick="openSheet('guzergah')">
-          <div class="dest-dot-wrap">
-            <div class="dest-dot-o"></div>
-            <div class="dest-dot-line"></div>
-            <div class="dest-dot-d"></div>
-          </div>
-          <div class="dest-info">
-            <div class="dest-addr-block">
-              <span class="dest-lbl">Kalkış</span>
-              <span class="dest-val" id="disp-from">Zürich Flughafen</span>
-            </div>
-            <div class="dest-addr-block">
-              <span class="dest-lbl">Varış</span>
-              <span class="dest-val" id="disp-to">Bahnhofstrasse 10</span>
-            </div>
-          </div>
-          <div class="dest-edit">
-            <svg viewBox="0 0 11 11"><path d="M7.5 1.5l2 2-5.5 5.5H2v-2L7.5 1.5z" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </div>
-        </div>
-
-        <!-- Vehicle class -->
-        <div class="class-strip a4">
-          <div class="cls-tab" onclick="selectClass(this,'Economy','CHF 68')">
-            <span class="cls-name">Economy</span>
-            <span class="cls-price">CHF 68</span>
-            <div class="cls-dot"></div>
-          </div>
-          <div class="cls-tab" onclick="selectClass(this,'Business','CHF 98')">
-            <span class="cls-name">Business</span>
-            <span class="cls-price">CHF 98</span>
-            <div class="cls-dot"></div>
-          </div>
-          <div class="cls-tab active" onclick="selectClass(this,'First','CHF 148')">
-            <span class="cls-name">First</span>
-            <span class="cls-price">CHF 148</span>
-            <div class="cls-dot"></div>
-          </div>
-          <div class="cls-tab" onclick="selectClass(this,'VIP','CHF 220')">
-            <span class="cls-name">VIP</span>
-            <span class="cls-price">CHF 220</span>
-            <div class="cls-dot"></div>
-          </div>
-        </div>
-
-        <!-- Meta strip -->
-        <div class="meta-strip a5">
-          <div class="meta-item">
-            <div class="meta-ico"><svg viewBox="0 0 11 11"><rect x="1" y="1.5" width="9" height="8.5" rx="1.5"/><path d="M1 4.5h9"/><path d="M3.5 1v1.5M7.5 1v1.5" stroke-linecap="round"/></svg></div>
-            <span class="meta-val" id="disp-date">Paz, 27 Nis</span>
-          </div>
-          <div class="meta-sep"></div>
-          <div class="meta-item">
-            <div class="meta-ico"><svg viewBox="0 0 11 11"><circle cx="5.5" cy="5.5" r="4.5"/><path d="M5.5 3v2.5l2 1.5" stroke-linecap="round"/></svg></div>
-            <span class="meta-val" id="disp-time">14:30</span>
-          </div>
-          <div class="meta-sep"></div>
-          <div class="meta-item">
-            <div class="meta-ico"><svg viewBox="0 0 11 11"><path d="M5.5 1C3.57 1 2 2.57 2 4.5c0 2.72 3.5 5.5 3.5 5.5s3.5-2.78 3.5-5.5C9 2.57 7.43 1 5.5 1z"/><circle cx="5.5" cy="4.5" r="1.2"/></svg></div>
-            <span class="meta-val">28 km</span>
-          </div>
-          <div class="meta-sep"></div>
-          <div class="meta-item">
-            <span class="meta-val">≈ 32 dk</span>
-          </div>
-        </div>
-
-        <!-- Book bar -->
-        <div class="book-bar a6">
-          <div>
-            <div class="book-price-lbl">Toplam</div>
-            <div class="book-price-val"><span class="book-price-cur">CHF</span><span id="disp-price">148</span></div>
-          </div>
-          <div class="book-btn" onclick="goToScreen(2)">
-            <span>Rezervasyon</span>
-            <svg viewBox="0 0 12 12"><path d="M2 6h8M7 3l3 3-3 3" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </div>
-        </div>
-
-      </div><!-- /s1 -->
-
-      <!-- Bottom Nav -->
-      <div class="bnav">
-        <div class="ni active"><svg viewBox="0 0 18 18"><path d="M2 7.5L9 2l7 5.5V16H12v-4H6v4H2V7.5z" stroke-linecap="round" stroke-linejoin="round"/></svg><div class="ni-dot"></div></div>
-        <div class="ni"><svg viewBox="0 0 18 18"><circle cx="8" cy="8" r="6"/><path d="M13 13l3 3" stroke-linecap="round"/></svg><div class="ni-dot"></div></div>
-        <div class="ni"><svg viewBox="0 0 18 18"><rect x="2" y="4" width="14" height="10" rx="2"/><path d="M2 8h14"/><path d="M6 12h3" stroke-linecap="round"/></svg><div class="ni-dot"></div></div>
-        <div class="ni"><svg viewBox="0 0 18 18"><path d="M2 4h14v9a2 2 0 01-2 2H4a2 2 0 01-2-2V4z"/><path d="M6 9h6M6 12h4" stroke-linecap="round"/></svg><div class="ni-dot"></div></div>
-        <div class="ni"><svg viewBox="0 0 18 18"><circle cx="9" cy="6" r="3"/><path d="M3 16c0-3.31 2.69-6 6-6s6 2.69 6 6" stroke-linecap="round"/></svg><div class="ni-dot"></div></div>
       </div>
 
-      <!-- Overlay -->
-      <div class="ov" id="ov1"><div class="ov-bd" onclick="closeSheet()"></div><div class="ov-sh" id="ov-sh1"></div></div>
-
-    </div><!-- /scrn -->
-  </div><!-- /phone -->
-</div>
-
-<!-- ══════════════
-     PHONE 2
-══════════════ -->
-<div class="phone-col">
-  <span class="pcol-lbl">Journey Details</span>
-  <div class="phone tc">
-    <div class="island"></div>
-    <div class="scrn">
-
-      <div class="s2">
-
-        <!-- Header -->
-        <div class="s2-hdr a1">
-          <div class="s2-back"><svg viewBox="0 0 12 12"><path d="M8 2L4 6l4 4" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-          <span class="s2-ttl">Yolculuk</span>
-          <span class="s2-step">2 / 3</span>
+      <!-- II — ZAMAN -->
+      <div class="chapter" id="ch-zaman" onclick="open_ov('zaman')">
+        <div class="ch-num">II</div>
+        <div class="ch-body">
+          <div class="ch-label">Tarih & Saat</div>
+          <div class="ch-value" id="v-zaman">Zamanı belirleyin</div>
         </div>
-
-        <!-- Progress -->
-        <div class="pdots a2">
-          <div class="pdot done"></div>
-          <div class="pdot active"></div>
-          <div class="pdot"></div>
+        <div class="ch-ico">
+          <svg class="ico-arrow" viewBox="0 0 24 24" stroke-width="1.6"><path d="M9 18l6-6-6-6"/></svg>
+          <svg class="ico-check" viewBox="0 0 24 24" stroke-width="1.5"><polyline points="20 6 9 17 4 12"/></svg>
         </div>
+      </div>
 
-        <!-- Mini map -->
-        <div class="s2-map a2">
-          <svg viewBox="0 0 312 94" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
-            <rect width="312" height="94" fill="#0A0C16"/>
-            <g stroke="rgba(80,100,160,0.08)" stroke-width="0.5" fill="none">
-              <line x1="0" y1="31" x2="312" y2="31"/><line x1="0" y1="62" x2="312" y2="62"/>
-              <line x1="78" y1="0" x2="78" y2="94"/><line x1="156" y1="0" x2="156" y2="94"/><line x1="234" y1="0" x2="234" y2="94"/>
-            </g>
-            <path d="M 40 70 C 80 24, 200 24, 260 48" fill="none" stroke="rgba(184,153,90,0.80)" stroke-width="1.6" stroke-linecap="round" stroke-dasharray="260" style="stroke-dashoffset:260;animation:draw 1.6s cubic-bezier(.4,0,.2,1) .3s forwards"/>
-            <circle cx="40" cy="70" r="4" fill="rgba(255,255,255,0.05)" stroke="rgba(255,255,255,0.30)" stroke-width="1"/>
-            <circle cx="40" cy="70" r="2" fill="rgba(255,255,255,0.70)"/>
-            <circle cx="260" cy="48" r="5" fill="rgba(184,153,90,0.12)" stroke="rgba(184,153,90,0.58)" stroke-width="1.2"/>
-            <circle cx="260" cy="48" r="2.4" fill="rgba(184,153,90,0.88)"/>
-          </svg>
-          <span class="s2-lbl-o">ZRH</span>
-          <span class="s2-lbl-d">Bahnhofstr.</span>
+      <!-- III — ARAÇ -->
+      <div class="chapter" id="ch-arac" onclick="open_ov('arac')">
+        <div class="ch-num">III</div>
+        <div class="ch-body">
+          <div class="ch-label">Araç Sınıfı</div>
+          <div class="ch-value" id="v-arac">Konfor seviyesi seçin</div>
         </div>
+        <div class="ch-ico">
+          <svg class="ico-arrow" viewBox="0 0 24 24" stroke-width="1.6"><path d="M9 18l6-6-6-6"/></svg>
+          <svg class="ico-check" viewBox="0 0 24 24" stroke-width="1.5"><polyline points="20 6 9 17 4 12"/></svg>
+        </div>
+      </div>
 
-        <!-- Driver card -->
-        <div class="a3">
-          <p class="sec-lbl">Şoförünüz</p>
+      <!-- IV — ÖDEME -->
+      <div class="chapter" id="ch-odeme" onclick="open_ov('odeme')">
+        <div class="ch-num">IV</div>
+        <div class="ch-body">
+          <div class="ch-label">Ödeme</div>
+          <div class="ch-value" id="v-odeme">Ödeme yöntemi ekle</div>
         </div>
-        <div class="driver-card a3">
-          <div class="driver-av">
-            <svg viewBox="0 0 20 20"><circle cx="10" cy="6.5" r="3.8"/><path d="M2 18c0-4.42 3.58-8 8-8s8 3.58 8 8" stroke-linecap="round"/></svg>
-            <div class="driver-verified"><svg viewBox="0 0 8 8"><path d="M1 4l2 2 4-4" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <div class="ch-ico">
+          <svg class="ico-arrow" viewBox="0 0 24 24" stroke-width="1.6"><path d="M9 18l6-6-6-6"/></svg>
+          <svg class="ico-check" viewBox="0 0 24 24" stroke-width="1.5"><polyline points="20 6 9 17 4 12"/></svg>
+        </div>
+      </div>
+
+    </div><!-- /chapters -->
+
+    <!-- Book CTA -->
+    <div class="cta-zone" id="cta-zone">
+      <button class="btn-book" onclick="show_conf()">
+        <span class="btn-book-lbl">Rezervasyonu Onayla</span>
+        <svg viewBox="0 0 24 24" stroke-width="1.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </button>
+    </div>
+
+    <div class="foot-rule"></div>
+    <div class="foot-note">Pamoox · Özel Şoför Hizmeti · İstanbul</div>
+
+  </div><!-- /mainscreen -->
+
+
+  <!-- ══════════════════════════════════
+       OVERLAY I — ROTA
+  ══════════════════════════════════ -->
+  <div class="ov" id="ov-rota">
+    <div class="ov-bg" onclick="close_ov('rota')"></div>
+    <div class="ov-sheet">
+      <div class="ov-handle"><div class="ov-bar"></div></div>
+      <div class="ov-hdr">
+        <div class="ov-hdr-l">
+          <span class="ov-chapter-num">I</span>
+          <span class="ov-chapter-lbl">Rota</span>
+        </div>
+        <div class="ov-x" onclick="close_ov('rota')">
+          <svg viewBox="0 0 24 24" stroke-width="1.8"><path d="M18 6L6 18M6 6l12 12"/></svg>
+        </div>
+      </div>
+      <div class="ov-rule"></div>
+      <div class="ov-body">
+        <div class="rc">
+          <div class="rc-spine">
+            <div class="rc-dot-a"></div>
+            <div class="rc-wire"></div>
+            <div class="rc-dot-b"></div>
           </div>
-          <div class="driver-info">
-            <div class="driver-name">Thomas Meier</div>
-            <div class="driver-meta">
-              <div class="driver-stars">
-                <svg viewBox="0 0 9 9"><polygon points="4.5,0.5 5.7,3.2 8.5,3.4 6.5,5.3 7.1,8 4.5,6.5 1.9,8 2.5,5.3 0.5,3.4 3.3,3.2"/></svg>
-                4.97
+          <div class="rc-fields">
+            <div class="sf" style="margin:0">
+              <label>Kalkış Noktası</label>
+              <div class="loc-pill" onclick="use_location()">
+                <div class="loc-dot"></div>
+                <span class="loc-txt" id="pickup-lbl">Mevcut konumunuz</span>
               </div>
-              <span style="color:var(--t3)">·</span>
-              <span>214 yolculuk</span>
             </div>
-          </div>
-          <div class="driver-car">
-            <div class="driver-car-name">BMW 7 Series</div>
-            <div class="driver-car-plate">ZH · 445 · M</div>
-          </div>
-        </div>
-
-        <!-- Journey details -->
-        <div class="a4">
-          <p class="sec-lbl">Güzergah Detayları</p>
-        </div>
-        <div class="jcard a4">
-          <p class="jcard-ttl">Yolculuk Bilgileri</p>
-          <div class="jrow">
-            <div class="jrow-ico"><svg viewBox="0 0 11 11"><path d="M5.5 1C3.57 1 2 2.57 2 4.5c0 2.72 3.5 5.5 3.5 5.5s3.5-2.78 3.5-5.5C9 2.57 7.43 1 5.5 1z"/><circle cx="5.5" cy="4.5" r="1.2"/></svg></div>
-            <div class="jrow-content">
-              <div class="jrow-lbl">Kalkış</div>
-              <div class="jrow-val">Zürich Flughafen</div>
-              <div class="jrow-sub">Terminal 1, Arrivals</div>
-            </div>
-          </div>
-          <div class="jrow">
-            <div class="jrow-ico"><svg viewBox="0 0 11 11"><path d="M5.5 1C3.57 1 2 2.57 2 4.5c0 2.72 3.5 5.5 3.5 5.5s3.5-2.78 3.5-5.5C9 2.57 7.43 1 5.5 1z" fill="rgba(184,153,90,0.20)"/><circle cx="5.5" cy="4.5" r="1.2"/></svg></div>
-            <div class="jrow-content">
-              <div class="jrow-lbl">Varış</div>
-              <div class="jrow-val">Bahnhofstrasse 10</div>
-              <div class="jrow-sub">8001 Zürich Merkez</div>
-            </div>
-          </div>
-          <div class="jrow">
-            <div class="jrow-ico"><svg viewBox="0 0 11 11"><circle cx="5.5" cy="5.5" r="4.5"/><path d="M5.5 3v2.5l2 1.5" stroke-linecap="round"/></svg></div>
-            <div class="jrow-content">
-              <div class="jrow-lbl">Tarih ve Saat</div>
-              <div class="jrow-val">Paz, 27 Nisan · 14:30</div>
+            <div class="sf" style="margin:0">
+              <label>Varış Noktası</label>
+              <input class="sf-inp" id="dest-inp" placeholder="Nereye gidiyorsunuz?" type="text" autocomplete="off">
             </div>
           </div>
         </div>
-
-        <!-- Price -->
-        <div class="a5">
-          <p class="sec-lbl">Ücret</p>
+        <div class="sf">
+          <label>Notlar (İsteğe bağlı)</label>
+          <textarea class="sf-ta" rows="2" placeholder="Özel talepleriniz…"></textarea>
         </div>
-        <div class="price-card a5">
-          <div class="price-row"><span class="pr-lbl">Temel ücret</span><span class="pr-val">CHF 98</span></div>
-          <div class="price-row"><span class="pr-lbl">First sınıf farkı</span><span class="pr-val">CHF 44</span></div>
-          <div class="price-row"><span class="pr-lbl">Havalimanı çıkış</span><span class="pr-val">CHF 6</span></div>
-          <div class="price-row"><span class="pr-lbl total">Toplam</span><span class="pr-val total">CHF 148</span></div>
-        </div>
-
-        <!-- CTA -->
-        <div class="lux-cta a6" onclick="goToScreen(3)">
-          <span>Rezervasyonu Tamamla</span>
-          <svg viewBox="0 0 12 12"><path d="M2 6h8M7 3l3 3-3 3" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </div>
-
-        <p class="reassure">Ücretsiz iptal · 24 saat öncesine kadar</p>
-
-      </div><!-- /s2 -->
-
-      <!-- Bottom Nav -->
-      <div class="bnav">
-        <div class="ni active"><svg viewBox="0 0 18 18"><path d="M2 7.5L9 2l7 5.5V16H12v-4H6v4H2V7.5z" stroke-linecap="round" stroke-linejoin="round"/></svg><div class="ni-dot"></div></div>
-        <div class="ni"><svg viewBox="0 0 18 18"><circle cx="8" cy="8" r="6"/><path d="M13 13l3 3" stroke-linecap="round"/></svg><div class="ni-dot"></div></div>
-        <div class="ni"><svg viewBox="0 0 18 18"><rect x="2" y="4" width="14" height="10" rx="2"/><path d="M2 8h14"/><path d="M6 12h3" stroke-linecap="round"/></svg><div class="ni-dot"></div></div>
-        <div class="ni"><svg viewBox="0 0 18 18"><path d="M2 4h14v9a2 2 0 01-2 2H4a2 2 0 01-2-2V4z"/><path d="M6 9h6M6 12h4" stroke-linecap="round"/></svg><div class="ni-dot"></div></div>
-        <div class="ni"><svg viewBox="0 0 18 18"><circle cx="9" cy="6" r="3"/><path d="M3 16c0-3.31 2.69-6 6-6s6 2.69 6 6" stroke-linecap="round"/></svg><div class="ni-dot"></div></div>
       </div>
+      <button class="ov-btn" onclick="confirm_chapter('rota')">Güzergahı Onayla</button>
+    </div>
+  </div>
 
-    </div><!-- /scrn -->
-  </div><!-- /phone -->
-</div>
 
-<!-- ══════════════
-     PHONE 3
-══════════════ -->
-<div class="phone-col">
-  <span class="pcol-lbl">Confirmation</span>
-  <div class="phone tr">
-    <div class="island"></div>
-    <div class="scrn">
-
-      <div class="s3">
-
-        <div class="s3-seal a1">
-          <svg viewBox="0 0 26 26"><path d="M4 13l6 6L22 7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  <!-- ══════════════════════════════════
+       OVERLAY II — ZAMAN
+  ══════════════════════════════════ -->
+  <div class="ov" id="ov-zaman">
+    <div class="ov-bg" onclick="close_ov('zaman')"></div>
+    <div class="ov-sheet">
+      <div class="ov-handle"><div class="ov-bar"></div></div>
+      <div class="ov-hdr">
+        <div class="ov-hdr-l">
+          <span class="ov-chapter-num">II</span>
+          <span class="ov-chapter-lbl">Tarih & Saat</span>
         </div>
-
-        <div class="a2">
-          <p class="s3-ttl">Rezervasyon<br>Onaylandı</p>
+        <div class="ov-x" onclick="close_ov('zaman')">
+          <svg viewBox="0 0 24 24" stroke-width="1.8"><path d="M18 6L6 18M6 6l12 12"/></svg>
         </div>
-        <p class="s3-sub a2">Şoförünüz belirlendi</p>
-
-        <!-- Booking reference -->
-        <div class="s3-ref a3">
-          <p class="s3-ref-lbl">Rezervasyon Numarası</p>
-          <p class="s3-ref-code">PMX · 4782</p>
-        </div>
-
-        <!-- Summary card -->
-        <div class="ccard a4">
-          <p class="ccard-ttl">Özet</p>
-          <div class="crow"><span class="crow-lbl">Kalkış</span><span class="crow-val">ZRH Flughafen</span></div>
-          <div class="crow"><span class="crow-lbl">Varış</span><span class="crow-val">Bahnhofstr. 10</span></div>
-          <div class="crow"><span class="crow-lbl">Tarih</span><span class="crow-val">Paz, 27 Nis · 14:30</span></div>
-          <div class="crow"><span class="crow-lbl">Sınıf</span><span class="crow-val">First Class</span></div>
-          <div class="crow" style="padding-top:8px;border-top:0.5px solid rgba(255,255,255,0.055);margin-top:4px;">
-            <span class="crow-lbl" style="color:var(--cream);font-weight:400">Toplam</span>
-            <span class="crow-val total">CHF 148</span>
-          </div>
-        </div>
-
-        <!-- Driver mini -->
-        <div class="driver-card a5" style="padding:11px 14px;">
-          <div class="driver-av" style="width:38px;height:38px;">
-            <svg viewBox="0 0 20 20" style="width:16px;height:16px"><circle cx="10" cy="6.5" r="3.8"/><path d="M2 18c0-4.42 3.58-8 8-8s8 3.58 8 8" stroke-linecap="round"/></svg>
-            <div class="driver-verified"><svg viewBox="0 0 8 8"><path d="M1 4l2 2 4-4" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-          </div>
-          <div class="driver-info">
-            <div class="driver-name" style="font-size:14px">Thomas Meier</div>
-            <div class="driver-meta">BMW 7 · ZH 445 M</div>
-          </div>
-          <div style="text-align:right">
-            <div style="font-size:8.5px;letter-spacing:0.16em;text-transform:uppercase;color:var(--golddim);font-family:var(--ff-b);margin-bottom:3px">Varış</div>
-            <div style="font-family:var(--ff-d);font-size:16px;font-weight:300;color:var(--goldb)">14:22</div>
-          </div>
-        </div>
-
-        <!-- Steps done -->
-        <div class="sdone a6">
-          <p class="sdone-ttl">Tamamlanan Adımlar</p>
-          <div class="sd-row"><div class="sd-chk"><svg viewBox="0 0 7 7"><path d="M1 3.5l2 2 3-3" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span class="sd-txt">Yolcu bilgileri</span><span class="sd-badge">✓</span></div>
-          <div class="sd-row"><div class="sd-chk"><svg viewBox="0 0 7 7"><path d="M1 3.5l2 2 3-3" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span class="sd-txt">Güzergah onayı</span><span class="sd-badge">✓</span></div>
-          <div class="sd-row"><div class="sd-chk"><svg viewBox="0 0 7 7"><path d="M1 3.5l2 2 3-3" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span class="sd-txt">Ödeme alındı</span><span class="sd-badge">✓</span></div>
-        </div>
-
-        <p class="s3-note a6">Rezervasyon detayları e-posta ile gönderildi.<br>Şoför 30 dk öncesinde bildirim gönderecek.</p>
-
-        <!-- Done CTA -->
-        <div class="lux-cta a6" style="margin-top:2px;">
-          <span>Tamam</span>
-        </div>
-
-      </div><!-- /s3 -->
-
-      <!-- Bottom Nav -->
-      <div class="bnav">
-        <div class="ni active"><svg viewBox="0 0 18 18"><path d="M2 7.5L9 2l7 5.5V16H12v-4H6v4H2V7.5z" stroke-linecap="round" stroke-linejoin="round"/></svg><div class="ni-dot"></div></div>
-        <div class="ni"><svg viewBox="0 0 18 18"><circle cx="8" cy="8" r="6"/><path d="M13 13l3 3" stroke-linecap="round"/></svg><div class="ni-dot"></div></div>
-        <div class="ni"><svg viewBox="0 0 18 18"><rect x="2" y="4" width="14" height="10" rx="2"/><path d="M2 8h14"/><path d="M6 12h3" stroke-linecap="round"/></svg><div class="ni-dot"></div></div>
-        <div class="ni"><svg viewBox="0 0 18 18"><path d="M2 4h14v9a2 2 0 01-2 2H4a2 2 0 01-2-2V4z"/><path d="M6 9h6M6 12h4" stroke-linecap="round"/></svg><div class="ni-dot"></div></div>
-        <div class="ni"><svg viewBox="0 0 18 18"><circle cx="9" cy="6" r="3"/><path d="M3 16c0-3.31 2.69-6 6-6s6 2.69 6 6" stroke-linecap="round"/></svg><div class="ni-dot"></div></div>
       </div>
+      <div class="ov-rule"></div>
+      <div class="ov-body">
+        <div class="row2">
+          <div class="sf">
+            <label>Tarih</label>
+            <input class="sf-inp" id="date-inp" type="date" value="2026-04-29">
+          </div>
+          <div class="sf">
+            <label>Saat</label>
+            <input class="sf-inp" id="time-inp" type="time" value="14:30">
+          </div>
+        </div>
+        <div class="sf">
+          <label>Yolcu Sayısı</label>
+          <div class="pax-box">
+            <span class="pax-lbl">Kişi sayısı</span>
+            <div class="pax-ctrl">
+              <div class="pax-btn" onclick="chg_pax(-1)">−</div>
+              <span class="pax-num" id="pax-n">2</span>
+              <div class="pax-btn" onclick="chg_pax(1)">+</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <button class="ov-btn" onclick="confirm_chapter('zaman')">Zamanı Onayla</button>
+    </div>
+  </div>
 
-    </div><!-- /scrn -->
-  </div><!-- /phone -->
-</div>
 
-</div><!-- /phones-row -->
+  <!-- ══════════════════════════════════
+       OVERLAY III — ARAÇ
+  ══════════════════════════════════ -->
+  <div class="ov" id="ov-arac">
+    <div class="ov-bg" onclick="close_ov('arac')"></div>
+    <div class="ov-sheet">
+      <div class="ov-handle"><div class="ov-bar"></div></div>
+      <div class="ov-hdr">
+        <div class="ov-hdr-l">
+          <span class="ov-chapter-num">III</span>
+          <span class="ov-chapter-lbl">Araç Sınıfı</span>
+        </div>
+        <div class="ov-x" onclick="close_ov('arac')">
+          <svg viewBox="0 0 24 24" stroke-width="1.8"><path d="M18 6L6 18M6 6l12 12"/></svg>
+        </div>
+      </div>
+      <div class="ov-rule"></div>
+      <div class="ov-body">
+        <div class="cls-list">
+
+          <div class="cls-item" id="cls-std" onclick="pick_cls('std')">
+            <div class="cls-icon-wrap">
+              <svg viewBox="0 0 24 24"><path d="M3 13l1.8-6h14.4L21 13"/><rect x="2" y="13" width="20" height="5" rx="2"/><circle cx="6.5" cy="18.5" r="1.5"/><circle cx="17.5" cy="18.5" r="1.5"/></svg>
+            </div>
+            <div class="cls-meta">
+              <div class="cls-name">Standart</div>
+              <div class="cls-desc">Toyota Corolla veya muadili</div>
+            </div>
+            <div class="cls-price">₺1.240</div>
+          </div>
+
+          <div class="cls-item" id="cls-kon" onclick="pick_cls('kon')">
+            <div class="cls-icon-wrap">
+              <svg viewBox="0 0 24 24"><path d="M3 13l1.8-6h14.4L21 13"/><rect x="2" y="13" width="20" height="5" rx="2"/><circle cx="6.5" cy="18.5" r="1.5"/><circle cx="17.5" cy="18.5" r="1.5"/></svg>
+            </div>
+            <div class="cls-meta">
+              <div class="cls-name">Konfor</div>
+              <div class="cls-desc">Mercedes E-Class veya muadili</div>
+            </div>
+            <div class="cls-price">₺2.180</div>
+          </div>
+
+          <div class="cls-item sel" id="cls-vip" onclick="pick_cls('vip')">
+            <div class="cls-icon-wrap">
+              <svg viewBox="0 0 24 24"><path d="M3 13l1.8-6h14.4L21 13"/><rect x="2" y="13" width="20" height="5" rx="2"/><circle cx="6.5" cy="18.5" r="1.5"/><circle cx="17.5" cy="18.5" r="1.5"/></svg>
+            </div>
+            <div class="cls-meta">
+              <div class="cls-name">VIP</div>
+              <div class="cls-desc">BMW 7 Series veya muadili</div>
+            </div>
+            <div class="cls-price">₺3.840</div>
+          </div>
+
+        </div>
+      </div>
+      <button class="ov-btn" onclick="confirm_chapter('arac')">Aracı Onayla</button>
+    </div>
+  </div>
+
+
+  <!-- ══════════════════════════════════
+       OVERLAY IV — ÖDEME
+  ══════════════════════════════════ -->
+  <div class="ov" id="ov-odeme">
+    <div class="ov-bg" onclick="close_ov('odeme')"></div>
+    <div class="ov-sheet">
+      <div class="ov-handle"><div class="ov-bar"></div></div>
+      <div class="ov-hdr">
+        <div class="ov-hdr-l">
+          <span class="ov-chapter-num">IV</span>
+          <span class="ov-chapter-lbl">Ödeme</span>
+        </div>
+        <div class="ov-x" onclick="close_ov('odeme')">
+          <svg viewBox="0 0 24 24" stroke-width="1.8"><path d="M18 6L6 18M6 6l12 12"/></svg>
+        </div>
+      </div>
+      <div class="ov-rule"></div>
+      <div class="ov-body">
+
+        <!-- Card visual -->
+        <div class="pay-card">
+          <div class="pay-chip"></div>
+          <div class="pay-nums">
+            <span class="pay-grp">4782</span>
+            <span class="pay-grp">••••</span>
+            <span class="pay-grp">••••</span>
+            <span class="pay-grp">3901</span>
+          </div>
+          <div class="pay-footer">
+            <span class="pay-holder">Şaban Pamuk</span>
+            <span class="pay-exp">04 / 28</span>
+          </div>
+        </div>
+
+        <div class="sf">
+          <label>Kart Üzerindeki İsim</label>
+          <input class="sf-inp" id="card-name" placeholder="Ad Soyad" value="Şaban Pamuk">
+        </div>
+        <div class="g2">
+          <div class="sf">
+            <label>Son Kullanma</label>
+            <input class="sf-inp" id="card-exp" placeholder="AA / YY" value="04 / 28">
+          </div>
+          <div class="sf">
+            <label>CVV</label>
+            <input class="sf-inp" id="card-cvv" placeholder="•••" type="password" maxlength="3">
+          </div>
+        </div>
+        <div class="sf">
+          <label>Kart Numarası</label>
+          <input class="sf-inp" id="card-num" placeholder="•••• •••• •••• ••••" value="4782 •••• •••• 3901">
+        </div>
+
+      </div>
+      <button class="ov-btn" onclick="confirm_chapter('odeme')">Ödemeyi Onayla</button>
+    </div>
+  </div>
+
+
+  <!-- ══════════════════════════════════
+       CONFIRMATION SCREEN
+  ══════════════════════════════════ -->
+  <div class="conf-screen" id="conf-screen">
+    <div class="conf-seal">
+      <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+    </div>
+    <div class="conf-ref">PMX · 4782</div>
+    <div class="conf-h">Rezervasyon<br><em>Onaylandı</em></div>
+    <div class="conf-sub" id="conf-sub">29 Nisan 2026 · 14:30</div>
+
+    <div class="conf-details">
+      <div class="conf-row">
+        <span class="conf-row-lbl">Güzergah</span>
+        <span class="conf-row-val" id="conf-rota">—</span>
+      </div>
+      <div class="conf-row">
+        <span class="conf-row-lbl">Araç</span>
+        <span class="conf-row-val" id="conf-arac">—</span>
+      </div>
+      <div class="conf-row">
+        <span class="conf-row-lbl">Ödeme</span>
+        <span class="conf-row-val" id="conf-odeme">—</span>
+      </div>
+    </div>
+
+    <div class="conf-driver">
+      <div class="conf-driver-avatar">
+        <svg viewBox="0 0 24 24" stroke-width="1.2"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+      </div>
+      <div class="conf-driver-info">
+        <div class="conf-driver-name">Thomas Meier</div>
+        <div class="conf-driver-sub">BMW 7 Series · ZH·445·M · ~12 dk</div>
+      </div>
+      <div class="conf-driver-rating">
+        <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+        4.97
+      </div>
+    </div>
+
+    <button class="conf-back" onclick="back_to_hub()">Ana Ekrana Dön</button>
+  </div>
+
+</div><!-- /phone -->
 
 <script>
-const state={
-  guzergah:{from:'Zürich Flughafen',to:'Bahnhofstrasse 10',date:'Paz, 27 Nis',time:'14:30'},
-  yolcu:{name:'',phone:'',note:''},
-  sinif:{name:'First',price:'148'},
-  odeme:{card:'',holder:''}
-};
+/* ── State ── */
+const done = { rota:false, zaman:false, arac:false, odeme:false };
+let pax = 2;
+let cls = 'vip';
+const clsPrices = { std:'Standart · ₺1.240', kon:'Konfor · ₺2.180', vip:'VIP · ₺3.840' };
 
-function goToScreen(n){/* screen nav placeholder */}
-
-function selectClass(el,name,price){
-  document.querySelectorAll('.cls-tab').forEach(t=>t.classList.remove('active'));
-  el.classList.add('active');
-  const p=price.replace('CHF ','');
-  document.getElementById('disp-price').textContent=p;
-  const pc=document.querySelector('.cls-price');
-  state.sinif={name,price:p};
+/* ── Overlay open/close ── */
+function open_ov(id){
+  document.getElementById('ov-'+id).classList.add('open');
+}
+function close_ov(id){
+  document.getElementById('ov-'+id).classList.remove('open');
 }
 
-const formTpl={
-  guzergah:()=>`<div class="sf-handle"></div><div class="sf-hdr"><div class="sf-hdr-ico"><svg viewBox="0 0 13 13"><path d="M2 6.5h9M7.5 2.5l4 4-4 4" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span class="sf-hdr-ttl">Güzergah</span><div class="sf-close" onclick="closeSheet()"><svg viewBox="0 0 11 11"><path d="M2 2l7 7M9 2l-7 7" stroke-linecap="round"/></svg></div></div><div class="sf-f"><label>Kalkış Noktası</label><input class="sf-inp" type="text" id="f-from" value="${state.guzergah.from}" placeholder="Kalkış adresi"></div><div class="sf-f"><label>Varış Noktası</label><input class="sf-inp" type="text" id="f-to" value="${state.guzergah.to}" placeholder="Varış adresi"></div><div class="sf-f"><label>Tarih</label><div class="sf-dates">${[['Paz·27','Paz, 27 Nis'],['Pzt·28','Pzt, 28 Nis'],['Sal·29','Sal, 29 Nis'],['Çar·30','Çar, 30 Nis']].map(([l,v])=>`<div class="date-p${state.guzergah.date===v?' active':''}" onclick="selectDate('${v}',this)">${l}</div>`).join('')}</div></div><div class="sf-f"><label>Saat</label><input class="sf-inp" type="time" id="f-time" value="${state.guzergah.time}"></div><button class="sf-apply" onclick="applyGuzergah()">Kaydet</button>`,
-  yolcu:()=>`<div class="sf-handle"></div><div class="sf-hdr"><div class="sf-hdr-ico"><svg viewBox="0 0 13 13"><circle cx="6.5" cy="4" r="2.4"/><path d="M1.5 12c0-2.76 2.24-5 5-5s5 2.24 5 5" stroke-linecap="round"/></svg></div><span class="sf-hdr-ttl">Yolcu Bilgileri</span><div class="sf-close" onclick="closeSheet()"><svg viewBox="0 0 11 11"><path d="M2 2l7 7M9 2l-7 7" stroke-linecap="round"/></svg></div></div><div class="sf-f"><label>Ad Soyad</label><input class="sf-inp" type="text" id="f-name" placeholder="Tam isim" value="${state.yolcu.name}"></div><div class="sf-f"><label>Telefon</label><input class="sf-inp" type="tel" id="f-phone" placeholder="+41 000 000 00 00" value="${state.yolcu.phone}"></div><div class="sf-f"><label>Özel Not <span style="opacity:.6;font-size:8px">isteğe bağlı</span></label><textarea class="sf-inp sf-ta" id="f-note" placeholder="Şoföre iletmek istediğiniz not…">${state.yolcu.note}</textarea></div><button class="sf-apply" onclick="closeSheet()">Kaydet</button>`,
-  odeme:()=>`<div class="sf-handle"></div><div class="sf-hdr"><div class="sf-hdr-ico"><svg viewBox="0 0 13 13"><rect x="1" y="3" width="11" height="7" rx="1.5"/><path d="M1 6h11"/><path d="M4 8.5h2" stroke-linecap="round"/></svg></div><span class="sf-hdr-ttl">Ödeme Yöntemi</span><div class="sf-close" onclick="closeSheet()"><svg viewBox="0 0 11 11"><path d="M2 2l7 7M9 2l-7 7" stroke-linecap="round"/></svg></div></div><div class="card-visual"><div class="cv-chip"></div><div class="cv-num">${state.odeme.card?'•••• •••• •••• '+state.odeme.card.slice(-4):'0000  0000  0000  0000'}</div></div><div class="sf-f"><label>Kart Numarası</label><input class="sf-inp" type="text" id="f-card" placeholder="0000  0000  0000  0000" maxlength="19" value="${state.odeme.card}"></div><div class="sf-f"><label>Kart Sahibi</label><input class="sf-inp" type="text" id="f-holder" placeholder="Ad Soyad"></div><div class="sf-row2"><div class="sf-f"><label>Son Kullanma</label><input class="sf-inp" type="text" placeholder="AA/YY" maxlength="5"></div><div class="sf-f"><label>CVV</label><input class="sf-inp" type="text" placeholder="000" maxlength="3"></div></div><button class="sf-apply" onclick="closeSheet()">Kartı Kaydet</button>`,
-  sinif:()=>`<div class="sf-handle"></div><div class="sf-hdr"><div class="sf-hdr-ico"><svg viewBox="0 0 13 13"><path d="M1.5 9.5l3-6 3 4 2-2.5 2 4.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span class="sf-hdr-ttl">Araç Sınıfı</span><div class="sf-close" onclick="closeSheet()"><svg viewBox="0 0 11 11"><path d="M2 2l7 7M9 2l-7 7" stroke-linecap="round"/></svg></div></div><div class="sf-class-list">${[['Economy','Volkswagen Passat veya benzeri','CHF 68'],['Business','BMW 5 Series veya benzeri','CHF 98'],['First','BMW 7 / Mercedes E-Class','CHF 148'],['VIP','Mercedes S-Class / Maybach','CHF 220']].map(([n,d,p])=>`<div class="cc${state.sinif.name===n?' active':''}" onclick="selectSinif('${n}','${p.replace('CHF ','')}',this)"><div class="cc-ico"><svg viewBox="0 0 13 13"><path d="M1 8.5h11M2 8.5l1-3h6l2 3"/><circle cx="3.5" cy="9.5" r="1"/><circle cx="9.5" cy="9.5" r="1"/></svg></div><div class="cc-info"><div class="cc-name">${n}</div><div class="cc-desc">${d}</div></div><span class="cc-p">${p}</span></div>`).join('')}</div><button class="sf-apply" onclick="closeSheet()">Seçimi Kaydet</button>`
-};
-
-function openSheet(t){
-  const sh=document.getElementById('ov-sh1'),ov=document.getElementById('ov1');
-  sh.innerHTML=formTpl[t]();ov.classList.add('open');
-  setTimeout(()=>{const fi=sh.querySelector('input:not([type=time]),textarea');if(fi)fi.focus();},460);
+/* ── Pickup location ── */
+function use_location(){
+  document.getElementById('pickup-lbl').textContent = 'Beşiktaş Meydanı, İstanbul';
 }
 
-function closeSheet(){
-  const ov=document.getElementById('ov1');if(ov)ov.classList.remove('open');
+/* ── Passenger counter ── */
+function chg_pax(d){
+  pax = Math.max(1, Math.min(8, pax + d));
+  document.getElementById('pax-n').textContent = pax;
 }
 
-function selectDate(v,el){
-  state.guzergah.date=v;
-  document.querySelectorAll('.date-p').forEach(d=>d.classList.remove('active'));
-  el.classList.add('active');
-  const dd=document.getElementById('disp-date');if(dd)dd.textContent=v;
-}
-
-function selectSinif(name,price,el){
-  state.sinif={name,price};
-  el.closest('.sf-class-list').querySelectorAll('.cc').forEach(c=>c.classList.remove('active'));
-  el.classList.add('active');
-  const dp=document.getElementById('disp-price');if(dp)dp.textContent=price;
-  document.querySelectorAll('.cls-tab').forEach(t=>{
-    if(t.querySelector('.cls-name').textContent===name)t.classList.add('active');
-    else t.classList.remove('active');
+/* ── Class selector ── */
+function pick_cls(id){
+  cls = id;
+  ['std','kon','vip'].forEach(c => {
+    document.getElementById('cls-'+c).classList.toggle('sel', c === id);
   });
 }
 
-function applyGuzergah(){
-  const f=document.getElementById('f-from'),t=document.getElementById('f-to');
-  if(f&&t){
-    state.guzergah.from=f.value||state.guzergah.from;
-    state.guzergah.to=t.value||state.guzergah.to;
-    const df=document.getElementById('disp-from'),dt=document.getElementById('disp-to');
-    if(df)df.textContent=state.guzergah.from;
-    if(dt)dt.textContent=state.guzergah.to;
+/* ── Confirm a chapter ── */
+function confirm_chapter(id){
+  done[id] = true;
+
+  /* Update summary in the chapter strip */
+  if(id === 'rota'){
+    const dest = document.getElementById('dest-inp').value.trim() || 'Varış seçilmedi';
+    const origin = document.getElementById('pickup-lbl').textContent;
+    const from = origin === 'Mevcut konumunuz' ? 'Beşiktaş' : origin.split(',')[0];
+    document.getElementById('v-rota').textContent = from + ' → ' + dest;
   }
-  closeSheet();
+  else if(id === 'zaman'){
+    const d = document.getElementById('date-inp').value;
+    const t = document.getElementById('time-inp').value;
+    let ds = '—';
+    if(d){
+      const dt = new Date(d + 'T00:00:00');
+      ds = dt.toLocaleDateString('tr-TR',{day:'numeric',month:'long'});
+    }
+    document.getElementById('v-zaman').textContent = ds + ' · ' + t + ' · ' + pax + ' kişi';
+  }
+  else if(id === 'arac'){
+    document.getElementById('v-arac').textContent = clsPrices[cls];
+  }
+  else if(id === 'odeme'){
+    document.getElementById('v-odeme').textContent = 'Visa •••• 3901';
+  }
+
+  /* Mark chapter filled */
+  document.getElementById('ch-'+id).classList.add('filled');
+
+  /* Close overlay */
+  close_ov(id);
+
+  /* Update progress */
+  update_prog();
+}
+
+/* ── Progress rail ── */
+function update_prog(){
+  const n = Object.values(done).filter(Boolean).length;
+  document.getElementById('prog-fill').style.width = (n/4*100) + '%';
+  document.getElementById('prog-n').textContent = n;
+  const cta = document.getElementById('cta-zone');
+  if(n === 4) cta.classList.add('on');
+  else cta.classList.remove('on');
+}
+
+/* ── Confirmation screen ── */
+function show_conf(){
+  /* Populate detail rows */
+  document.getElementById('conf-rota').textContent  = document.getElementById('v-rota').textContent;
+  document.getElementById('conf-arac').textContent  = clsPrices[cls].split(' · ')[0];
+  document.getElementById('conf-odeme').textContent = 'Visa •••• 3901';
+
+  const d = document.getElementById('date-inp').value;
+  const t = document.getElementById('time-inp').value;
+  let ds = '—';
+  if(d){
+    const dt = new Date(d + 'T00:00:00');
+    ds = dt.toLocaleDateString('tr-TR',{day:'numeric',month:'long',year:'numeric'});
+  }
+  document.getElementById('conf-sub').textContent = ds + ' · ' + t;
+
+  document.getElementById('conf-screen').classList.add('show');
+}
+
+/* ── Back to hub ── */
+function back_to_hub(){
+  document.getElementById('conf-screen').classList.remove('show');
 }
 </script>
 </body>
