@@ -1,0 +1,945 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Pamoox — Özel Şoför Rezervasyonu</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,200;0,300;0,400;1,200;1,300&family=Jost:wght@200;300;400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#111926;--bg2:#182033;--bg3:#1F2B3E;--bg4:#273549;
+  --gold:#B8995A;--goldb:#D4B872;--golddim:#7A6638;
+  --goldfog:rgba(184,153,90,0.07);--goldbdr:rgba(184,153,90,0.20);
+  --cream:#EDE8DF;--t1:#E4DED4;--t2:#ACA79F;--t3:#7C7870;
+  --line:rgba(255,255,255,0.09);
+  --ff-d:'Cormorant',Georgia,serif;--ff-b:'Jost',sans-serif;
+}
+*{-webkit-tap-highlight-color:transparent}
+body{background:#080C15;min-height:100vh;display:flex;align-items:center;justify-content:center;font-family:var(--ff-b);font-weight:300}
+
+/* ── PHONE FRAME ── */
+.phone{width:390px;height:844px;background:var(--bg);border-radius:52px;position:relative;overflow:hidden;box-shadow:0 0 0 1px rgba(255,255,255,0.07),0 30px 80px rgba(0,0,0,0.75),0 8px 24px rgba(0,0,0,0.50);flex-shrink:0}
+.phone::before{content:'';position:absolute;left:-3px;top:160px;width:3px;height:36px;background:rgba(255,255,255,0.10);border-radius:2px 0 0 2px;box-shadow:0 52px 0 rgba(255,255,255,0.10),0 96px 0 rgba(255,255,255,0.10)}
+.phone::after{content:'';position:absolute;right:-3px;top:200px;width:3px;height:60px;background:rgba(255,255,255,0.10);border-radius:0 2px 2px 0}
+.di{position:absolute;top:14px;left:50%;transform:translateX(-50%);width:124px;height:36px;background:#000;border-radius:20px;z-index:200}
+
+/* ── SCREEN ── */
+.screen{width:100%;height:100%;overflow-y:auto;overflow-x:hidden;scrollbar-width:none}
+.screen::-webkit-scrollbar{display:none}
+
+/* ── STATUS BAR ── */
+.sbar{height:58px;display:flex;align-items:flex-end;justify-content:space-between;padding:0 30px 8px}
+.sbar-time{font-family:var(--ff-b);font-size:14px;font-weight:400;color:var(--cream);letter-spacing:0.04em}
+.sbar-r{display:flex;align-items:center;gap:5px}
+.sbar-r svg{width:14px;height:14px;stroke:var(--cream);fill:none;stroke-width:1.8}
+
+/* ── HEADER ── */
+.hdr{padding:8px 28px 0;display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:18px}
+.brand-eyebrow{font-family:var(--ff-b);font-size:8.5px;font-weight:400;letter-spacing:0.42em;text-transform:uppercase;color:var(--gold);margin-bottom:4px}
+.brand-title{font-family:var(--ff-d);font-size:28px;font-weight:200;color:var(--cream);line-height:1;letter-spacing:0.02em}
+.brand-title em{font-style:italic;color:var(--gold);font-weight:200}
+.hdr-av{width:38px;height:38px;border-radius:50%;background:var(--bg2);border:0.5px solid var(--goldbdr);display:flex;align-items:center;justify-content:center;cursor:pointer;margin-top:2px;flex-shrink:0}
+.hdr-av svg{width:17px;height:17px;stroke:var(--gold);fill:none;stroke-width:1.2}
+
+/* ══════════════════════════════════
+   PREVIEW CARD
+══════════════════════════════════ */
+.prev-card{
+  margin:0 20px 20px;
+  background:var(--bg2);
+  border:0.5px solid var(--line);
+  border-radius:20px;
+  padding:18px 20px 16px;
+  position:relative;
+  overflow:hidden;
+  transition:border-color 0.5s;
+}
+.prev-card.complete{border-color:rgba(184,153,90,0.22)}
+.prev-card::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:50px;
+  background:linear-gradient(180deg,rgba(184,153,90,0.045),transparent);
+}
+.prev-eyebrow{
+  font-family:var(--ff-b);font-size:7.5px;font-weight:400;
+  letter-spacing:0.34em;text-transform:uppercase;color:rgba(184,153,90,0.65);
+  margin-bottom:14px;position:relative;
+}
+
+/* Route SVG row */
+.prev-route-wrap{position:relative;margin-bottom:8px}
+.prev-route-svg{width:100%;height:22px;display:block;margin-bottom:8px}
+.prev-route-labels{display:flex;justify-content:space-between;align-items:flex-start;gap:8px}
+.prev-rl-item{flex:1;min-width:0}
+.prev-rl-item:last-child{text-align:right}
+.prev-lbl{
+  font-family:var(--ff-b);font-size:7.5px;font-weight:400;
+  letter-spacing:0.22em;text-transform:uppercase;color:rgba(172,167,159,0.80);
+  margin-bottom:4px;
+}
+
+/* Value cells — filled text OR dashed line */
+.pv{
+  font-family:var(--ff-d);font-size:14px;font-weight:300;color:var(--cream);
+  min-height:18px;display:flex;align-items:center;
+  transition:color 0.3s;
+}
+.pv.empty::after{
+  content:'';display:block;
+  height:1px;
+  background:repeating-linear-gradient(90deg,rgba(255,255,255,0.28) 0,rgba(255,255,255,0.28) 9px,transparent 9px,transparent 15px);
+}
+.pv.empty#pv-from::after{width:88px}
+.pv.empty#pv-to::after{width:88px;margin-left:auto}
+.pv.empty#pv-dt::after{width:110px}
+.pv.empty#pv-arac::after{width:68px}
+.pv.empty#pv-pax::after{width:60px}
+.pv.empty#pv-pay::after{width:56px}
+
+/* Date/time row */
+.prev-dt-row{margin-top:6px}
+
+/* Separator */
+.prev-sep{height:0.5px;background:rgba(255,255,255,0.05);margin:12px 0}
+
+/* Meta 3-col */
+.prev-meta{display:flex;align-items:flex-start;gap:0}
+.prev-meta-item{flex:1;min-width:0}
+.prev-meta-divider{width:0.5px;background:rgba(255,255,255,0.06);margin:0 10px;align-self:stretch;flex-shrink:0}
+
+/* ── PROGRESS RAIL ── */
+.prog{margin:0 28px 20px;position:relative}
+.prog-track{height:1px;background:rgba(255,255,255,0.07);border-radius:1px}
+.prog-fill{height:100%;background:linear-gradient(90deg,var(--golddim),var(--gold));width:0%;transition:width 0.6s cubic-bezier(0.4,0,0.2,1);border-radius:1px}
+.prog-meta{display:flex;justify-content:space-between;margin-top:7px}
+.prog-txt{font-family:var(--ff-b);font-size:8px;font-weight:300;letter-spacing:0.16em;color:var(--t2)}
+.prog-count{font-family:var(--ff-d);font-size:12px;font-weight:200;color:var(--t2);letter-spacing:0.06em}
+.prog-count b{color:var(--gold);font-weight:300}
+
+/* ── CHAPTERS — 2×2 GRID ── */
+.chapters{
+  padding:0 20px;
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+}
+.chapter{
+  position:relative;
+  background:var(--bg2);
+  border-radius:18px;
+  border:0.5px solid var(--line);
+  padding:16px 16px 18px;
+  display:flex;
+  flex-direction:column;
+  justify-content:space-between;
+  min-height:136px;
+  cursor:pointer;
+  transition:background 0.2s,border-color 0.2s,transform 0.15s;
+  overflow:hidden;
+}
+/* Top accent bar (horizontal, spans full width) */
+.chapter::before{
+  content:'';position:absolute;
+  left:0;top:0;right:0;
+  height:2.5px;
+  border-radius:0;
+  background:rgba(184,153,90,0.15);
+  transition:all 0.5s cubic-bezier(0.4,0,0.2,1);
+}
+.chapter.filled::before{
+  background:linear-gradient(90deg,var(--goldb) 0%,var(--gold) 55%,var(--golddim) 100%);
+}
+.chapter.filled{border-color:rgba(184,153,90,0.14)}
+.chapter:active{transform:scale(0.96)}
+
+/* Top row inside card: numeral + icon */
+.ch-top{display:flex;justify-content:space-between;align-items:flex-start}
+.ch-num{
+  font-family:var(--ff-d);font-size:32px;font-weight:200;font-style:italic;
+  color:rgba(184,153,90,0.35);line-height:1;
+  transition:color 0.4s;user-select:none;
+}
+.chapter.filled .ch-num{color:rgba(184,153,90,0.78)}
+
+/* Bottom row: label + value */
+.ch-bottom{}
+.ch-label{
+  font-family:var(--ff-b);font-size:7.5px;font-weight:400;
+  letter-spacing:0.28em;text-transform:uppercase;
+  color:rgba(172,167,159,0.75);margin-bottom:5px;
+  transition:color 0.4s;
+}
+.chapter.filled .ch-label{color:rgba(184,153,90,0.82)}
+.ch-value{
+  font-family:var(--ff-d);font-size:13.5px;font-weight:300;
+  color:rgba(172,167,159,0.65);line-height:1.35;
+  transition:color 0.4s;letter-spacing:0.01em;
+  overflow:hidden;
+  display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;
+}
+.chapter.filled .ch-value{color:var(--t1)}
+
+/* Icon */
+.ch-ico{width:22px;height:22px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.ch-ico .ico-a{stroke:rgba(172,167,159,0.55);fill:none;width:12px;height:12px}
+.ch-ico .ico-c{stroke:var(--gold);fill:none;width:13px;height:13px;display:none}
+.chapter.filled .ico-a{display:none}
+.chapter.filled .ico-c{display:block}
+
+/* ── CTA ── */
+.cta-zone{padding:20px 20px 0;opacity:0;transform:translateY(12px);pointer-events:none;transition:opacity 0.45s ease,transform 0.45s cubic-bezier(0.4,0,0.2,1)}
+.cta-zone.on{opacity:1;transform:translateY(0);pointer-events:auto}
+.btn-book{width:100%;padding:15px 20px;background:transparent;border:0.5px solid rgba(184,153,90,0.38);border-radius:14px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:10px;position:relative;overflow:hidden;transition:border-color 0.22s}
+.btn-book::before{content:'';position:absolute;inset:0;background:linear-gradient(145deg,rgba(184,153,90,0.055),transparent)}
+.btn-book:hover{border-color:rgba(184,153,90,0.60)}
+.btn-book:active{opacity:0.85}
+.btn-book-lbl{font-family:var(--ff-b);font-size:10.5px;font-weight:400;letter-spacing:0.28em;text-transform:uppercase;color:var(--goldb);position:relative}
+.btn-book svg{width:13px;height:13px;stroke:var(--gold);fill:none;stroke-width:1.5;position:relative}
+
+.foot-rule{margin:24px 28px 0;height:0.5px;background:rgba(255,255,255,0.05)}
+.foot-note{padding:10px 28px 36px;font-family:var(--ff-b);font-size:8px;font-weight:300;letter-spacing:0.14em;color:var(--t3);text-align:center}
+
+/* ══════════════════════════════════
+   OVERLAY SYSTEM
+══════════════════════════════════ */
+.ov{position:absolute;inset:0;z-index:60;display:flex;flex-direction:column;justify-content:flex-end;opacity:0;pointer-events:none;transition:opacity 0.28s ease}
+.ov.open{opacity:1;pointer-events:auto}
+.ov-bg{position:absolute;inset:0;background:rgba(6,9,15,0.62);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)}
+.ov-sheet{position:relative;background:var(--bg2);border-radius:24px 24px 0 0;border-top:0.5px solid rgba(184,153,90,0.18);transform:translateY(100%);transition:transform 0.38s cubic-bezier(0.32,0.72,0,1);max-height:88%;overflow-y:auto;scrollbar-width:none;padding-bottom:36px}
+.ov-sheet::-webkit-scrollbar{display:none}
+.ov.open .ov-sheet{transform:translateY(0)}
+.ov-handle{padding:14px 0 0;display:flex;justify-content:center}
+.ov-bar{width:34px;height:3px;background:rgba(255,255,255,0.10);border-radius:2px}
+.ov-hdr{display:flex;align-items:center;justify-content:space-between;padding:18px 24px 4px}
+.ov-hdr-l{display:flex;align-items:baseline;gap:11px}
+.ov-cn{font-family:var(--ff-d);font-size:34px;font-weight:200;font-style:italic;color:var(--gold);line-height:1}
+.ov-cl{font-family:var(--ff-b);font-size:8px;font-weight:400;letter-spacing:0.32em;text-transform:uppercase;color:var(--t1)}
+.ov-x{width:30px;height:30px;background:var(--bg3);border:0.5px solid var(--line);border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0}
+.ov-x svg{width:11px;height:11px;stroke:var(--t2);fill:none;stroke-width:1.8}
+.ov-rule{height:0.5px;background:rgba(184,153,90,0.12);margin:16px 24px 22px}
+.ov-body{padding:0 24px}
+.ov-sep{height:0.5px;background:rgba(255,255,255,0.05);margin:18px 0}
+
+/* ── FORM ── */
+.sf{margin-bottom:18px}
+.sf:last-child{margin-bottom:0}
+.sf>label{display:block;font-family:var(--ff-b);font-size:8px;font-weight:400;letter-spacing:0.26em;text-transform:uppercase;color:var(--t2);margin-bottom:7px}
+.opt-hint{font-family:var(--ff-b);font-size:7.5px;font-weight:300;letter-spacing:0.16em;color:var(--t2);float:right;text-transform:uppercase;opacity:0.7}
+.sf-inp{width:100%;background:var(--bg3);border:0.5px solid rgba(255,255,255,0.07);border-radius:11px;padding:13px 14px;font-family:var(--ff-d);font-size:16px;font-weight:300;color:var(--cream);outline:none;transition:border-color 0.2s;-webkit-appearance:none;color-scheme:dark}
+.sf-inp::placeholder{color:rgba(78,75,71,0.90);font-weight:300}
+.sf-inp:focus{border-color:rgba(184,153,90,0.30)}
+.sf-ta{width:100%;background:var(--bg3);border:0.5px solid rgba(255,255,255,0.07);border-radius:11px;padding:13px 14px;font-family:var(--ff-d);font-size:15px;font-weight:300;color:var(--cream);outline:none;resize:none;transition:border-color 0.2s;color-scheme:dark}
+.sf-ta::placeholder{color:rgba(78,75,71,0.90)}
+.sf-ta:focus{border-color:rgba(184,153,90,0.30)}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+
+/* Route connector in overlay */
+.rc{display:flex;align-items:stretch;gap:14px;margin-bottom:18px}
+.rc-spine{display:flex;flex-direction:column;align-items:center;padding-top:30px;flex-shrink:0}
+.rc-dot-a{width:8px;height:8px;border-radius:50%;background:var(--gold);flex-shrink:0}
+.rc-wire{width:1px;flex:1;background:linear-gradient(180deg,rgba(184,153,90,0.40),rgba(184,153,90,0.14));margin:4px 0}
+.rc-dot-b{width:8px;height:8px;border-radius:50%;border:1.5px solid rgba(184,153,90,0.44);flex-shrink:0}
+.rc-fields{flex:1;display:flex;flex-direction:column;gap:10px}
+.loc-pill{display:flex;align-items:center;gap:10px;background:var(--bg3);border:0.5px solid rgba(255,255,255,0.07);border-radius:11px;padding:13px 14px;cursor:pointer;transition:border-color 0.2s}
+.loc-pill:hover{border-color:rgba(184,153,90,0.24)}
+.loc-dot{width:7px;height:7px;border-radius:50%;background:var(--gold);flex-shrink:0}
+.loc-txt{font-family:var(--ff-d);font-size:16px;font-weight:300;color:var(--cream)}
+
+/* Vehicle type tabs */
+.vtype-tabs{display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;margin-bottom:18px}
+.vtype-tab{padding:11px 8px;background:var(--bg3);border:0.5px solid rgba(255,255,255,0.06);border-radius:10px;cursor:pointer;text-align:center;transition:all 0.2s}
+.vtype-tab.sel{background:rgba(184,153,90,0.06);border-color:rgba(184,153,90,0.32)}
+.vtype-tab:active{opacity:0.8}
+.vtype-tab-ico{width:28px;height:28px;background:var(--bg4);border-radius:7px;margin:0 auto 6px;display:flex;align-items:center;justify-content:center;transition:background 0.2s}
+.vtype-tab.sel .vtype-tab-ico{background:rgba(184,153,90,0.10)}
+.vtype-tab-ico svg{width:14px;height:14px;stroke:var(--t3);fill:none;stroke-width:1.2;transition:stroke 0.2s}
+.vtype-tab.sel .vtype-tab-ico svg{stroke:var(--gold)}
+.vtype-tab-lbl{font-family:var(--ff-b);font-size:9px;font-weight:400;letter-spacing:0.12em;color:var(--t1);transition:color 0.2s}
+.vtype-tab.sel .vtype-tab-lbl{color:var(--cream)}
+.cls-list{display:flex;flex-direction:column;gap:9px}
+.cls-item{display:flex;align-items:center;background:var(--bg3);border:0.5px solid rgba(255,255,255,0.06);border-radius:13px;padding:13px 14px;cursor:pointer;gap:13px;transition:background 0.2s,border-color 0.2s}
+.cls-item.sel{background:rgba(184,153,90,0.05);border-color:rgba(184,153,90,0.32)}
+.cls-item:active{opacity:0.8}
+.cls-ico-wrap{width:36px;height:36px;background:var(--bg4);border-radius:9px;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:background 0.2s}
+.cls-item.sel .cls-ico-wrap{background:rgba(184,153,90,0.10)}
+.cls-ico-wrap svg{width:17px;height:17px;stroke:var(--t3);fill:none;stroke-width:1.2;transition:stroke 0.2s}
+.cls-item.sel .cls-ico-wrap svg{stroke:var(--gold)}
+.cls-meta{flex:1}
+.cls-name{font-family:var(--ff-b);font-size:11px;font-weight:400;color:var(--t1);margin-bottom:2px;transition:color 0.2s}
+.cls-item.sel .cls-name{color:var(--cream)}
+.cls-desc{font-family:var(--ff-b);font-size:8.5px;font-weight:300;color:var(--t2)}
+.cls-right{text-align:right}
+.cls-price{font-family:var(--ff-d);font-size:16px;font-weight:200;color:var(--t2);transition:color 0.2s}
+.cls-item.sel .cls-price{color:var(--goldb)}
+.cls-note{font-family:var(--ff-b);font-size:8px;font-weight:300;color:var(--t3)}
+.price-note{font-family:var(--ff-b);font-size:8px;font-weight:300;color:var(--t3);letter-spacing:0.08em;text-align:center;margin-top:12px}
+
+/* Passenger toggle */
+.who-toggle{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:18px}
+.who-opt{padding:12px;background:var(--bg3);border:0.5px solid rgba(255,255,255,0.06);border-radius:11px;cursor:pointer;text-align:center;transition:all 0.2s}
+.who-opt.sel{background:rgba(184,153,90,0.06);border-color:rgba(184,153,90,0.32)}
+.who-opt:active{opacity:0.8}
+.who-icon{margin:0 auto 6px;width:28px;height:28px;background:var(--bg4);border-radius:7px;display:flex;align-items:center;justify-content:center;transition:background 0.2s}
+.who-icon svg{width:15px;height:15px;stroke:var(--t3);fill:none;stroke-width:1.2;transition:stroke 0.2s}
+.who-opt.sel .who-icon svg{stroke:var(--gold)}
+.who-opt.sel .who-icon{background:rgba(184,153,90,0.10)}
+.who-lbl{font-family:var(--ff-b);font-size:9px;font-weight:400;letter-spacing:0.14em;color:var(--t1);transition:color 0.2s}
+.who-opt.sel .who-lbl{color:var(--cream)}
+.promo-wrap{display:flex;gap:0}
+.promo-wrap .sf-inp{border-radius:11px 0 0 11px;border-right:none;flex:1}
+.promo-apply{padding:0 16px;background:var(--bg3);border:0.5px solid rgba(255,255,255,0.07);border-radius:0 11px 11px 0;cursor:pointer;font-family:var(--ff-b);font-size:9px;font-weight:400;letter-spacing:0.18em;text-transform:uppercase;color:var(--gold);white-space:nowrap;transition:background 0.2s}
+.promo-apply:hover{background:rgba(184,153,90,0.08)}
+
+/* Payment */
+.pay-methods{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:20px}
+.pay-m{padding:15px 10px;background:var(--bg3);border:0.5px solid rgba(255,255,255,0.06);border-radius:13px;cursor:pointer;text-align:center;transition:all 0.2s}
+.pay-m.sel{background:rgba(184,153,90,0.06);border-color:rgba(184,153,90,0.32)}
+.pay-m:active{opacity:0.8}
+.pay-m-icon{width:34px;height:34px;background:var(--bg4);border-radius:8px;margin:0 auto 7px;display:flex;align-items:center;justify-content:center;transition:background 0.2s}
+.pay-m.sel .pay-m-icon{background:rgba(184,153,90,0.10)}
+.pay-m-icon svg{width:16px;height:16px;stroke:var(--t3);fill:none;stroke-width:1.2;transition:stroke 0.2s}
+.pay-m.sel .pay-m-icon svg{stroke:var(--gold)}
+.pay-m-lbl{font-family:var(--ff-b);font-size:10px;font-weight:400;color:var(--t1);transition:color 0.2s}
+.pay-m.sel .pay-m-lbl{color:var(--cream)}
+.saved-card-pill{display:flex;align-items:center;gap:12px;background:var(--bg3);border:0.5px solid rgba(184,153,90,0.16);border-radius:12px;padding:13px 16px;margin-bottom:16px;cursor:pointer;transition:border-color 0.2s}
+.saved-card-pill.active{border-color:rgba(184,153,90,0.38);background:rgba(184,153,90,0.04)}
+.sc-chip{width:28px;height:20px;background:linear-gradient(135deg,rgba(184,153,90,0.28),rgba(184,153,90,0.10));border:0.5px solid rgba(184,153,90,0.28);border-radius:3px;flex-shrink:0}
+.sc-info{flex:1}
+.sc-num{font-family:var(--ff-d);font-size:15px;font-weight:300;color:var(--cream);letter-spacing:0.10em}
+.sc-brand{font-family:var(--ff-b);font-size:8px;font-weight:300;color:var(--t3);letter-spacing:0.12em;text-transform:uppercase;margin-top:2px}
+.sc-check{width:18px;height:18px;display:flex;align-items:center;justify-content:center}
+.sc-check svg{width:14px;height:14px;stroke:var(--gold);fill:none;stroke-width:1.8;display:none}
+.saved-card-pill.active .sc-check svg{display:block}
+.new-card-toggle{font-family:var(--ff-b);font-size:9px;font-weight:300;letter-spacing:0.18em;text-transform:uppercase;color:var(--t3);cursor:pointer;text-align:center;padding:8px 0;transition:color 0.2s}
+.new-card-toggle:hover{color:var(--gold)}
+#new-card-form{display:none}
+#new-card-form.show{display:block}
+
+/* Overlay confirm button */
+.ov-btn{display:block;width:calc(100% - 48px);margin:22px 24px 0;padding:15px;background:transparent;border:0.5px solid rgba(184,153,90,0.36);border-radius:13px;cursor:pointer;font-family:var(--ff-b);font-size:10px;font-weight:400;letter-spacing:0.30em;text-transform:uppercase;color:var(--goldb);position:relative;overflow:hidden;transition:border-color 0.22s}
+.ov-btn::before{content:'';position:absolute;inset:0;background:linear-gradient(145deg,rgba(184,153,90,0.055),transparent)}
+.ov-btn:hover{border-color:rgba(184,153,90,0.58)}
+.ov-btn:active{opacity:0.75}
+
+/* ══════════════════════════════════
+   THANK YOU SCREEN
+══════════════════════════════════ */
+.thank-screen{position:absolute;inset:0;background:var(--bg);z-index:90;overflow-y:auto;scrollbar-width:none;opacity:0;pointer-events:none;transition:opacity 0.55s ease}
+.thank-screen::-webkit-scrollbar{display:none}
+.thank-screen.show{opacity:1;pointer-events:auto}
+.th-inner{min-height:100%;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;padding:72px 28px 48px}
+.th-seal{width:72px;height:72px;border:0.5px solid rgba(184,153,90,0.36);border-radius:50%;display:flex;align-items:center;justify-content:center;position:relative;margin-bottom:26px;flex-shrink:0}
+.th-seal::before{content:'';position:absolute;inset:6px;border:0.5px solid rgba(184,153,90,0.14);border-radius:50%}
+.th-seal svg{width:24px;height:24px;stroke:var(--gold);fill:none;stroke-width:1.2}
+.th-label{font-family:var(--ff-b);font-size:8.5px;font-weight:300;letter-spacing:0.38em;text-transform:uppercase;color:var(--gold);margin-bottom:10px}
+.th-h{font-family:var(--ff-d);font-size:28px;font-weight:200;color:var(--cream);text-align:center;line-height:1.28;margin-bottom:6px}
+.th-h em{font-style:italic;color:var(--gold)}
+.th-sub{font-family:var(--ff-b);font-size:10px;font-weight:300;color:var(--t3);letter-spacing:0.12em;margin-bottom:8px}
+.th-refno{font-family:var(--ff-d);font-size:22px;font-weight:200;color:var(--goldb);letter-spacing:0.16em;margin-bottom:32px}
+.th-card{width:100%;background:var(--bg2);border:0.5px solid var(--line);border-radius:16px;overflow:hidden;margin-bottom:14px}
+.th-card-hdr{padding:11px 18px;border-bottom:0.5px solid var(--line)}
+.th-card-title{font-family:var(--ff-b);font-size:7.5px;font-weight:400;letter-spacing:0.28em;text-transform:uppercase;color:var(--gold)}
+.th-row{display:flex;align-items:flex-start;justify-content:space-between;padding:10px 18px;border-bottom:0.5px solid var(--line)}
+.th-row:last-child{border-bottom:none}
+.th-rk{font-family:var(--ff-b);font-size:8px;font-weight:300;letter-spacing:0.12em;color:var(--t3);padding-top:2px;flex-shrink:0;width:80px}
+.th-rv{font-family:var(--ff-d);font-size:14px;font-weight:300;color:var(--t1);text-align:right;line-height:1.3}
+.th-driver{width:100%;background:var(--bg2);border:0.5px solid var(--line);border-radius:16px;padding:15px 18px;display:flex;align-items:center;gap:14px;margin-bottom:22px}
+.th-drv-av{width:44px;height:44px;border-radius:50%;background:var(--bg3);border:0.5px solid var(--goldbdr);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.th-drv-av svg{width:20px;height:20px;stroke:var(--gold);fill:none;stroke-width:1.2}
+.th-drv-info{flex:1;min-width:0}
+.th-drv-name{font-family:var(--ff-d);font-size:18px;font-weight:300;color:var(--cream)}
+.th-drv-sub{font-family:var(--ff-b);font-size:8.5px;font-weight:300;letter-spacing:0.08em;color:var(--t3);margin-top:2px}
+.th-drv-eta{text-align:right}
+.th-drv-eta-n{font-family:var(--ff-d);font-size:20px;font-weight:200;color:var(--goldb)}
+.th-drv-eta-l{font-family:var(--ff-b);font-size:7.5px;font-weight:300;letter-spacing:0.18em;text-transform:uppercase;color:var(--t3);margin-top:1px}
+.th-drv-rate{display:flex;align-items:center;gap:3px;margin-top:4px;justify-content:flex-end}
+.th-drv-rate svg{width:10px;height:10px;stroke:var(--gold);fill:rgba(184,153,90,0.35);stroke-width:1.5}
+.th-drv-rate span{font-family:var(--ff-d);font-size:13px;font-weight:200;color:var(--gold)}
+.th-back{width:100%;padding:14px;background:transparent;border:0.5px solid rgba(184,153,90,0.24);border-radius:12px;cursor:pointer;font-family:var(--ff-b);font-size:9.5px;font-weight:400;letter-spacing:0.24em;text-transform:uppercase;color:var(--t2);transition:all 0.2s}
+.th-back:hover{border-color:rgba(184,153,90,0.44);color:var(--goldb)}
+</style>
+</head>
+<body>
+<div class="phone">
+  <div class="di"></div>
+
+  <!-- ═══════════════════════════
+       MAIN HUB SCREEN
+  ═══════════════════════════ -->
+  <div class="screen" id="mainscreen">
+
+    <!-- Status bar -->
+    <div class="sbar">
+      <span class="sbar-time">14:28</span>
+      <div class="sbar-r">
+        <svg viewBox="0 0 24 24"><path d="M1 6l5.5 5.5L12 6l5.5 5.5L23 6"/></svg>
+        <svg viewBox="0 0 24 24"><rect x="2" y="10" width="18" height="7" rx="1.5"/><path d="M20 12.5h1a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1h-1"/></svg>
+      </div>
+    </div>
+
+    <!-- Header -->
+    <div class="hdr">
+      <div>
+        <div class="brand-eyebrow">Özel Şoför</div>
+        <div class="brand-title">Rezerv<em>asyon</em></div>
+      </div>
+      <div class="hdr-av">
+        <svg viewBox="0 0 24 24" stroke-width="1.2"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+      </div>
+    </div>
+
+    <!-- ── RESERVATION PREVIEW CARD ── -->
+    <div class="prev-card" id="prev-card">
+      <div class="prev-eyebrow">Rezervasyon Önizleme</div>
+
+      <!-- Route visualization -->
+      <div class="prev-route-wrap">
+        <svg class="prev-route-svg" viewBox="0 0 330 22" preserveAspectRatio="none">
+          <circle cx="11" cy="11" r="5" fill="#B8995A"/>
+          <line id="pv-svg-line" x1="20" y1="11" x2="310" y2="11"
+            stroke="rgba(184,153,90,0.22)" stroke-width="1"
+            stroke-dasharray="7 5"/>
+          <circle id="pv-svg-dotb" cx="319" cy="11" r="5"
+            fill="none" stroke="rgba(184,153,90,0.40)" stroke-width="1.5"/>
+        </svg>
+        <div class="prev-route-labels">
+          <div class="prev-rl-item">
+            <div class="prev-lbl">Kalkış</div>
+            <div class="pv empty" id="pv-from"></div>
+          </div>
+          <div class="prev-rl-item" style="text-align:right">
+            <div class="prev-lbl" style="text-align:right">Varış</div>
+            <div class="pv empty" id="pv-to" style="justify-content:flex-end"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Date/time -->
+      <div style="margin-top:10px">
+        <div class="prev-lbl">Tarih & Saat</div>
+        <div class="pv empty" id="pv-dt"></div>
+      </div>
+
+      <div class="prev-sep"></div>
+
+      <!-- 3-col meta strip -->
+      <div class="prev-meta">
+        <div class="prev-meta-item">
+          <div class="prev-lbl">Araç</div>
+          <div class="pv empty" id="pv-arac"></div>
+        </div>
+        <div class="prev-meta-divider"></div>
+        <div class="prev-meta-item">
+          <div class="prev-lbl">Yolcu</div>
+          <div class="pv empty" id="pv-pax"></div>
+        </div>
+        <div class="prev-meta-divider"></div>
+        <div class="prev-meta-item">
+          <div class="prev-lbl">Ödeme</div>
+          <div class="pv empty" id="pv-pay"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Progress rail -->
+    <div class="prog">
+      <div class="prog-track"><div class="prog-fill" id="prog-fill"></div></div>
+      <div class="prog-meta">
+        <span class="prog-txt">Adım adım doldurun</span>
+        <span class="prog-count"><b id="prog-n">0</b> / 4 tamamlandı</span>
+      </div>
+    </div>
+
+    <!-- Chapters -->
+    <div class="chapters">
+
+      <div class="chapter" id="ch-1" onclick="open_ov('1')">
+        <div class="ch-top">
+          <div class="ch-num">I</div>
+          <div class="ch-ico">
+            <svg class="ico-a" viewBox="0 0 24 24" stroke-width="1.6"><path d="M9 18l6-6-6-6"/></svg>
+            <svg class="ico-c" viewBox="0 0 24 24" stroke-width="1.5"><polyline points="20 6 9 17 4 12"/></svg>
+          </div>
+        </div>
+        <div class="ch-bottom">
+          <div class="ch-label">Rota & Zaman</div>
+          <div class="ch-value" id="v-1">Güzergah ve tarih belirleyin</div>
+        </div>
+      </div>
+
+      <div class="chapter" id="ch-2" onclick="open_ov('2')">
+        <div class="ch-top">
+          <div class="ch-num">II</div>
+          <div class="ch-ico">
+            <svg class="ico-a" viewBox="0 0 24 24" stroke-width="1.6"><path d="M9 18l6-6-6-6"/></svg>
+            <svg class="ico-c" viewBox="0 0 24 24" stroke-width="1.5"><polyline points="20 6 9 17 4 12"/></svg>
+          </div>
+        </div>
+        <div class="ch-bottom">
+          <div class="ch-label">Araç Sınıfı</div>
+          <div class="ch-value" id="v-2">Konfor seviyesi seçin</div>
+        </div>
+      </div>
+
+      <div class="chapter" id="ch-3" onclick="open_ov('3')">
+        <div class="ch-top">
+          <div class="ch-num">III</div>
+          <div class="ch-ico">
+            <svg class="ico-a" viewBox="0 0 24 24" stroke-width="1.6"><path d="M9 18l6-6-6-6"/></svg>
+            <svg class="ico-c" viewBox="0 0 24 24" stroke-width="1.5"><polyline points="20 6 9 17 4 12"/></svg>
+          </div>
+        </div>
+        <div class="ch-bottom">
+          <div class="ch-label">Yolcu Bilgileri</div>
+          <div class="ch-value" id="v-3">Kişi bilgilerini girin</div>
+        </div>
+      </div>
+
+      <div class="chapter" id="ch-4" onclick="open_ov('4')">
+        <div class="ch-top">
+          <div class="ch-num">IV</div>
+          <div class="ch-ico">
+            <svg class="ico-a" viewBox="0 0 24 24" stroke-width="1.6"><path d="M9 18l6-6-6-6"/></svg>
+            <svg class="ico-c" viewBox="0 0 24 24" stroke-width="1.5"><polyline points="20 6 9 17 4 12"/></svg>
+          </div>
+        </div>
+        <div class="ch-bottom">
+          <div class="ch-label">Ödeme</div>
+          <div class="ch-value" id="v-4">Ödeme yöntemi seçin</div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Final CTA -->
+    <div class="cta-zone" id="cta-zone">
+      <button class="btn-book" onclick="show_thank()">
+        <span class="btn-book-lbl">Siparişi Onayla</span>
+        <svg viewBox="0 0 24 24" stroke-width="1.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </button>
+    </div>
+
+    <div class="foot-rule"></div>
+    <div class="foot-note">Pamoox · Özel Şoför Hizmeti · İstanbul</div>
+
+  </div><!-- /screen -->
+
+
+  <!-- ═══════════════════
+       OVERLAY I — ROTA & ZAMAN
+  ═══════════════════ -->
+  <div class="ov" id="ov-1">
+    <div class="ov-bg" onclick="close_ov('1')"></div>
+    <div class="ov-sheet">
+      <div class="ov-handle"><div class="ov-bar"></div></div>
+      <div class="ov-hdr">
+        <div class="ov-hdr-l"><span class="ov-cn">I</span><span class="ov-cl">Rota & Zaman</span></div>
+        <div class="ov-x" onclick="close_ov('1')"><svg viewBox="0 0 24 24" stroke-width="1.8"><path d="M18 6L6 18M6 6l12 12"/></svg></div>
+      </div>
+      <div class="ov-rule"></div>
+      <div class="ov-body">
+        <div class="rc">
+          <div class="rc-spine">
+            <div class="rc-dot-a"></div><div class="rc-wire"></div><div class="rc-dot-b"></div>
+          </div>
+          <div class="rc-fields">
+            <div class="sf" style="margin:0">
+              <label>Kalkış Noktası</label>
+              <div class="loc-pill" onclick="use_loc()">
+                <div class="loc-dot"></div>
+                <span class="loc-txt" id="pickup-lbl">Mevcut konumunuz</span>
+              </div>
+            </div>
+            <div class="sf" style="margin:0">
+              <label>Varış Noktası</label>
+              <input class="sf-inp" id="dest-inp" placeholder="Nereye gidiyorsunuz?" type="text" autocomplete="off">
+            </div>
+          </div>
+        </div>
+        <div class="ov-sep"></div>
+        <div class="row2">
+          <div class="sf"><label>Tarih</label><input class="sf-inp" id="date-inp" type="date" value="2026-04-29"></div>
+          <div class="sf"><label>Saat</label><input class="sf-inp" id="time-inp" type="time" value="14:30"></div>
+        </div>
+      </div>
+      <button class="ov-btn" onclick="confirm(1)">Güzergahı Onayla</button>
+    </div>
+  </div>
+
+
+  <!-- ═══════════════════
+       OVERLAY II — ARAÇ
+  ═══════════════════ -->
+  <div class="ov" id="ov-2">
+    <div class="ov-bg" onclick="close_ov('2')"></div>
+    <div class="ov-sheet">
+      <div class="ov-handle"><div class="ov-bar"></div></div>
+      <div class="ov-hdr">
+        <div class="ov-hdr-l"><span class="ov-cn">II</span><span class="ov-cl">Araç Sınıfı</span></div>
+        <div class="ov-x" onclick="close_ov('2')"><svg viewBox="0 0 24 24" stroke-width="1.8"><path d="M18 6L6 18M6 6l12 12"/></svg></div>
+      </div>
+      <div class="ov-rule"></div>
+      <div class="ov-body">
+        <div class="vtype-tabs">
+          <div class="vtype-tab sel" id="vt-sedan" onclick="set_vtype('sedan')">
+            <div class="vtype-tab-ico"><svg viewBox="0 0 24 24"><path d="M3 13l1.8-6h14.4L21 13"/><rect x="2" y="13" width="20" height="5" rx="2"/><circle cx="6.5" cy="18.5" r="1.5"/><circle cx="17.5" cy="18.5" r="1.5"/></svg></div>
+            <div class="vtype-tab-lbl">Sedan</div>
+          </div>
+          <div class="vtype-tab" id="vt-van" onclick="set_vtype('van')">
+            <div class="vtype-tab-ico"><svg viewBox="0 0 24 24"><rect x="2" y="8" width="20" height="10" rx="2"/><path d="M2 13h20"/><circle cx="6" cy="19" r="1.5"/><circle cx="18" cy="19" r="1.5"/><path d="M14 8V5a1 1 0 0 0-1-1H5a1 1 0 0 0-1 1v3"/></svg></div>
+            <div class="vtype-tab-lbl">Van</div>
+          </div>
+          <div class="vtype-tab" id="vt-suv" onclick="set_vtype('suv')">
+            <div class="vtype-tab-ico"><svg viewBox="0 0 24 24"><path d="M2 13l2-8h16l2 8"/><rect x="2" y="13" width="20" height="5" rx="2"/><circle cx="6.5" cy="18.5" r="1.5"/><circle cx="17.5" cy="18.5" r="1.5"/></svg></div>
+            <div class="vtype-tab-lbl">SUV</div>
+          </div>
+        </div>
+        <div class="cls-list" id="sub-cls-list"></div>
+        <div class="price-note">Rota bilgisine göre tahmini fiyatlardır</div>
+      </div>
+      <button class="ov-btn" onclick="confirm(2)">Aracı Onayla</button>
+    </div>
+  </div>
+
+
+  <!-- ═══════════════════
+       OVERLAY III — YOLCU
+  ═══════════════════ -->
+  <div class="ov" id="ov-3">
+    <div class="ov-bg" onclick="close_ov('3')"></div>
+    <div class="ov-sheet">
+      <div class="ov-handle"><div class="ov-bar"></div></div>
+      <div class="ov-hdr">
+        <div class="ov-hdr-l"><span class="ov-cn">III</span><span class="ov-cl">Yolcu Bilgileri</span></div>
+        <div class="ov-x" onclick="close_ov('3')"><svg viewBox="0 0 24 24" stroke-width="1.8"><path d="M18 6L6 18M6 6l12 12"/></svg></div>
+      </div>
+      <div class="ov-rule"></div>
+      <div class="ov-body">
+        <div class="who-toggle">
+          <div class="who-opt sel" id="who-self" onclick="set_who('self')">
+            <div class="who-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg></div>
+            <div class="who-lbl">Kendim için</div>
+          </div>
+          <div class="who-opt" id="who-other" onclick="set_who('other')">
+            <div class="who-icon"><svg viewBox="0 0 24 24"><circle cx="9" cy="7" r="3.5"/><path d="M2 20c0-3.5 3.1-6 7-6"/><circle cx="17" cy="9" r="3"/><path d="M11 21c0-3 2.7-5 6-5s6 2 6 5"/></svg></div>
+            <div class="who-lbl">Başkası için</div>
+          </div>
+        </div>
+        <div id="pax-fields">
+          <div class="sf"><label>Ad Soyad</label><input class="sf-inp" id="pax-name" value="Şaban Pamuk" placeholder="Ad Soyad"></div>
+          <div class="sf"><label>Telefon</label><input class="sf-inp" id="pax-phone" value="+90 555 123 45 67" placeholder="+90 ___"></div>
+          <div class="sf"><label>E-posta</label><input class="sf-inp" id="pax-email" value="pamuk.saban.ch@gmail.com" placeholder="E-posta"></div>
+        </div>
+        <div class="ov-sep"></div>
+        <div class="sf">
+          <label>Uçuş Numarası<span class="opt-hint">İsteğe bağlı</span></label>
+          <input class="sf-inp" id="flight-inp" placeholder="TK 0042" autocomplete="off">
+        </div>
+        <div class="sf">
+          <label>Şoföre Not<span class="opt-hint">İsteğe bağlı</span></label>
+          <textarea class="sf-ta" rows="2" id="note-inp" placeholder="Özel talepler, bagaj bilgisi…"></textarea>
+        </div>
+        <div class="sf">
+          <label>İndirim Kodu<span class="opt-hint">İsteğe bağlı</span></label>
+          <div class="promo-wrap">
+            <input class="sf-inp" id="promo-inp" placeholder="PMXVIP2026">
+            <button class="promo-apply" onclick="apply_promo()">Uygula</button>
+          </div>
+        </div>
+      </div>
+      <button class="ov-btn" onclick="confirm(3)">Bilgileri Onayla</button>
+    </div>
+  </div>
+
+
+  <!-- ═══════════════════
+       OVERLAY IV — ÖDEME
+  ═══════════════════ -->
+  <div class="ov" id="ov-4">
+    <div class="ov-bg" onclick="close_ov('4')"></div>
+    <div class="ov-sheet">
+      <div class="ov-handle"><div class="ov-bar"></div></div>
+      <div class="ov-hdr">
+        <div class="ov-hdr-l"><span class="ov-cn">IV</span><span class="ov-cl">Ödeme</span></div>
+        <div class="ov-x" onclick="close_ov('4')"><svg viewBox="0 0 24 24" stroke-width="1.8"><path d="M18 6L6 18M6 6l12 12"/></svg></div>
+      </div>
+      <div class="ov-rule"></div>
+      <div class="ov-body">
+        <div class="pay-methods">
+          <div class="pay-m" id="pm-cash" onclick="set_pm('cash')">
+            <div class="pay-m-icon"><svg viewBox="0 0 24 24"><rect x="2" y="6" width="20" height="13" rx="2"/><path d="M2 10h20"/><circle cx="12" cy="15" r="2"/></svg></div>
+            <div class="pay-m-lbl">Nakit</div>
+          </div>
+          <div class="pay-m sel" id="pm-card" onclick="set_pm('card')">
+            <div class="pay-m-icon"><svg viewBox="0 0 24 24"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/><path d="M6 15h4"/></svg></div>
+            <div class="pay-m-lbl">Kart ile Öde</div>
+          </div>
+        </div>
+        <div id="card-section">
+          <div class="saved-card-pill active" id="saved-card-pill" onclick="sel_saved()">
+            <div class="sc-chip"></div>
+            <div class="sc-info">
+              <div class="sc-num">•••• •••• •••• 3901</div>
+              <div class="sc-brand">Visa · Son Kullanma 04/28</div>
+            </div>
+            <div class="sc-check"><svg viewBox="0 0 24 24" stroke-width="1.8"><polyline points="20 6 9 17 4 12"/></svg></div>
+          </div>
+          <div class="new-card-toggle" onclick="toggle_new_card()">+ Yeni kart ekle</div>
+          <div id="new-card-form">
+            <div class="sf" style="margin-top:16px"><label>Kart Numarası</label><input class="sf-inp" placeholder="•••• •••• •••• ••••" type="text" inputmode="numeric"></div>
+            <div class="sf"><label>Kart Üzerindeki İsim</label><input class="sf-inp" placeholder="Ad Soyad"></div>
+            <div class="g2">
+              <div class="sf"><label>Son Kullanma</label><input class="sf-inp" placeholder="AA / YY"></div>
+              <div class="sf"><label>CVV</label><input class="sf-inp" placeholder="•••" type="password" maxlength="4"></div>
+            </div>
+          </div>
+        </div>
+        <div id="cash-section" style="display:none">
+          <div style="background:var(--bg3);border:0.5px solid var(--line);border-radius:12px;padding:16px 18px">
+            <div style="font-family:var(--ff-b);font-size:8.5px;font-weight:300;letter-spacing:0.14em;color:var(--t3);margin-bottom:8px">ÖDEME BİLGİSİ</div>
+            <div style="font-family:var(--ff-d);font-size:15px;font-weight:300;color:var(--t1);line-height:1.5">Ödemenizi seyahat sonunda doğrudan şoförünüze nakit olarak yapabilirsiniz.</div>
+          </div>
+        </div>
+      </div>
+      <button class="ov-btn" id="pay-confirm-btn" onclick="confirm(4)">Ödemeyi Onayla</button>
+    </div>
+  </div>
+
+
+  <!-- ═══════════════════
+       THANK YOU SCREEN
+  ═══════════════════ -->
+  <div class="thank-screen" id="thank-screen">
+    <div class="th-inner">
+      <div class="th-seal"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
+      <div class="th-label">Rezervasyon Alındı</div>
+      <div class="th-h">Teşekkür<br><em>ederiz</em></div>
+      <div class="th-sub">Rezervasyon numaranız</div>
+      <div class="th-refno" id="booking-no">PMX · 2026 · 8472</div>
+      <div class="th-card">
+        <div class="th-card-hdr"><span class="th-card-title">Seyahat Özeti</span></div>
+        <div class="th-row"><span class="th-rk">Güzergah</span><span class="th-rv" id="th-rota">—</span></div>
+        <div class="th-row"><span class="th-rk">Tarih & Saat</span><span class="th-rv" id="th-zaman">—</span></div>
+        <div class="th-row"><span class="th-rk">Araç</span><span class="th-rv" id="th-arac">—</span></div>
+        <div class="th-row"><span class="th-rk">Yolcu</span><span class="th-rv" id="th-pax">—</span></div>
+        <div class="th-row"><span class="th-rk">Ödeme</span><span class="th-rv" id="th-pay">—</span></div>
+      </div>
+      <div class="th-driver">
+        <div class="th-drv-av"><svg viewBox="0 0 24 24" stroke-width="1.2"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg></div>
+        <div class="th-drv-info">
+          <div class="th-drv-name">Thomas Meier</div>
+          <div class="th-drv-sub" id="th-drv-sub">BMW 7 Series · ZH·445·M</div>
+          <div class="th-drv-rate">
+            <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            <span>4.97</span>
+          </div>
+        </div>
+        <div class="th-drv-eta">
+          <div class="th-drv-eta-n">~12 dk</div>
+          <div class="th-drv-eta-l">Tahmini varış</div>
+        </div>
+      </div>
+      <button class="th-back" onclick="back_hub()">Ana Ekrana Dön</button>
+    </div>
+  </div>
+
+</div><!-- /phone -->
+
+<script>
+/* ─── State ─── */
+const done = {1:false,2:false,3:false,4:false};
+let vtype='sedan', vsub='first';
+const vehicleDB={
+  sedan:{
+    business:{name:'Business',       car:'Toyota Camry veya muadili',      price:'₺1.240',eta:'~38 dk',cap:'4 kişi'},
+    exec:    {name:'Business Exec.', car:'Mercedes C-Class veya muadili',  price:'₺1.980',eta:'~38 dk',cap:'4 kişi'},
+    first:   {name:'First Class',    car:'Mercedes S-Class veya muadili',  price:'₺3.120',eta:'~38 dk',cap:'4 kişi'},
+  },
+  van:{
+    business:{name:'Business',       car:'Volkswagen Caravelle veya muad.',price:'₺1.840',eta:'~38 dk',cap:'6 kişi'},
+    exec:    {name:'Business Exec.', car:'Mercedes Vito veya muadili',     price:'₺2.680',eta:'~38 dk',cap:'6 kişi'},
+    first:   {name:'First Class',    car:'Mercedes V-Class veya muadili',  price:'₺4.240',eta:'~38 dk',cap:'7 kişi'},
+  },
+  suv:{
+    business:{name:'Business',       car:'BMW X3 veya muadili',            price:'₺1.640',eta:'~38 dk',cap:'5 kişi'},
+    exec:    {name:'Business Exec.', car:'BMW X5 veya muadili',            price:'₺2.540',eta:'~38 dk',cap:'5 kişi'},
+    first:   {name:'First Class',    car:'Range Rover veya muadili',       price:'₺3.980',eta:'~38 dk',cap:'5 kişi'},
+  }
+};
+let who='self', pm='card', useSavedCard=true, newCardShown=false;
+
+/* ─── Overlay ─── */
+function open_ov(id){document.getElementById('ov-'+id).classList.add('open')}
+function close_ov(id){document.getElementById('ov-'+id).classList.remove('open')}
+
+/* ─── Step I ─── */
+function use_loc(){document.getElementById('pickup-lbl').textContent='Beşiktaş Meydanı, İstanbul'}
+
+/* ─── Step II ─── */
+function render_sub_cls(){
+  const list=document.getElementById('sub-cls-list');
+  const subs=vehicleDB[vtype];
+  const svgInner='<path d="M3 13l1.8-6h14.4L21 13"/><rect x="2" y="13" width="20" height="5" rx="2"/><circle cx="6.5" cy="18.5" r="1.5"/><circle cx="17.5" cy="18.5" r="1.5"/>';
+  list.innerHTML=Object.entries(subs).map(([key,d])=>`
+    <div class="cls-item${key===vsub?' sel':''}" id="cls-${key}" onclick="pick_sub('${key}')">
+      <div class="cls-ico-wrap"><svg viewBox="0 0 24 24">${svgInner}</svg></div>
+      <div class="cls-meta"><div class="cls-name">${d.name}</div><div class="cls-desc">${d.car} · ${d.cap}</div></div>
+      <div class="cls-right"><div class="cls-price">${d.price}</div><div class="cls-note">${d.eta}</div></div>
+    </div>`).join('');
+}
+function set_vtype(t){
+  vtype=t; vsub='first';
+  ['sedan','van','suv'].forEach(v=>document.getElementById('vt-'+v).classList.toggle('sel',v===t));
+  render_sub_cls();
+}
+function pick_sub(key){
+  vsub=key;
+  document.querySelectorAll('#sub-cls-list .cls-item').forEach(el=>el.classList.toggle('sel',el.id==='cls-'+key));
+}
+
+/* ─── Step III ─── */
+function set_who(w){
+  who=w;
+  document.getElementById('who-self').classList.toggle('sel',w==='self');
+  document.getElementById('who-other').classList.toggle('sel',w==='other');
+  if(w==='self'){
+    document.getElementById('pax-name').value='Şaban Pamuk';
+    document.getElementById('pax-phone').value='+90 555 123 45 67';
+    document.getElementById('pax-email').value='pamuk.saban.ch@gmail.com';
+  }else{
+    document.getElementById('pax-name').value='';
+    document.getElementById('pax-phone').value='';
+    document.getElementById('pax-email').value='';
+  }
+}
+function apply_promo(){
+  const v=document.getElementById('promo-inp').value.trim();
+  if(v) document.getElementById('promo-inp').style.borderColor='rgba(184,153,90,0.50)';
+}
+
+/* ─── Step IV ─── */
+function set_pm(m){
+  pm=m;
+  document.getElementById('pm-cash').classList.toggle('sel',m==='cash');
+  document.getElementById('pm-card').classList.toggle('sel',m==='card');
+  document.getElementById('card-section').style.display=m==='card'?'block':'none';
+  document.getElementById('cash-section').style.display=m==='cash'?'block':'none';
+  document.getElementById('pay-confirm-btn').textContent=m==='cash'?'Nakit ile Onayla':'Ödemeyi Onayla';
+}
+function sel_saved(){useSavedCard=true;document.getElementById('saved-card-pill').classList.add('active')}
+function toggle_new_card(){
+  newCardShown=!newCardShown;
+  document.getElementById('new-card-form').classList.toggle('show',newCardShown);
+  if(newCardShown){useSavedCard=false;document.getElementById('saved-card-pill').classList.remove('active')}
+}
+
+/* ─── Preview updater ─── */
+function set_pv(id,text,filled){
+  const el=document.getElementById(id);
+  if(filled){el.textContent=text;el.classList.remove('empty')}
+  else{el.textContent='';el.classList.add('empty')}
+}
+function update_preview(){
+  /* Route & time (Step I) */
+  if(done[1]){
+    const dest=document.getElementById('dest-inp').value.trim()||'Varış belirsiz';
+    const origin=document.getElementById('pickup-lbl').textContent;
+    const from=origin==='Mevcut konumunuz'?'Beşiktaş Meydanı':origin.split(',')[0];
+    set_pv('pv-from',from,true);
+    set_pv('pv-to',dest,true);
+    /* SVG: solid line, filled dest dot */
+    const ln=document.getElementById('pv-svg-line');
+    ln.setAttribute('stroke','#B8995A');
+    ln.setAttribute('stroke-opacity','0.55');
+    ln.removeAttribute('stroke-dasharray');
+    const db=document.getElementById('pv-svg-dotb');
+    db.setAttribute('fill','#B8995A');
+    db.removeAttribute('stroke');
+    /* Date/time */
+    const d=document.getElementById('date-inp').value;
+    const t=document.getElementById('time-inp').value;
+    let ds='—';
+    if(d){const dt=new Date(d+'T00:00:00');ds=dt.toLocaleDateString('tr-TR',{day:'numeric',month:'long'})}
+    set_pv('pv-dt',ds+' · '+t,true);
+  }else{
+    set_pv('pv-from','',false); set_pv('pv-to','',false); set_pv('pv-dt','',false);
+  }
+  /* Vehicle (Step II) */
+  if(done[2]){
+    const vtName={sedan:'Sedan',van:'Van',suv:'SUV'}[vtype];
+    const d=vehicleDB[vtype][vsub];
+    set_pv('pv-arac',vtName+' · '+d.name,true);
+  }else set_pv('pv-arac','',false);
+  /* Passenger (Step III) */
+  if(done[3]){
+    const n=document.getElementById('pax-name').value.trim()||'Yolcu';
+    set_pv('pv-pax',n,true);
+  }else set_pv('pv-pax','',false);
+  /* Payment (Step IV) */
+  if(done[4]){
+    set_pv('pv-pay',pm==='cash'?'Nakit':'Visa •••• 3901',true);
+  }else set_pv('pv-pay','',false);
+  /* Card border */
+  const allDone=Object.values(done).every(Boolean);
+  document.getElementById('prev-card').classList.toggle('complete',allDone);
+}
+
+/* ─── Confirm a chapter ─── */
+function confirm(n){
+  done[n]=true;
+  if(n===1){
+    const dest=document.getElementById('dest-inp').value.trim()||'Varış belirsiz';
+    const origin=document.getElementById('pickup-lbl').textContent;
+    const from=origin==='Mevcut konumunuz'?'Konumunuz':origin.split(',')[0];
+    document.getElementById('v-1').textContent=from+' → '+dest;
+  }else if(n===2){
+    const vtName={sedan:'Sedan',van:'Van',suv:'SUV'}[vtype];
+    const d=vehicleDB[vtype][vsub];
+    document.getElementById('v-2').textContent=vtName+' · '+d.name+' · '+d.price;
+  }else if(n===3){
+    const name=document.getElementById('pax-name').value.trim()||'Yolcu';
+    const for_=who==='self'?'Kendiniz':'Başkası';
+    document.getElementById('v-3').textContent=name+' · '+for_;
+  }else if(n===4){
+    document.getElementById('v-4').textContent=pm==='cash'?'Nakit ödeme':useSavedCard?'Visa •••• 3901':'Yeni kart';
+  }
+  document.getElementById('ch-'+n).classList.add('filled');
+  close_ov(n+'');
+  update_preview();
+  upd_prog();
+}
+
+/* ─── Progress ─── */
+function upd_prog(){
+  const n=Object.values(done).filter(Boolean).length;
+  document.getElementById('prog-fill').style.width=(n/4*100)+'%';
+  document.getElementById('prog-n').textContent=n;
+  document.getElementById('cta-zone').classList.toggle('on',n===4);
+}
+
+/* ─── Thank you ─── */
+function show_thank(){
+  document.getElementById('th-rota').textContent=document.getElementById('v-1').textContent;
+  const d=document.getElementById('date-inp').value;
+  const t=document.getElementById('time-inp').value;
+  let ds='—';
+  if(d){const dt=new Date(d+'T00:00:00');ds=dt.toLocaleDateString('tr-TR',{day:'numeric',month:'long',year:'numeric'})}
+  document.getElementById('th-zaman').textContent=ds+' · '+t;
+  const _d=vehicleDB[vtype][vsub];
+  document.getElementById('th-arac').textContent={sedan:'Sedan',van:'Van',suv:'SUV'}[vtype]+' · '+_d.name+' · '+_d.car;
+  document.getElementById('th-pax').textContent=document.getElementById('pax-name').value.trim()||'Yolcu';
+  document.getElementById('th-pay').textContent=document.getElementById('v-4').textContent;
+  document.getElementById('th-drv-sub').textContent=_d.car.split(' veya')[0]+' · ZH·445·M';
+  const r=Math.floor(1000+Math.random()*8999);
+  document.getElementById('booking-no').textContent='PMX · 2026 · '+r;
+  document.getElementById('thank-screen').classList.add('show');
+}
+function back_hub(){document.getElementById('thank-screen').classList.remove('show')}
+
+/* ─── Init ─── */
+document.addEventListener('DOMContentLoaded',render_sub_cls);
+</script>
+</body>
+</html>
