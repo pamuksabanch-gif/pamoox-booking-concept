@@ -1,0 +1,1005 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Pamoox — Booking · Chrome</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap');
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+
+:root{
+  --phone:#0C0C16;
+  --t1:#EAE6E0;
+  --t2:#9A968E;
+  --t3:#5C5854;
+  --gold:#C49A5A;
+  --ivory:#F2EEE8;
+  --ff-d:'Cormorant Garamond',Georgia,serif;
+  --ff-b:'DM Sans',-apple-system,sans-serif;
+}
+
+/* ─────────── PAGE ─────────── */
+body{
+  min-height:100vh;
+  font-family:var(--ff-b);font-weight:400;color:var(--t1);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  padding:64px 24px 88px;
+  /* 3-tone: white mix + light anthracite + dark anthracite */
+  background:#2C2C3C;
+  background-image:
+    radial-gradient(ellipse 58% 42% at 20% 7%,  rgba(255,255,255,0.130) 0%, transparent 52%),
+    radial-gradient(ellipse 40% 30% at 82% 92%,  rgba(6,6,18,0.38)       0%, transparent 55%),
+    linear-gradient(148deg,
+      #717180 0%,
+      #525264 22%,
+      #343448 48%,
+      #1E1E30 75%,
+      #121220 100%
+    );
+}
+.pg-label{color:var(--t3);font-family:var(--ff-d);font-size:11.5px;letter-spacing:0.28em;text-transform:uppercase;margin-bottom:56px;font-style:italic;opacity:.85;}
+.row{display:flex;gap:48px;align-items:flex-start;justify-content:center;flex-wrap:wrap;}
+.col{display:flex;flex-direction:column;align-items:center;gap:22px;}
+.col-lbl{color:var(--t3);font-size:10px;letter-spacing:0.20em;text-transform:uppercase;font-family:var(--ff-d);font-style:italic;opacity:.8;}
+
+/* ─────────── PHONE FRAME ─────────── */
+.phone{
+  width:356px;height:774px;background:var(--phone);border-radius:54px;
+  border:1.5px solid rgba(255,255,255,0.13);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.18),inset 0 -1px 0 rgba(255,255,255,0.05),
+    0 0 0 1px rgba(0,0,0,0.70),
+    0 36px 96px rgba(0,0,0,0.72),0 12px 32px rgba(0,0,0,0.54),0 4px 10px rgba(0,0,0,0.40);
+  position:relative;overflow:hidden;flex-shrink:0;
+}
+.phone.tl{transform:perspective(1800px) rotateY(3.5deg) rotateX(-0.8deg);}
+.phone.tc{transform:perspective(1800px) rotateY(0);}
+.phone.tr{transform:perspective(1800px) rotateY(-3.5deg) rotateX(-0.8deg);}
+.phone::before{content:'';position:absolute;right:-3px;top:118px;width:3px;height:74px;background:rgba(255,255,255,0.11);border-radius:0 2px 2px 0;box-shadow:0 42px 0 rgba(255,255,255,0.09),0 78px 0 rgba(255,255,255,0.09);}
+.phone::after{content:'';position:absolute;left:-3px;top:150px;width:3px;height:48px;background:rgba(255,255,255,0.11);border-radius:2px 0 0 2px;box-shadow:0 58px 0 rgba(255,255,255,0.09);}
+.island{position:absolute;top:12px;left:50%;transform:translateX(-50%);width:118px;height:34px;background:#050508;border-radius:20px;z-index:20;box-shadow:0 0 0 1.5px rgba(255,255,255,0.08),0 2px 8px rgba(0,0,0,0.6);}
+.gloss{position:absolute;inset:0;border-radius:52px;background:linear-gradient(142deg,rgba(255,255,255,0.044) 0%,transparent 40%,transparent 65%,rgba(0,0,0,0.022) 100%);pointer-events:none;z-index:99;}
+.scrn{
+  position:absolute;inset:0;border-radius:52px;overflow:hidden;
+  display:flex;flex-direction:column;padding-top:58px;
+  /* Zemin: beyaz → açık antrasit → koyu antrasit */
+  background:
+    radial-gradient(ellipse 90% 24% at 50% 0%, rgba(255,255,255,0.18) 0%, transparent 100%),
+    linear-gradient(175deg,
+      #797988 0%,
+      #4E4E60 28%,
+      #2C2C3E 56%,
+      #161624 100%
+    );
+}
+
+/* ═══════════════════════════════════════════════════════
+   PHYSICAL GLASS BUTTON SYSTEM — VIVID
+   Face opacity: 0.22–0.26 (bright)
+   Border-top: 0.48–0.52 (thick bright edge = glass thickness)
+   Inset specular: 0.32–0.40 (strong overhead highlight)
+   Active / green: 0.62–0.72 face opacity (vivid colored glass)
+═══════════════════════════════════════════════════════ */
+
+/* ── PRIMARY chrome glass ── */
+.gc{
+  background:linear-gradient(155deg,
+    rgba(255,255,255,0.28) 0%,rgba(255,255,255,0.16) 34%,
+    rgba(255,255,255,0.06) 55%,rgba(255,255,255,0.02) 100%);
+  backdrop-filter:blur(75px) saturate(130%) brightness(1.18);
+  -webkit-backdrop-filter:blur(75px) saturate(130%) brightness(1.18);
+  border-top:    2.5px solid rgba(0,255,144,0.62);
+  border-left:   2px   solid rgba(0,235,128,0.40);
+  border-right:  1.5px solid rgba(255,255,255,0.06);
+  border-bottom: 1.5px solid rgba(255,255,255,0.04);
+  box-shadow:
+    inset 0  5px  0 rgba(255,255,255,0.420),
+    inset 5px 0   0 rgba(255,255,255,0.210),
+    inset 0 -3px 20px rgba(0,0,0,0.30),
+    inset -2px -2px 0  rgba(0,0,0,0.14),
+    0  1px  3px  rgba(0,0,0,0.58),
+    0  5px 18px  rgba(0,0,0,0.22),
+    0 18px 48px  rgba(0,0,0,0.24),
+    0 36px 80px  rgba(0,0,0,0.14),
+    0  0   8px   rgba(0,200,106,0.10);
+}
+
+/* ── SECONDARY chrome glass ── */
+.gc-s{
+  background:linear-gradient(155deg,
+    rgba(255,255,255,0.20) 0%,rgba(255,255,255,0.11) 37%,
+    rgba(255,255,255,0.04) 57%,rgba(255,255,255,0.01) 100%);
+  backdrop-filter:blur(55px) saturate(130%) brightness(1.16);
+  -webkit-backdrop-filter:blur(55px) saturate(130%) brightness(1.16);
+  border-top:    2px   solid rgba(0,255,140,0.50);
+  border-left:   2px   solid rgba(0,235,126,0.32);
+  border-right:  1px   solid rgba(255,255,255,0.05);
+  border-bottom: 1px   solid rgba(255,255,255,0.03);
+  box-shadow:
+    inset 0  4px  0 rgba(255,255,255,0.340),
+    inset 4px 0   0 rgba(255,255,255,0.170),
+    inset 0 -2px 14px rgba(0,0,0,0.24),
+    inset -1.5px -1.5px 0 rgba(0,0,0,0.10),
+    0  1px  2px  rgba(0,0,0,0.52),
+    0  3px 10px  rgba(0,0,0,0.18),
+    0 10px 28px  rgba(0,0,0,0.20),
+    0 22px 54px  rgba(0,0,0,0.12);
+}
+
+/* ─────────── ANIMATIONS ─────────── */
+@keyframes up{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+.a1{animation:up .52s cubic-bezier(.22,.9,.36,1) .06s both}
+.a2{animation:up .52s cubic-bezier(.22,.9,.36,1) .14s both}
+.a3{animation:up .52s cubic-bezier(.22,.9,.36,1) .22s both}
+.a4{animation:up .52s cubic-bezier(.22,.9,.36,1) .30s both}
+.a5{animation:up .52s cubic-bezier(.22,.9,.36,1) .38s both}
+.a6{animation:up .52s cubic-bezier(.22,.9,.36,1) .46s both}
+@keyframes draw{from{stroke-dashoffset:320}to{stroke-dashoffset:0}}
+@keyframes pulse{0%,100%{opacity:.5}50%{opacity:.9}}
+
+/* ─────────── SCREEN 1 ─────────── */
+.s1{padding:0 18px 0;overflow:hidden;flex:1;display:flex;flex-direction:column;gap:12px;}
+.s1-hdr{display:flex;align-items:center;justify-content:space-between;padding:0 2px;flex-shrink:0;}
+.s1-brand{font-family:var(--ff-d);font-size:26px;font-weight:400;letter-spacing:0.15em;color:var(--gold);text-shadow:0 0 28px rgba(196,154,90,0.26);}
+
+/* Avatar — chrome glass circle */
+.s1-avatar{
+  width:36px;height:36px;border-radius:50%;cursor:pointer;
+  background:linear-gradient(145deg,rgba(255,255,255,0.30) 0%,rgba(255,255,255,0.10) 100%);
+  backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);
+  border-top:  2px   solid rgba(0,252,138,0.48);
+  border-left: 1.5px solid rgba(0,232,124,0.30);
+  border-right:1px   solid rgba(255,255,255,0.06);
+  border-bottom:1px  solid rgba(255,255,255,0.04);
+  box-shadow:inset 0 3px 0 rgba(255,255,255,0.440),inset 2.5px 0 0 rgba(255,255,255,0.220),
+    inset 0 -2px 8px rgba(0,0,0,0.24),
+    0 2px 8px rgba(0,0,0,0.40),0 6px 18px rgba(0,0,0,0.20),0 14px 36px rgba(0,0,0,0.13);
+  display:flex;align-items:center;justify-content:center;transition:transform .18s;
+}
+.s1-avatar:active{transform:scale(0.94);}
+.s1-avatar svg{stroke:var(--t1);fill:none;stroke-width:1.1;width:16px;height:16px;}
+
+/* ─────────── PREVIEW MAP ─────────── */
+.pmap{
+  border-radius:22px;
+  background:linear-gradient(168deg,#0C0C18 0%,#0E0E1E 50%,#0A0A14 100%);
+  border-top:  2.5px solid rgba(255,255,255,0.150);
+  border-left: 2px   solid rgba(255,255,255,0.095);
+  border-right:1.5px solid rgba(255,255,255,0.038);
+  border-bottom:1.5px solid rgba(255,255,255,0.022);
+  box-shadow:
+    inset 0 2.5px 0 rgba(255,255,255,0.095),inset 0 -2px 12px rgba(0,0,0,0.44),
+    0 2px 10px rgba(0,0,0,0.54),0 8px 26px rgba(0,0,0,0.34),0 20px 52px rgba(0,0,0,0.20);
+  overflow:hidden;height:124px;flex-shrink:0;
+}
+.pmap svg{width:100%;height:100%;}
+
+/* ─────────── BOOKING SUMMARY ─────────── */
+.bsc{border-radius:22px;padding:15px 17px 13px;flex-shrink:0;}
+.bsc-rte{display:flex;gap:10px;align-items:stretch;margin-bottom:11px;}
+.bsc-dots{display:flex;flex-direction:column;align-items:center;padding-top:3px;}
+.dot-o{width:6px;height:6px;border-radius:50%;background:var(--t3);flex-shrink:0;}
+.dot-line{width:1px;flex:1;background:linear-gradient(to bottom,var(--t3) 0%,rgba(0,108,62,0.35) 100%);min-height:22px;margin:3px 0;}
+.dot-d{width:6px;height:6px;border-radius:50%;border:1.5px solid rgba(0,130,70,0.70);flex-shrink:0;}
+.bsc-addrs{flex:1;display:flex;flex-direction:column;justify-content:space-between;gap:7px;}
+.bsc-addr-row{display:flex;flex-direction:column;gap:2px;}
+.bsc-addr-lbl{font-size:9px;color:var(--t3);letter-spacing:0.16em;text-transform:uppercase;font-family:var(--ff-d);font-style:italic;}
+.bsc-addr-val{font-size:13.5px;color:var(--t1);font-weight:400;letter-spacing:0.01em;transition:color .25s;}
+.bsc-meta{display:flex;gap:6px;align-items:center;border-top:1px solid rgba(255,255,255,0.068);padding-top:10px;}
+
+/* CHIP — chrome glass pill */
+.bsc-chip{
+  font-size:10.5px;color:rgba(230,242,236,0.86);cursor:pointer;
+  background:linear-gradient(150deg,rgba(255,255,255,0.22) 0%,rgba(255,255,255,0.08) 100%);
+  backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
+  border-top:  2px   solid rgba(0,248,134,0.42);
+  border-left: 1.5px solid rgba(0,228,120,0.26);
+  border-right:1px   solid rgba(255,255,255,0.05);
+  border-bottom:1px  solid rgba(255,255,255,0.03);
+  border-radius:20px;padding:4px 10px;transition:all .22s;
+  box-shadow:inset 0 2.5px 0 rgba(255,255,255,0.380),inset 2px 0 0 rgba(255,255,255,0.190),
+    inset 0 -1.5px 6px rgba(0,0,0,0.20),
+    0 1px 4px rgba(0,0,0,0.34),0 3px 10px rgba(0,0,0,0.16),0 8px 22px rgba(0,0,0,0.11);
+}
+.bsc-fare{margin-left:auto;font-family:var(--ff-d);font-size:17px;color:var(--ivory);font-weight:400;transition:all .25s;}
+
+/* ─────────── STEP GRID 2×2 ─────────── */
+.sgrid{display:grid;grid-template-columns:1fr 1fr;gap:12px;flex-shrink:0;}
+
+/* STEP CARD — chrome glass, green border edges */
+.scard{
+  border-radius:20px;padding:14px 14px 13px;
+  display:flex;flex-direction:column;gap:8px;
+  cursor:pointer;position:relative;overflow:hidden;
+  transition:transform .20s cubic-bezier(.22,.9,.36,1),box-shadow .20s ease;
+  background:linear-gradient(155deg,
+    rgba(255,255,255,0.26) 0%,rgba(255,255,255,0.15) 38%,
+    rgba(255,255,255,0.05) 65%,rgba(255,255,255,0.02) 100%);
+  backdrop-filter:blur(65px) saturate(130%) brightness(1.20);
+  -webkit-backdrop-filter:blur(65px) saturate(130%) brightness(1.20);
+  border-top:    2.5px solid rgba(0,255,144,0.74);
+  border-left:   2px   solid rgba(0,240,130,0.48);
+  border-right:  1.5px solid rgba(255,255,255,0.05);
+  border-bottom: 1.5px solid rgba(255,255,255,0.03);
+  box-shadow:
+    inset 0  5px  0 rgba(255,255,255,0.480),
+    inset 5px 0   0 rgba(255,255,255,0.240),
+    inset 0 -4px 22px rgba(0,0,0,0.26),
+    inset -2px -2px 0  rgba(0,0,0,0.12),
+    0  2px  5px  rgba(0,0,0,0.50),
+    0  6px 20px  rgba(0,0,0,0.22),
+    0 18px 46px  rgba(0,0,0,0.18),
+    0 32px 72px  rgba(0,0,0,0.12),
+    0  0   16px  rgba(0,200,100,0.10);
+}
+/* top-left face sheen */
+.scard::after{content:'';position:absolute;inset:0;
+  background:linear-gradient(128deg,rgba(255,255,255,0.048) 0%,transparent 44%);
+  pointer-events:none;border-radius:inherit;}
+.scard:hover{transform:translateY(-2px);
+  box-shadow:inset 0 4.5px 0 rgba(255,255,255,0.340),inset 4.5px 0 0 rgba(255,255,255,0.170),
+    inset 0 -2px 12px rgba(0,0,0,0.28),
+    0 2px 5px rgba(0,0,0,0.62),0 6px 20px rgba(0,0,0,0.44),
+    0 18px 50px rgba(0,0,0,0.26),0 38px 84px rgba(0,0,0,0.15);}
+.scard:active{transform:scale(0.968) translateY(1px);}
+
+/* Icon tile inside card — chrome glass */
+.scard-ico{
+  width:30px;height:30px;
+  background:linear-gradient(145deg,rgba(255,255,255,0.30) 0%,rgba(255,255,255,0.12) 100%);
+  backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
+  border-top:  2px   solid rgba(0,252,138,0.48);
+  border-left: 1.5px solid rgba(0,232,124,0.30);
+  border-right:1px   solid rgba(255,255,255,0.05);
+  border-bottom:1px  solid rgba(255,255,255,0.03);
+  border-radius:10px;display:flex;align-items:center;justify-content:center;
+  box-shadow:inset 0 3px 0 rgba(255,255,255,0.460),inset 2.5px 0 0 rgba(255,255,255,0.230),
+    inset 0 -2px 8px rgba(0,0,0,0.22),
+    0 1px 4px rgba(0,0,0,0.34),0 3px 10px rgba(0,0,0,0.16),0 8px 20px rgba(0,0,0,0.12);
+}
+.scard-ico svg{stroke:var(--t1);fill:none;stroke-width:1.1;width:13px;height:13px;}
+.scard-ttl{font-size:12.5px;color:var(--t1);font-weight:500;letter-spacing:0.01em;}
+.scard-sub{font-size:10px;color:var(--t3);font-family:var(--ff-d);font-style:italic;transition:color .25s;}
+
+/* Badge — green glass circle */
+.scard-badge{
+  position:absolute;top:11px;right:11px;width:18px;height:18px;border-radius:50%;
+  background:linear-gradient(145deg,rgba(0,140,78,0.28) 0%,rgba(0,104,56,0.14) 100%);
+  border-top:  2px   solid rgba(0,248,134,0.38);
+  border-left: 1.5px solid rgba(0,228,120,0.24);
+  border-right:1px   solid rgba(0,66,34,0.36);
+  border-bottom:1px  solid rgba(0,44,22,0.44);
+  display:flex;align-items:center;justify-content:center;
+  box-shadow:inset 0 2px 0 rgba(0,255,144,0.160),
+    0 1px 3px rgba(0,0,0,0.34),0 3px 8px rgba(0,0,0,0.20);
+}
+.scard-badge svg{stroke:rgba(180,255,210,0.75);fill:none;stroke-width:1.3;width:7px;height:7px;}
+
+/* Done → VIVID green glass badge */
+.scard.done .scard-badge{
+  background:linear-gradient(145deg,rgba(0,138,76,0.68) 0%,rgba(0,106,56,0.48) 100%);
+  border-top-color:  rgba(0,252,138,0.62);
+  border-left-color: rgba(0,232,124,0.40);
+  border-right-color:rgba(0,64,34,0.40);
+  border-bottom-color:rgba(0,44,22,0.48);
+  box-shadow:inset 0 2px 0 rgba(0,255,144,0.22),0 1px 3px rgba(0,0,0,0.28),0 0 10px rgba(0,130,68,0.14);
+}
+.scard.done .scard-badge svg{stroke:rgba(180,255,210,0.92);}
+.scard.done .scard-sub{color:var(--t2);}
+
+/* ─────────── CTA BUTTON — chrome glass, green border ─────────── */
+.cta-btn{
+  border-radius:50px;padding:15px 22px;
+  background:linear-gradient(160deg,rgba(255,255,255,0.28) 0%,rgba(255,255,255,0.16) 42%,rgba(255,255,255,0.06) 100%);
+  backdrop-filter:blur(60px) saturate(130%) brightness(1.22);
+  -webkit-backdrop-filter:blur(60px) saturate(130%) brightness(1.22);
+  border-top:   2.5px solid rgba(0,255,144,0.72);
+  border-left:  2px   solid rgba(0,240,130,0.46);
+  border-right: 1.5px solid rgba(255,255,255,0.05);
+  border-bottom:1.5px solid rgba(255,255,255,0.03);
+  box-shadow:
+    inset 0  5px  0 rgba(255,255,255,0.500),
+    inset 5px 0   0 rgba(255,255,255,0.250),
+    inset 0 -3px 18px rgba(0,0,0,0.18),
+    inset -2px -2px 0  rgba(0,0,0,0.10),
+    0  2px 10px rgba(0,0,0,0.34),
+    0  8px 28px rgba(0,0,0,0.18),
+    0 20px 54px rgba(0,0,0,0.14),
+    0  0   16px rgba(0,200,100,0.10);
+  display:flex;align-items:center;justify-content:center;gap:9px;
+  cursor:pointer;flex-shrink:0;transition:opacity .15s,transform .15s;
+}
+.cta-btn:active{opacity:.88;transform:scale(0.98);}
+.cta-btn span{font-size:14px;color:rgba(230,244,236,0.96);font-weight:400;letter-spacing:0.05em;font-family:var(--ff-d);font-style:italic;}
+.cta-btn svg{stroke:rgba(0,230,120,0.90);fill:none;stroke-width:1.1;width:14px;height:14px;}
+
+.reassure{text-align:center;font-size:10px;color:var(--t3);font-family:var(--ff-d);font-style:italic;letter-spacing:0.06em;padding-bottom:10px;flex-shrink:0;opacity:.75;}
+
+/* ─────────── OVERLAY SYSTEM ─────────── */
+.ov{position:absolute;inset:0;z-index:50;pointer-events:none;border-radius:52px;overflow:hidden;}
+.ov.open{pointer-events:all;}
+.ov-bd{
+  position:absolute;inset:0;
+  background:linear-gradient(to bottom,
+    rgba(10,10,20,0) 0%,rgba(10,10,20,0) 33%,
+    rgba(10,10,20,0.76) 50%,rgba(10,10,20,0.93) 100%);
+  opacity:0;transition:opacity .34s ease;
+}
+.ov.open .ov-bd{opacity:1;}
+
+/* Bottom sheet — dark panel, green top edge */
+.ov-sh{
+  position:absolute;bottom:0;left:0;right:0;
+  background:linear-gradient(178deg,#141E18 0%,#0E1410 100%);
+  border-top:  2.5px solid rgba(0,240,128,0.26);
+  border-left: 1px   solid rgba(0,180,94,0.12);
+  border-right:1px   solid rgba(0,180,94,0.08);
+  border-radius:26px 26px 0 0;
+  padding:0 18px 82px;max-height:68%;overflow-y:auto;
+  transform:translateY(110%);transition:transform .46s cubic-bezier(.22,.9,.36,1);
+  box-shadow:
+    inset 0  4px 0 rgba(0,255,144,0.095),
+    inset 0  1.5px 0 rgba(0,235,128,0.052),
+    0 -8px  38px rgba(0,0,0,0.58),
+    0 -2px  0   rgba(0,200,108,0.055),
+    0 -22px 64px rgba(0,0,0,0.32);
+}
+.ov.open .ov-sh{transform:translateY(0);}
+.ov-sh::-webkit-scrollbar{display:none;}
+
+/* ─────────── FORM STYLES ─────────── */
+.sf-handle{width:32px;height:3px;background:rgba(255,255,255,0.14);border-radius:2px;margin:13px auto 18px;}
+.sf-hdr{display:flex;align-items:center;gap:10px;margin-bottom:17px;padding-bottom:13px;border-bottom:1px solid rgba(255,255,255,0.065);}
+
+/* Form icon — chrome glass tile */
+.sf-hdr-ico{
+  width:30px;height:30px;
+  background:linear-gradient(145deg,rgba(255,255,255,0.28) 0%,rgba(255,255,255,0.10) 100%);
+  backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
+  border-top:  2px   solid rgba(0,252,138,0.46);
+  border-left: 1.5px solid rgba(0,232,124,0.28);
+  border-right:1px   solid rgba(255,255,255,0.05);
+  border-bottom:1px  solid rgba(255,255,255,0.03);
+  border-radius:10px;display:flex;align-items:center;justify-content:center;
+  box-shadow:inset 0 2.5px 0 rgba(255,255,255,0.420),inset 2px 0 0 rgba(255,255,255,0.210),
+    inset 0 -2px 8px rgba(0,0,0,0.22),
+    0 2px 6px rgba(0,0,0,0.34),0 6px 16px rgba(0,0,0,0.16);
+}
+.sf-hdr-ico svg{stroke:var(--t1);fill:none;stroke-width:1.1;width:13px;height:13px;}
+.sf-hdr-ttl{font-family:var(--ff-d);font-size:16px;color:var(--ivory);font-weight:400;letter-spacing:0.07em;font-style:italic;}
+
+/* Close button — chrome glass circle */
+.sf-close{
+  margin-left:auto;width:28px;height:28px;border-radius:50%;cursor:pointer;
+  background:linear-gradient(145deg,rgba(255,255,255,0.24) 0%,rgba(255,255,255,0.08) 100%);
+  border-top:  2px   solid rgba(0,248,134,0.40);
+  border-left: 1.5px solid rgba(0,228,120,0.24);
+  border-right:1px   solid rgba(255,255,255,0.05);
+  border-bottom:1px  solid rgba(255,255,255,0.03);
+  display:flex;align-items:center;justify-content:center;
+  box-shadow:inset 0 2.5px 0 rgba(255,255,255,0.360),inset 2px 0 0 rgba(255,255,255,0.180),
+    inset 0 -1.5px 5px rgba(0,0,0,0.20),
+    0 2px 6px rgba(0,0,0,0.30),0 6px 16px rgba(0,0,0,0.16);
+  transition:transform .15s;
+}
+.sf-close:active{transform:scale(0.92);}
+.sf-close svg{stroke:var(--t2);fill:none;stroke-width:1.2;width:10px;height:10px;}
+
+.sf-f{display:flex;flex-direction:column;gap:5px;margin-bottom:12px;}
+.sf-f label{font-size:9.5px;color:var(--t3);text-transform:uppercase;letter-spacing:0.15em;font-family:var(--ff-d);font-style:italic;}
+.sf-opt{font-size:9px;margin-left:4px;opacity:.65;}
+
+/* Input — CONCAVE/sunken (opposite of raised — contrast with buttons) */
+.sf-inp{
+  background:rgba(0,0,0,0.20);
+  border-top:   1.5px solid rgba(0,0,0,0.28);
+  border-left:  1.5px solid rgba(0,0,0,0.19);
+  border-right: 1px   solid rgba(255,255,255,0.085);
+  border-bottom:1px   solid rgba(255,255,255,0.062);
+  border-radius:13px;padding:11px 14px;
+  color:var(--t1);font-family:var(--ff-b);font-size:13px;font-weight:400;
+  outline:none;width:100%;
+  box-shadow:inset 0  2.5px 10px rgba(0,0,0,0.30),inset 2.5px 0 6px rgba(0,0,0,0.16),
+    inset 0 -1px 0 rgba(255,255,255,0.038),0 1px 0 rgba(255,255,255,0.042);
+  transition:box-shadow .2s,background .2s;
+  -webkit-appearance:none;
+}
+.sf-inp:focus{
+  background:rgba(0,0,0,0.24);
+  box-shadow:inset 0 2.5px 10px rgba(0,0,0,0.34),inset 2.5px 0 6px rgba(0,0,0,0.18),
+    0 0 0 1.5px rgba(0,160,84,0.22),0 0 8px rgba(0,140,72,0.08);
+}
+.sf-inp::placeholder{color:var(--t3);font-size:12.5px;}
+.sf-ta{resize:none;height:64px;line-height:1.55;}
+.sf-row2{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
+
+/* Apply button — chrome glass, green border */
+.sf-apply{
+  width:100%;margin-top:11px;border-radius:50px;padding:14px;
+  background:linear-gradient(160deg,rgba(255,255,255,0.28) 0%,rgba(255,255,255,0.16) 42%,rgba(255,255,255,0.06) 100%);
+  backdrop-filter:blur(60px) saturate(130%) brightness(1.22);
+  -webkit-backdrop-filter:blur(60px) saturate(130%) brightness(1.22);
+  border-top:   2.5px solid rgba(0,255,144,0.72);
+  border-left:  2px   solid rgba(0,240,130,0.46);
+  border-right: 1.5px solid rgba(255,255,255,0.05);
+  border-bottom:1.5px solid rgba(255,255,255,0.03);
+  box-shadow:inset 0 4px 0 rgba(255,255,255,0.480),inset 3.5px 0 0 rgba(255,255,255,0.240),
+    inset 0 -2.5px 14px rgba(0,0,0,0.18),
+    0 2px 8px rgba(0,0,0,0.30),0 8px 24px rgba(0,0,0,0.16),0 18px 48px rgba(0,0,0,0.12);
+  cursor:pointer;font-size:13.5px;color:rgba(230,244,236,0.96);
+  font-family:var(--ff-d);font-style:italic;letter-spacing:0.07em;
+  transition:opacity .15s,transform .15s;
+}
+.sf-apply:active{opacity:.84;transform:scale(0.985);}
+
+/* DATE CHIPS — chrome glass button pills */
+.sf-dates{display:flex;gap:6px;}
+.date-p{
+  flex:1;text-align:center;padding:9px 2px;
+  background:linear-gradient(150deg,rgba(255,255,255,0.20) 0%,rgba(255,255,255,0.07) 100%);
+  backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
+  border-top:  2px   solid rgba(0,246,132,0.38);
+  border-left: 1.5px solid rgba(0,226,118,0.24);
+  border-right:1px   solid rgba(255,255,255,0.04);
+  border-bottom:1px  solid rgba(255,255,255,0.03);
+  border-radius:12px;font-size:10px;color:rgba(210,230,220,0.82);cursor:pointer;
+  font-family:var(--ff-d);font-style:italic;transition:all .2s;line-height:1.25;
+  box-shadow:inset 0 2.5px 0 rgba(255,255,255,0.340),inset 2px 0 0 rgba(255,255,255,0.170),
+    inset 0 -1.5px 6px rgba(0,0,0,0.20),
+    0 1px 4px rgba(0,0,0,0.30),0 3px 9px rgba(0,0,0,0.15),0 8px 22px rgba(0,0,0,0.10);
+}
+/* ACTIVE date — VIVID green glass */
+.date-p.active{
+  background:linear-gradient(150deg,rgba(0,138,78,0.72) 0%,rgba(0,108,60,0.54) 100%);
+  border-top-color:   rgba(0,252,138,0.64);
+  border-left-color:  rgba(0,232,124,0.42);
+  border-right-color: rgba(0,58,30,0.42);
+  border-bottom-color:rgba(0,40,20,0.50);
+  color:rgba(208,255,228,0.96);
+  box-shadow:inset 0 2.5px 0 rgba(0,255,144,0.240),inset 2px 0 0 rgba(0,235,130,0.120),
+    inset 0 -1.5px 6px rgba(0,0,0,0.24),
+    0 1px 4px rgba(0,0,0,0.30),0 0 14px rgba(0,140,72,0.14);
+}
+
+/* CLASS SELECTOR — chrome glass button rows */
+.sf-class-list{display:flex;flex-direction:column;gap:8px;margin-bottom:9px;}
+.cc{
+  display:flex;align-items:center;gap:12px;padding:12px 14px;
+  background:linear-gradient(155deg,rgba(255,255,255,0.22) 0%,rgba(255,255,255,0.10) 37%,rgba(255,255,255,0.03) 100%);
+  backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);
+  border-top:  2px   solid rgba(0,248,134,0.40);
+  border-left: 1.5px solid rgba(0,228,120,0.24);
+  border-right:1px   solid rgba(255,255,255,0.04);
+  border-bottom:1px  solid rgba(255,255,255,0.03);
+  border-radius:15px;cursor:pointer;transition:all .22s;
+  box-shadow:inset 0 3px 0 rgba(255,255,255,0.360),inset 2.5px 0 0 rgba(255,255,255,0.180),
+    inset 0 -2px 10px rgba(0,0,0,0.22),
+    0 1px 5px rgba(0,0,0,0.34),0 4px 14px rgba(0,0,0,0.18),0 12px 32px rgba(0,0,0,0.13);
+}
+.cc:active{transform:scale(0.982);}
+/* ACTIVE class — VIVID green glass button */
+.cc.active{
+  background:linear-gradient(155deg,rgba(0,140,78,0.68) 0%,rgba(0,112,62,0.52) 40%,rgba(0,86,46,0.38) 100%);
+  border-top-color:   rgba(0,252,138,0.60);
+  border-left-color:  rgba(0,232,124,0.38);
+  border-right-color: rgba(0,60,32,0.40);
+  border-bottom-color:rgba(0,40,20,0.48);
+  box-shadow:inset 0 3px 0 rgba(0,255,144,0.220),inset 2.5px 0 0 rgba(0,235,130,0.110),
+    inset 0 -2px 10px rgba(0,0,0,0.26),
+    0 1px 5px rgba(0,0,0,0.34),0 0 22px rgba(0,140,72,0.16);
+}
+
+/* Class icon tile — chrome glass */
+.cc-ico{
+  width:32px;height:32px;
+  background:linear-gradient(145deg,rgba(255,255,255,0.28) 0%,rgba(255,255,255,0.10) 100%);
+  backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+  border-top:  2px   solid rgba(0,252,138,0.46);
+  border-left: 1.5px solid rgba(0,232,124,0.28);
+  border-right:1px   solid rgba(255,255,255,0.05);
+  border-bottom:1px  solid rgba(255,255,255,0.03);
+  border-radius:11px;display:flex;align-items:center;justify-content:center;flex-shrink:0;
+  box-shadow:inset 0 3px 0 rgba(255,255,255,0.420),inset 2.5px 0 0 rgba(255,255,255,0.210),
+    inset 0 -2px 8px rgba(0,0,0,0.22),0 1px 4px rgba(0,0,0,0.32),0 4px 12px rgba(0,0,0,0.16);
+}
+.cc-ico svg{stroke:var(--t1);fill:none;stroke-width:1.1;width:14px;height:14px;}
+.cc.active .cc-ico svg{stroke:rgba(200,255,224,0.92);}
+.cc-info{flex:1;}
+.cc-name{font-size:13px;color:var(--t1);font-weight:500;}
+.cc.active .cc-name{color:rgba(215,255,232,0.94);}
+.cc-desc{font-size:9.5px;color:var(--t3);font-family:var(--ff-d);font-style:italic;margin-top:1px;}
+.cc-p{font-family:var(--ff-d);font-size:15px;color:var(--ivory);font-weight:400;flex-shrink:0;}
+
+/* Payment card visual — chrome glass */
+.card-visual{
+  background:linear-gradient(138deg,rgba(255,255,255,0.26) 0%,rgba(255,255,255,0.12) 60%,rgba(255,255,255,0.03) 100%);
+  backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
+  border-top:  2.5px solid rgba(0,252,138,0.48);
+  border-left: 2px   solid rgba(0,232,124,0.30);
+  border-right:1.5px solid rgba(255,255,255,0.05);
+  border-bottom:1.5px solid rgba(255,255,255,0.03);
+  border-radius:16px;padding:14px 16px;margin-bottom:13px;height:72px;
+  display:flex;flex-direction:column;justify-content:space-between;
+  box-shadow:inset 0 3.5px 0 rgba(255,255,255,0.420),inset 3px 0 0 rgba(255,255,255,0.210),
+    inset 0 -2.5px 12px rgba(0,0,0,0.22),
+    0 2px 8px rgba(0,0,0,0.30),0 8px 24px rgba(0,0,0,0.18),0 18px 44px rgba(0,0,0,0.11);
+}
+.cv-chip{width:24px;height:16px;background:rgba(196,154,90,0.30);border:1px solid rgba(196,154,90,0.44);border-radius:3px;}
+.cv-num{font-family:var(--ff-d);font-size:12.5px;color:var(--t2);letter-spacing:0.14em;transition:color .2s;}
+
+/* ─────────── BOTTOM NAV ─────────── */
+.bnav{
+  height:74px;flex-shrink:0;
+  background:rgba(10,10,18,0.97);
+  backdrop-filter:blur(28px);-webkit-backdrop-filter:blur(28px);
+  border-top:1.5px solid rgba(255,255,255,0.085);
+  display:flex;align-items:center;justify-content:space-around;padding:0 8px 12px;
+}
+.ni{display:flex;flex-direction:column;align-items:center;gap:3px;cursor:pointer;padding:7px 12px;border-radius:14px;transition:all .22s;border:1px solid transparent;}
+.ni:hover{
+  background:linear-gradient(150deg,rgba(255,255,255,0.16) 0%,rgba(255,255,255,0.06) 100%);
+  border-top-color:rgba(0,244,130,0.36);border-left-color:rgba(0,224,116,0.22);
+  box-shadow:inset 0 2px 0 rgba(255,255,255,0.280),0 1px 4px rgba(0,0,0,0.28);
+}
+/* ACTIVE nav — VIVID green glass pill */
+.ni.active{
+  background:linear-gradient(150deg,rgba(0,132,74,0.34) 0%,rgba(0,100,56,0.22) 100%);
+  backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
+  border-top-color:   rgba(0,248,134,0.44);
+  border-left-color:  rgba(0,228,120,0.28);
+  border-right-color: rgba(0,52,28,0.32);
+  border-bottom-color:rgba(0,36,18,0.38);
+  box-shadow:inset 0 2.5px 0 rgba(0,255,144,0.130),inset 2px 0 0 rgba(0,235,130,0.065),
+    inset 0 -1.5px 6px rgba(0,0,0,0.20),
+    0 1px 4px rgba(0,0,0,0.32),0 0 16px rgba(0,120,64,0.12);
+}
+.ni svg{stroke:var(--t3);fill:none;stroke-width:1.1;width:19px;height:19px;transition:stroke .2s;}
+.ni.active svg{stroke:rgba(0,220,118,0.88);}
+.ni-dot{width:3px;height:3px;border-radius:50%;background:transparent;}
+.ni.active .ni-dot{background:rgba(0,200,106,0.70);}
+
+/* ─────────── SCREENS 2 + 3 ─────────── */
+.s2,.s3{padding:0 18px 18px;overflow-y:auto;flex:1;display:flex;flex-direction:column;gap:12px;}
+.s2::-webkit-scrollbar,.s3::-webkit-scrollbar{display:none;}
+.s2-hdr{display:flex;align-items:center;justify-content:space-between;padding:0 2px;}
+
+/* Back button — chrome glass circle */
+.s2-back{
+  width:34px;height:34px;border-radius:50%;cursor:pointer;
+  background:linear-gradient(145deg,rgba(255,255,255,0.28) 0%,rgba(255,255,255,0.10) 100%);
+  backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
+  border-top:  2px   solid rgba(0,250,136,0.46);
+  border-left: 1.5px solid rgba(0,230,122,0.28);
+  border-right:1px   solid rgba(255,255,255,0.05);
+  border-bottom:1px  solid rgba(255,255,255,0.03);
+  display:flex;align-items:center;justify-content:center;
+  box-shadow:inset 0 3px 0 rgba(255,255,255,0.440),inset 2.5px 0 0 rgba(255,255,255,0.220),
+    inset 0 -2px 8px rgba(0,0,0,0.24),
+    0 2px 8px rgba(0,0,0,0.36),0 6px 18px rgba(0,0,0,0.18),0 14px 36px rgba(0,0,0,0.12);
+}
+.s2-back svg{stroke:var(--t1);fill:none;stroke-width:1.1;width:14px;height:14px;}
+.s2-ttl{font-family:var(--ff-d);font-size:17px;color:var(--ivory);font-weight:300;letter-spacing:0.07em;}
+.s2-step{font-size:10px;color:var(--t2);font-family:var(--ff-d);font-style:italic;letter-spacing:0.08em;}
+.msumm{border-radius:15px;padding:10px 13px;display:flex;align-items:center;gap:9px;}
+.msumm-txt{font-size:11.5px;color:var(--t2);}
+.msumm-txt strong{color:var(--t1);font-weight:500;}
+.pdots{display:flex;align-items:center;gap:4px;justify-content:center;padding:2px 0;}
+.pdot{width:6px;height:6px;border-radius:50%;background:var(--t3);transition:all .3s;}
+.pdot.active{width:18px;border-radius:3px;background:rgba(0,180,92,0.72);}
+.pdot.done{background:rgba(255,255,255,0.18);}
+
+.rmap{
+  border-radius:20px;
+  background:linear-gradient(160deg,#0C0C18,#0E0E1E 60%,#0A0A14);
+  border-top:  2.5px solid rgba(255,255,255,0.120);
+  border-left: 2px   solid rgba(255,255,255,0.076);
+  border-right:1.5px solid rgba(255,255,255,0.030);
+  border-bottom:1.5px solid rgba(255,255,255,0.018);
+  box-shadow:inset 0 2px 0 rgba(255,255,255,0.072),inset 0 -1.5px 12px rgba(0,0,0,0.44),
+    0 2px 10px rgba(0,0,0,0.48),0 8px 26px rgba(0,0,0,0.30);
+  overflow:hidden;height:128px;position:relative;
+}
+.rmap svg{width:100%;height:100%;}
+.rmap-lbl-o,.rmap-lbl-d{position:absolute;font-size:9px;color:var(--t2);font-family:var(--ff-d);font-style:italic;letter-spacing:.10em;text-transform:uppercase;}
+.rmap-lbl-o{left:16px;bottom:11px;}
+.rmap-lbl-d{right:16px;bottom:11px;text-align:right;}
+
+.jcard{border-radius:22px;padding:16px 16px 14px;display:flex;flex-direction:column;gap:12px;}
+.jcard-ttl{font-family:var(--ff-d);font-size:13px;color:var(--t2);font-style:italic;letter-spacing:0.05em;border-bottom:1px solid rgba(255,255,255,0.055);padding-bottom:9px;}
+.jrow{display:flex;align-items:flex-start;gap:10px;}
+
+/* Journey row icon — chrome glass tile */
+.jrow-ico{
+  width:28px;height:28px;border-radius:10px;
+  background:linear-gradient(145deg,rgba(255,255,255,0.26) 0%,rgba(255,255,255,0.09) 100%);
+  border-top:  2px   solid rgba(0,250,136,0.44);
+  border-left: 1.5px solid rgba(0,230,122,0.27);
+  border-right:1px   solid rgba(255,255,255,0.05);
+  border-bottom:1px  solid rgba(255,255,255,0.03);
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;
+  box-shadow:inset 0 2.5px 0 rgba(255,255,255,0.400),inset 2px 0 0 rgba(255,255,255,0.200),
+    inset 0 -1.5px 6px rgba(0,0,0,0.22),0 1px 4px rgba(0,0,0,0.32),0 4px 10px rgba(0,0,0,0.16);
+}
+.jrow-ico svg{stroke:var(--t1);fill:none;stroke-width:1.1;width:12px;height:12px;}
+.jrow-content{flex:1;}
+.jrow-lbl{font-size:9px;color:var(--t3);letter-spacing:.14em;text-transform:uppercase;font-family:var(--ff-d);font-style:italic;margin-bottom:2px;}
+.jrow-val{font-size:13px;color:var(--t1);font-weight:400;}
+.jrow-sub{font-size:10.5px;color:var(--t2);font-family:var(--ff-d);font-style:italic;margin-top:2px;}
+
+.msteps{border-radius:14px;overflow:hidden;max-height:0;opacity:0;transition:max-height .4s ease,opacity .3s ease;}
+.msteps.open{max-height:200px;opacity:1;}
+.mstep-row{display:flex;align-items:center;gap:8px;padding:10px 13px;border-bottom:1px solid rgba(255,255,255,0.042);cursor:pointer;}
+.mstep-row:last-child{border-bottom:none;}
+
+/* Step circle — chrome glass */
+.mstep-n{
+  width:20px;height:20px;border-radius:50%;font-size:8.5px;color:rgba(210,228,220,0.82);
+  background:linear-gradient(145deg,rgba(255,255,255,0.22) 0%,rgba(255,255,255,0.08) 100%);
+  border-top:  1.5px solid rgba(0,246,132,0.38);
+  border-left: 1.5px solid rgba(0,226,118,0.23);
+  border-right:1px   solid rgba(255,255,255,0.04);
+  border-bottom:1px  solid rgba(255,255,255,0.03);
+  display:flex;align-items:center;justify-content:center;
+  box-shadow:inset 0 2px 0 rgba(255,255,255,0.320),0 1px 3px rgba(0,0,0,0.28),0 3px 8px rgba(0,0,0,0.14);
+}
+.mstep-txt{font-size:11.5px;color:var(--t2);flex:1;}
+.toggle-steps{display:flex;align-items:center;gap:6px;padding:9px 13px;cursor:pointer;}
+.toggle-steps span{font-size:11px;color:var(--t2);font-family:var(--ff-d);font-style:italic;}
+.toggle-steps svg{stroke:var(--t2);fill:none;stroke-width:1.1;width:11px;height:11px;transition:transform .3s;margin-left:auto;}
+.toggle-steps.open svg{transform:rotate(180deg);}
+
+/* Screen 3 — Confirmation */
+.s3-hdr{display:flex;align-items:center;justify-content:center;padding:4px 0 6px;}
+.s3-ttl{font-family:var(--ff-d);font-size:19px;color:var(--ivory);font-weight:300;letter-spacing:0.09em;font-style:italic;}
+.chk-wrap{display:flex;align-items:center;justify-content:center;padding:4px 0 2px;}
+.chk-ring{
+  width:68px;height:68px;border-radius:50%;
+  border:2px solid rgba(0,200,106,0.50);
+  background:linear-gradient(145deg,rgba(0,140,76,0.16) 0%,rgba(0,100,52,0.08) 100%);
+  box-shadow:inset 0 3px 0 rgba(0,255,144,0.090),inset 0 0 22px rgba(0,130,68,0.12),
+    0 0 0 8px rgba(0,130,68,0.05),0 0 36px rgba(0,140,72,0.10);
+  display:flex;align-items:center;justify-content:center;position:relative;
+}
+.chk-ring::before{content:'';position:absolute;inset:-8px;border-radius:50%;border:1px solid rgba(0,160,84,0.15);}
+.chk-ring svg{stroke:rgba(0,220,116,0.86);fill:none;stroke-width:1.4;width:25px;height:25px;}
+
+.ccard{border-radius:22px;padding:15px 16px 14px;display:flex;flex-direction:column;gap:9px;}
+.ccard-ttl{font-family:var(--ff-d);font-size:10.5px;color:var(--t2);font-style:italic;letter-spacing:.11em;text-transform:uppercase;padding-bottom:9px;border-bottom:1px solid rgba(255,255,255,0.055);}
+.crow{display:flex;align-items:center;justify-content:space-between;padding:1px 0;}
+.crow-lbl{font-size:10.5px;color:var(--t3);font-family:var(--ff-d);font-style:italic;}
+.crow-val{font-size:12.5px;color:var(--t1);font-weight:400;}
+.crow-val.highlight{color:var(--ivory);font-family:var(--ff-d);font-size:16px;font-weight:300;}
+
+.sdone{border-radius:18px;padding:13px 14px;display:flex;flex-direction:column;gap:0;}
+.sdone-ttl{font-size:9.5px;color:var(--t3);font-family:var(--ff-d);font-style:italic;letter-spacing:.12em;text-transform:uppercase;margin-bottom:9px;}
+.sd-row{display:flex;align-items:center;gap:8px;padding:7px 0;border-bottom:1px solid rgba(255,255,255,0.042);}
+.sd-row:last-child{border-bottom:none;}
+
+/* Done check — VIVID green glass circle */
+.sd-chk{
+  width:18px;height:18px;border-radius:50%;
+  background:linear-gradient(145deg,rgba(0,140,78,0.66) 0%,rgba(0,108,58,0.46) 100%);
+  border-top:  2px   solid rgba(0,252,138,0.58);
+  border-left: 1.5px solid rgba(0,232,124,0.36);
+  border-right:1px   solid rgba(0,62,32,0.38);
+  border-bottom:1px  solid rgba(0,42,20,0.46);
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;
+  box-shadow:inset 0 2px 0 rgba(0,255,144,0.200),0 1px 3px rgba(0,0,0,0.28),0 0 8px rgba(0,140,72,0.12);
+}
+.sd-chk svg{stroke:rgba(210,255,228,0.94);fill:none;stroke-width:1.4;width:7px;height:7px;}
+.sd-txt{font-size:11.5px;color:var(--t2);font-weight:400;}
+
+/* Badge — VIVID green glass pill */
+.sd-badge{
+  margin-left:auto;font-size:9px;color:rgba(180,255,210,0.88);
+  background:linear-gradient(150deg,rgba(0,138,78,0.40) 0%,rgba(0,106,56,0.26) 100%);
+  border-top:  1.5px solid rgba(0,252,138,0.44);
+  border-left: 1px   solid rgba(0,232,124,0.28);
+  border-right:1px   solid rgba(0,56,28,0.30);
+  border-bottom:1px  solid rgba(0,38,18,0.36);
+  border-radius:20px;padding:2.5px 8px;font-family:var(--ff-d);font-style:italic;
+  box-shadow:inset 0 1.5px 0 rgba(0,255,144,0.140),0 0 8px rgba(0,140,72,0.08);
+}
+.disclaim{font-size:10px;color:var(--t3);text-align:center;font-family:var(--ff-d);font-style:italic;line-height:1.55;letter-spacing:0.02em;padding:0 8px;opacity:.8;}
+.pg-footer{margin-top:56px;color:var(--t3);font-size:11px;font-family:var(--ff-d);font-style:italic;letter-spacing:.12em;opacity:.7;}
+</style>
+</head>
+<body>
+
+<p class="pg-label">Pamoox · Booking — Chrome</p>
+
+<div class="row">
+
+<!-- ══════════════════════════
+     PHONE 1 — INTERACTIVE
+══════════════════════════ -->
+<div class="col">
+  <span class="col-lbl">Overview</span>
+  <div class="phone tl">
+    <div class="island"></div><div class="gloss"></div>
+    <div class="scrn">
+
+      <div class="s1">
+
+        <div class="s1-hdr a1">
+          <span class="s1-brand">PAMOOX</span>
+          <div class="s1-avatar">
+            <svg viewBox="0 0 16 16"><circle cx="8" cy="5.5" r="2.8"/><path d="M2.5 14c0-3.04 2.46-5.5 5.5-5.5s5.5 2.46 5.5 5.5" stroke-linecap="round"/></svg>
+          </div>
+        </div>
+
+        <!-- Live Preview Map -->
+        <div class="pmap a2">
+          <svg id="pmap-svg" viewBox="0 0 320 124" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <pattern id="pg" width="22" height="22" patternUnits="userSpaceOnUse"><path d="M 22 0 L 0 0 0 22" fill="none" stroke="rgba(255,255,255,0.016)" stroke-width="0.5"/></pattern>
+              <filter id="pglow" x="-28%" y="-28%" width="156%" height="156%"><feGaussianBlur stdDeviation="2.8" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+              <radialGradient id="pgo" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="rgba(255,255,255,0.09)"/><stop offset="100%" stop-color="rgba(255,255,255,0)"/></radialGradient>
+              <radialGradient id="pgd" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="rgba(0,112,62,0.18)"/><stop offset="100%" stop-color="rgba(0,96,57,0)"/></radialGradient>
+            </defs>
+            <rect width="320" height="124" fill="url(#pg)"/>
+            <g stroke="rgba(255,255,255,0.026)" stroke-width="0.5">
+              <line x1="36" y1="22" x2="62" y2="46"/><line x1="62" y1="46" x2="40" y2="76"/><line x1="62" y1="46" x2="94" y2="34"/>
+              <line x1="246" y1="24" x2="272" y2="50"/><line x1="272" y1="50" x2="254" y2="82"/><line x1="272" y1="50" x2="298" y2="36"/>
+            </g>
+            <ellipse cx="56" cy="63" rx="28" ry="20" fill="url(#pgo)" opacity=".65"/>
+            <ellipse cx="254" cy="63" rx="28" ry="20" fill="url(#pgd)" opacity=".80"/>
+            <circle cx="36" cy="22" r="1.2" fill="rgba(255,255,255,0.16)"/>
+            <circle cx="62" cy="46" r=".8" fill="rgba(255,255,255,0.10)"/>
+            <circle cx="40" cy="76" r=".6" fill="rgba(255,255,255,0.08)"/>
+            <circle cx="246" cy="24" r="1.2" fill="rgba(255,255,255,0.13)"/>
+            <circle cx="272" cy="50" r=".8" fill="rgba(255,255,255,0.09)"/>
+            <circle cx="254" cy="82" r=".6" fill="rgba(255,255,255,0.07)"/>
+            <path id="pmap-arc"
+              d="M 56 63 C 102 14, 206 14, 254 63"
+              fill="none" stroke="rgba(0,200,100,0.82)" stroke-width="1.8"
+              stroke-dasharray="4 5" stroke-linecap="round"
+              filter="url(#pglow)"
+              style="stroke-dashoffset:280;animation:draw 1.6s cubic-bezier(.4,0,.2,1) .3s forwards"/>
+            <circle cx="136" cy="33" r="1.3" fill="rgba(0,200,100,0.42)" style="animation:pulse 2.4s ease-in-out 0s infinite"/>
+            <circle cx="174" cy="27" r=".8" fill="rgba(0,200,100,0.30)" style="animation:pulse 2.4s ease-in-out .5s infinite"/>
+            <circle cx="214" cy="35" r="1.0" fill="rgba(0,200,100,0.36)" style="animation:pulse 2.4s ease-in-out 1s infinite"/>
+            <circle cx="56" cy="63" r="4.5" fill="rgba(255,255,255,0.07)" stroke="rgba(255,255,255,0.28)" stroke-width="1"/>
+            <circle cx="56" cy="63" r="2.2" fill="rgba(255,255,255,0.62)"/>
+            <circle cx="254" cy="63" r="5.5" fill="rgba(0,160,80,0.14)" stroke="rgba(0,220,110,0.52)" stroke-width="1.4"/>
+            <circle cx="254" cy="63" r="2.7" fill="rgba(0,220,110,0.80)"/>
+            <text id="pmap-from" x="16" y="116" font-family="'Cormorant Garamond',serif" font-style="italic" font-size="8" fill="rgba(144,140,134,0.82)" letter-spacing="1.1">ZRH · Havalimanı</text>
+            <text id="pmap-to" x="304" y="116" font-family="'Cormorant Garamond',serif" font-style="italic" font-size="8" fill="rgba(144,140,134,0.82)" letter-spacing="1.1" text-anchor="end">Bahnhofstrasse</text>
+          </svg>
+        </div>
+
+        <!-- Booking Summary -->
+        <div class="bsc gc a3">
+          <div class="bsc-rte">
+            <div class="bsc-dots">
+              <div class="dot-o"></div><div class="dot-line"></div><div class="dot-d"></div>
+            </div>
+            <div class="bsc-addrs">
+              <div class="bsc-addr-row">
+                <span class="bsc-addr-lbl">Kalkış</span>
+                <span class="bsc-addr-val" id="disp-from">Zürich Havalimanı</span>
+              </div>
+              <div class="bsc-addr-row">
+                <span class="bsc-addr-lbl">Varış</span>
+                <span class="bsc-addr-val" id="disp-to">Bahnhofstrasse 10</span>
+              </div>
+            </div>
+          </div>
+          <div class="bsc-meta">
+            <span class="bsc-chip" id="disp-date">Paz, 27 Nis</span>
+            <span class="bsc-chip" id="disp-time">14:30</span>
+            <span class="bsc-chip" id="disp-class">VIP</span>
+            <span class="bsc-fare" id="disp-price">CHF 148</span>
+          </div>
+        </div>
+
+        <!-- 2×2 Step Grid -->
+        <div class="sgrid a4">
+          <div class="scard" id="sc-yolcu" onclick="openSheet('yolcu')">
+            <div class="scard-ico"><svg viewBox="0 0 14 14"><circle cx="7" cy="4.2" r="2.4"/><path d="M2 13c0-2.76 2.24-5 5-5s5 2.24 5 5" stroke-linecap="round"/></svg></div>
+            <span class="scard-ttl">Yolcu</span>
+            <span class="scard-sub" id="sc-yolcu-sub">Bilgi ekle</span>
+            <div class="scard-badge"><svg viewBox="0 0 9 9"><path d="M4.5 2v5M2 4.5h5" stroke-linecap="round"/></svg></div>
+          </div>
+          <div class="scard done" id="sc-guzergah" onclick="openSheet('guzergah')">
+            <div class="scard-ico"><svg viewBox="0 0 14 14"><path d="M2 7h10M7.5 3l4 4-4 4" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+            <span class="scard-ttl">Güzergah</span>
+            <span class="scard-sub" id="sc-guzergah-sub">ZRH → Bahnhof</span>
+            <div class="scard-badge"><svg viewBox="0 0 9 9"><path d="M1.5 4.5L3.5 6.5L7.5 2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          </div>
+          <div class="scard" id="sc-sinif" onclick="openSheet('sinif')">
+            <div class="scard-ico"><svg viewBox="0 0 14 14"><rect x="1" y="5" width="12" height="5.5" rx="1.5"/><path d="M3.5 5V4a2 2 0 0 1 7 0v1" stroke-linecap="round"/></svg></div>
+            <span class="scard-ttl">Sınıf</span>
+            <span class="scard-sub" id="sc-sinif-sub">Seçim bekleniyor</span>
+            <div class="scard-badge"><svg viewBox="0 0 9 9"><path d="M4.5 2v5M2 4.5h5" stroke-linecap="round"/></svg></div>
+          </div>
+          <div class="scard" id="sc-odeme" onclick="openSheet('odeme')">
+            <div class="scard-ico"><svg viewBox="0 0 14 14"><rect x="1" y="3.5" width="12" height="7" rx="1.5"/><path d="M1 6.5h12"/><path d="M4 9h2" stroke-linecap="round"/></svg></div>
+            <span class="scard-ttl">Ödeme</span>
+            <span class="scard-sub" id="sc-odeme-sub">Kart ekle</span>
+            <div class="scard-badge"><svg viewBox="0 0 9 9"><path d="M4.5 2v5M2 4.5h5" stroke-linecap="round"/></svg></div>
+          </div>
+        </div>
+
+        <div class="cta-btn a5" onclick="onBook(this)">
+          <span>Rezervasyonu Tamamla</span>
+          <svg viewBox="0 0 15 15"><path d="M3 7.5h9M8 3.5l4 4-4 4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+
+        <p class="reassure a6">Ücretsiz iptal · 24 saat öncesine kadar</p>
+
+      </div>
+
+      <div class="bnav">
+        <div class="ni active"><svg viewBox="0 0 20 20"><path d="M3 9L10 3l7 6v8a1 1 0 01-1 1H4a1 1 0 01-1-1V9z" stroke-linecap="round" stroke-linejoin="round"/></svg><div class="ni-dot"></div></div>
+        <div class="ni"><svg viewBox="0 0 20 20"><circle cx="9" cy="9" r="6"/><path d="M15 15l3 3" stroke-linecap="round"/></svg></div>
+        <div class="ni"><svg viewBox="0 0 20 20"><rect x="3" y="4" width="14" height="12" rx="2"/><path d="M3 8h14M7 4v2M13 4v2" stroke-linecap="round"/></svg></div>
+        <div class="ni"><svg viewBox="0 0 20 20"><path d="M18 14a2 2 0 01-2 2H6l-4 4V6a2 2 0 012-2h12a2 2 0 012 2v8z" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <div class="ni"><svg viewBox="0 0 20 20"><circle cx="10" cy="7" r="3.5"/><path d="M3 18c0-3.87 3.13-7 7-7s7 3.13 7 7" stroke-linecap="round"/></svg></div>
+      </div>
+
+      <div class="ov" id="ov1">
+        <div class="ov-bd" onclick="closeSheet()"></div>
+        <div class="ov-sh" id="ov-sh1"></div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════
+     PHONE 2 — ACTIVE STEP
+══════════════════════════ -->
+<div class="col">
+  <span class="col-lbl">Active Step</span>
+  <div class="phone tc">
+    <div class="island"></div><div class="gloss"></div>
+    <div class="scrn">
+      <div class="s2">
+        <div class="s2-hdr a1">
+          <div class="s2-back"><svg viewBox="0 0 14 14"><path d="M9 2L4.5 7L9 12" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <span class="s2-ttl">Güzergah</span>
+          <span class="s2-step">2 / 4</span>
+        </div>
+        <div class="msumm gc-s a1">
+          <svg viewBox="0 0 14 14" style="stroke:var(--t2);fill:none;stroke-width:1.1;width:13px;height:13px;flex-shrink:0"><path d="M7 2C4.79 2 3 3.79 3 6c0 3 4 7 4 7s4-4 4-7c0-2.21-1.79-4-4-4z"/><circle cx="7" cy="6" r="1.4"/></svg>
+          <span class="msumm-txt"><strong>ZRH</strong> → <strong>Bahnhofstrasse</strong> · Paz, 27 Nis · 14:30</span>
+        </div>
+        <div class="pdots a2">
+          <div class="pdot done"></div><div class="pdot active"></div>
+          <div class="pdot"></div><div class="pdot"></div>
+        </div>
+        <div class="rmap a2">
+          <svg viewBox="0 0 320 128" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <pattern id="rg2" width="26" height="26" patternUnits="userSpaceOnUse"><path d="M 26 0 L 0 0 0 26" fill="none" stroke="rgba(255,255,255,0.018)" stroke-width="0.5"/></pattern>
+              <filter id="rf2" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation="2.4" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+              <radialGradient id="ro2" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="rgba(255,255,255,0.10)"/><stop offset="100%" stop-color="rgba(255,255,255,0)"/></radialGradient>
+              <radialGradient id="rd2" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="rgba(0,200,100,0.18)"/><stop offset="100%" stop-color="rgba(0,140,70,0)"/></radialGradient>
+            </defs>
+            <rect width="320" height="128" fill="url(#rg2)"/>
+            <g stroke="rgba(255,255,255,0.028)" stroke-width="0.5"><line x1="38" y1="26" x2="70" y2="52"/><line x1="70" y1="52" x2="46" y2="84"/><line x1="70" y1="52" x2="108" y2="40"/><line x1="248" y1="34" x2="280" y2="58"/><line x1="280" y1="58" x2="260" y2="92"/><line x1="280" y1="58" x2="306" y2="44"/></g>
+            <ellipse cx="62" cy="65" rx="33" ry="25" fill="url(#ro2)" opacity=".65"/>
+            <ellipse cx="258" cy="65" rx="33" ry="25" fill="url(#rd2)" opacity=".80"/>
+            <circle cx="38" cy="26" r="1.4" fill="rgba(255,255,255,0.18)"/><circle cx="70" cy="52" r=".9" fill="rgba(255,255,255,0.12)"/><circle cx="46" cy="84" r=".7" fill="rgba(255,255,255,0.09)"/>
+            <circle cx="248" cy="34" r="1.4" fill="rgba(255,255,255,0.14)"/><circle cx="280" cy="58" r=".9" fill="rgba(255,255,255,0.10)"/><circle cx="260" cy="92" r=".7" fill="rgba(255,255,255,0.08)"/>
+            <path d="M 62 65 C 108 18, 210 18, 258 65" fill="none" stroke="rgba(0,210,106,0.80)" stroke-width="1.6" stroke-dasharray="4 5" stroke-linecap="round" filter="url(#rf2)" style="stroke-dashoffset:320;animation:draw 1.6s cubic-bezier(.4,0,.2,1) .4s forwards"/>
+            <circle cx="62" cy="65" r="5" fill="rgba(255,255,255,0.07)" stroke="rgba(255,255,255,0.28)" stroke-width="1"/><circle cx="62" cy="65" r="2.4" fill="rgba(255,255,255,0.60)"/>
+            <circle cx="258" cy="65" r="5.5" fill="rgba(0,180,90,0.14)" stroke="rgba(0,230,116,0.52)" stroke-width="1.4"/><circle cx="258" cy="65" r="2.8" fill="rgba(0,228,114,0.82)"/>
+            <circle cx="140" cy="38" r="1.4" fill="rgba(0,210,106,0.42)"/><circle cx="180" cy="32" r=".9" fill="rgba(0,210,106,0.28)"/><circle cx="220" cy="40" r="1.1" fill="rgba(0,210,106,0.35)"/>
+          </svg>
+          <span class="rmap-lbl-o">ZRH · Flughafen</span>
+          <span class="rmap-lbl-d">Bahnhofstrasse</span>
+        </div>
+        <div class="jcard gc a3">
+          <span class="jcard-ttl">Yolculuk detayları</span>
+          <div class="jrow">
+            <div class="jrow-ico"><svg viewBox="0 0 13 13"><path d="M6.5 1C4.29 1 2.5 2.79 2.5 5c0 2.75 4 7 4 7s4-4.25 4-7c0-2.21-1.79-4-4-4z"/><circle cx="6.5" cy="5" r="1.4"/></svg></div>
+            <div class="jrow-content"><div class="jrow-lbl">Kalkış noktası</div><div class="jrow-val">Zürich Havalimanı, T2</div><div class="jrow-sub">Arrivals çıkışı, A kapısı önü</div></div>
+          </div>
+          <div class="jrow">
+            <div class="jrow-ico"><svg viewBox="0 0 13 13"><path d="M6.5 1C4.29 1 2.5 2.79 2.5 5c0 2.75 4 7 4 7s4-4.25 4-7c0-2.21-1.79-4-4-4z"/><circle cx="6.5" cy="5" r="1.4"/></svg></div>
+            <div class="jrow-content"><div class="jrow-lbl">Varış noktası</div><div class="jrow-val">Bahnhofstrasse 10</div><div class="jrow-sub">Ana giriş, portör dahil</div></div>
+          </div>
+          <div class="jrow">
+            <div class="jrow-ico"><svg viewBox="0 0 13 13"><circle cx="6.5" cy="6.5" r="4.5"/><path d="M6.5 3.5v3l2 1.5" stroke-linecap="round"/></svg></div>
+            <div class="jrow-content"><div class="jrow-lbl">Alınış zamanı</div><div class="jrow-val">27 Nisan · 14:30</div><div class="jrow-sub">Pazar günü · yakl. 32 dk</div></div>
+          </div>
+        </div>
+        <div class="gc-s" style="border-radius:14px;overflow:hidden">
+          <div class="toggle-steps" id="tBtn2" onclick="this.classList.toggle('open');document.getElementById('ms2').classList.toggle('open')">
+            <span>Diğer adımlar</span>
+            <svg viewBox="0 0 12 12"><path d="M2 4l4 4 4-4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <div class="msteps" id="ms2">
+            <div class="mstep-row"><div class="mstep-n">3</div><span class="mstep-txt">Araç sınıfı seçimi</span></div>
+            <div class="mstep-row"><div class="mstep-n">4</div><span class="mstep-txt">Ödeme yöntemi</span></div>
+          </div>
+        </div>
+        <div class="cta-btn a5"><span>Devam Et</span><svg viewBox="0 0 15 15"><path d="M3 7.5h9M8 3.5l4 4-4 4" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      </div>
+      <div class="bnav">
+        <div class="ni active"><svg viewBox="0 0 20 20"><path d="M3 9L10 3l7 6v8a1 1 0 01-1 1H4a1 1 0 01-1-1V9z" stroke-linecap="round" stroke-linejoin="round"/></svg><div class="ni-dot"></div></div>
+        <div class="ni"><svg viewBox="0 0 20 20"><circle cx="9" cy="9" r="6"/><path d="M15 15l3 3" stroke-linecap="round"/></svg></div>
+        <div class="ni"><svg viewBox="0 0 20 20"><rect x="3" y="4" width="14" height="12" rx="2"/><path d="M3 8h14M7 4v2M13 4v2" stroke-linecap="round"/></svg></div>
+        <div class="ni"><svg viewBox="0 0 20 20"><path d="M18 14a2 2 0 01-2 2H6l-4 4V6a2 2 0 012-2h12a2 2 0 012 2v8z" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <div class="ni"><svg viewBox="0 0 20 20"><circle cx="10" cy="7" r="3.5"/><path d="M3 18c0-3.87 3.13-7 7-7s7 3.13 7 7" stroke-linecap="round"/></svg></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════
+     PHONE 3 — CONFIRMATION
+══════════════════════════ -->
+<div class="col">
+  <span class="col-lbl">Confirmation</span>
+  <div class="phone tr">
+    <div class="island"></div><div class="gloss"></div>
+    <div class="scrn">
+      <div class="s3">
+        <div class="s3-hdr a1"><span class="s3-ttl">Rezervasyon Onayı</span></div>
+        <div class="chk-wrap a2"><div class="chk-ring"><svg viewBox="0 0 26 26"><path d="M5 13L10.5 18.5L21 8" stroke-linecap="round" stroke-linejoin="round"/></svg></div></div>
+        <div style="text-align:center;padding:0 16px 2px" class="a2"><span style="font-family:var(--ff-d);font-style:italic;font-size:13px;color:var(--t2);letter-spacing:0.04em;line-height:1.6">Rezervasyonunuz alındı.<br>Şoförünüz belirlendi.</span></div>
+        <div class="ccard gc a3">
+          <div class="ccard-ttl">Rezervasyon Özeti</div>
+          <div class="crow"><span class="crow-lbl">Referans</span><span class="crow-val"># PMX-8842</span></div>
+          <div class="crow"><span class="crow-lbl">Güzergah</span><span class="crow-val">ZRH → Bahnhofstr.</span></div>
+          <div class="crow"><span class="crow-lbl">Tarih & Saat</span><span class="crow-val">27 Nis · 14:30</span></div>
+          <div class="crow"><span class="crow-lbl">Araç Sınıfı</span><span class="crow-val">VIP · Mercedes S</span></div>
+          <div class="crow" style="border-top:1px solid rgba(255,255,255,0.052);padding-top:9px;margin-top:3px">
+            <span class="crow-lbl">Toplam Tutar</span><span class="crow-val highlight">CHF 148</span>
+          </div>
+        </div>
+        <div class="sdone gc-s a4">
+          <div class="sdone-ttl">Tamamlanan adımlar</div>
+          <div class="sd-row"><div class="sd-chk"><svg viewBox="0 0 8 8"><path d="M1 4L3 6L7 2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span class="sd-txt">Yolcu bilgileri</span><span class="sd-badge">Onaylandı</span></div>
+          <div class="sd-row"><div class="sd-chk"><svg viewBox="0 0 8 8"><path d="M1 4L3 6L7 2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span class="sd-txt">Güzergah belirlendi</span><span class="sd-badge">Onaylandı</span></div>
+          <div class="sd-row"><div class="sd-chk"><svg viewBox="0 0 8 8"><path d="M1 4L3 6L7 2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span class="sd-txt">VIP sınıfı seçildi</span><span class="sd-badge">Onaylandı</span></div>
+          <div class="sd-row"><div class="sd-chk"><svg viewBox="0 0 8 8"><path d="M1 4L3 6L7 2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span class="sd-txt">Ödeme alındı</span><span class="sd-badge">Onaylandı</span></div>
+        </div>
+        <div class="cta-btn a5"><span>Yolculuğu Takip Et</span><svg viewBox="0 0 15 15"><path d="M7.5 2C4.46 2 2 4.46 2 7.5S4.46 13 7.5 13 13 10.54 13 7.5 10.54 2 7.5 2z"/><path d="M7.5 5v3l2 1.5" stroke-linecap="round"/></svg></div>
+        <p class="disclaim a6">Şoförünüz 30 dk öncesinde bildirim gönderecektir.<br>Destek: +41 44 000 00 00</p>
+      </div>
+      <div class="bnav">
+        <div class="ni"><svg viewBox="0 0 20 20"><path d="M3 9L10 3l7 6v8a1 1 0 01-1 1H4a1 1 0 01-1-1V9z" stroke-linecap="round" stroke-linejoin="round"/></svg><div class="ni-dot"></div></div>
+        <div class="ni"><svg viewBox="0 0 20 20"><circle cx="9" cy="9" r="6"/><path d="M15 15l3 3" stroke-linecap="round"/></svg></div>
+        <div class="ni active"><svg viewBox="0 0 20 20"><rect x="3" y="4" width="14" height="12" rx="2"/><path d="M3 8h14M7 4v2M13 4v2" stroke-linecap="round"/></svg><div class="ni-dot"></div></div>
+        <div class="ni"><svg viewBox="0 0 20 20"><path d="M18 14a2 2 0 01-2 2H6l-4 4V6a2 2 0 012-2h12a2 2 0 012 2v8z" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <div class="ni"><svg viewBox="0 0 20 20"><circle cx="10" cy="7" r="3.5"/><path d="M3 18c0-3.87 3.13-7 7-7s7 3.13 7 7" stroke-linecap="round"/></svg></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</div>
+<p class="pg-footer">Private Chauffeur · Zürich · Est. 2025</p>
+
+<script>
+const state={yolcu:{name:'',phone:'',note:'',done:false},guzergah:{from:'Zürich Havalimanı',to:'Bahnhofstrasse 10',date:'Paz, 27 Nis',time:'14:30',done:true},sinif:{selected:'VIP',price:148,done:false},odeme:{card:'',holder:'',done:false}};
+const formTpl={
+  yolcu:()=>`<div class="sf-handle"></div><div class="sf-hdr"><div class="sf-hdr-ico"><svg viewBox="0 0 13 13"><circle cx="6.5" cy="4" r="2.4"/><path d="M1.5 12c0-2.76 2.24-5 5-5s5 2.24 5 5" stroke-linecap="round"/></svg></div><span class="sf-hdr-ttl">Yolcu Bilgileri</span><div class="sf-close" onclick="closeSheet()"><svg viewBox="0 0 11 11"><path d="M2 2l7 7M9 2l-7 7" stroke-linecap="round"/></svg></div></div><div class="sf-f"><label>Ad Soyad</label><input class="sf-inp" type="text" id="f-name" placeholder="Tam isim" value="${state.yolcu.name}"></div><div class="sf-f"><label>Telefon</label><input class="sf-inp" type="tel" id="f-phone" placeholder="+41 000 000 00 00" value="${state.yolcu.phone}"></div><div class="sf-f"><label>Özel Not <span class="sf-opt">isteğe bağlı</span></label><textarea class="sf-inp sf-ta" id="f-note" placeholder="Şoföre iletmek istediğiniz not…">${state.yolcu.note}</textarea></div><button class="sf-apply" onclick="applySheet('yolcu')">Kaydet</button>`,
+  guzergah:()=>`<div class="sf-handle"></div><div class="sf-hdr"><div class="sf-hdr-ico"><svg viewBox="0 0 13 13"><path d="M2 6.5h9M7.5 2.5l4 4-4 4" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span class="sf-hdr-ttl">Güzergah</span><div class="sf-close" onclick="closeSheet()"><svg viewBox="0 0 11 11"><path d="M2 2l7 7M9 2l-7 7" stroke-linecap="round"/></svg></div></div><div class="sf-f"><label>Kalkış noktası</label><input class="sf-inp" type="text" id="f-from" value="${state.guzergah.from}" oninput="onFromInput()" placeholder="Kalkış adresi"></div><div class="sf-f"><label>Varış noktası</label><input class="sf-inp" type="text" id="f-to" value="${state.guzergah.to}" oninput="onToInput()" placeholder="Varış adresi"></div><div class="sf-f"><label>Tarih</label><div class="sf-dates">${[['Paz·27','Paz, 27 Nis'],['Pzt·28','Pzt, 28 Nis'],['Sal·29','Sal, 29 Nis'],['Çar·30','Çar, 30 Nis'],['Per·1','Per, 1 May']].map(([l,v])=>`<div class="date-p${state.guzergah.date===v?' active':''}" data-date="${v}" onclick="selectDate('${v}')">${l}</div>`).join('')}</div></div><div class="sf-f"><label>Saat</label><input class="sf-inp" type="time" id="f-time" value="${state.guzergah.time}" oninput="onTimeInput()"></div><button class="sf-apply" onclick="applySheet('guzergah')">Güzergahı Kaydet</button>`,
+  sinif:()=>`<div class="sf-handle"></div><div class="sf-hdr"><div class="sf-hdr-ico"><svg viewBox="0 0 13 13"><rect x="1" y="4.5" width="11" height="5.5" rx="1.5"/><path d="M3.5 4.5V3.5a2 2 0 0 1 6 0v1" stroke-linecap="round"/></svg></div><span class="sf-hdr-ttl">Araç Sınıfı</span><div class="sf-close" onclick="closeSheet()"><svg viewBox="0 0 11 11"><path d="M2 2l7 7M9 2l-7 7" stroke-linecap="round"/></svg></div></div><div class="sf-class-list">${[{n:'Standart',p:78,d:'Toyota Camry veya muadili'},{n:'Konfor',p:108,d:'BMW 5 Serisi veya muadili'},{n:'VIP',p:148,d:'Mercedes S-Class veya muadili'}].map(c=>`<div class="cc${state.sinif.selected===c.n?' active':''}" data-name="${c.n}" onclick="selectClass('${c.n}',${c.p})"><div class="cc-ico"><svg viewBox="0 0 14 14"><rect x="1" y="6.5" width="12" height="4.5" rx="1.5"/><path d="M2.5 6.5l2-3.5h5l2 3.5" stroke-linecap="round" stroke-linejoin="round"/><circle cx="4" cy="11" r="1.1"/><circle cx="10" cy="11" r="1.1"/></svg></div><div class="cc-info"><div class="cc-name">${c.n}</div><div class="cc-desc">${c.d}</div></div><div class="cc-p">CHF ${c.p}</div></div>`).join('')}</div><button class="sf-apply" onclick="applySheet('sinif')">Seçimi Onayla</button>`,
+  odeme:()=>`<div class="sf-handle"></div><div class="sf-hdr"><div class="sf-hdr-ico"><svg viewBox="0 0 13 13"><rect x="1" y="3" width="11" height="7" rx="1.5"/><path d="M1 6h11"/><path d="M4 8.5h2" stroke-linecap="round"/></svg></div><span class="sf-hdr-ttl">Ödeme Yöntemi</span><div class="sf-close" onclick="closeSheet()"><svg viewBox="0 0 11 11"><path d="M2 2l7 7M9 2l-7 7" stroke-linecap="round"/></svg></div></div><div class="card-visual"><div class="cv-chip"></div><div class="cv-num" id="cv-num">${state.odeme.card?'•••• •••• •••• '+state.odeme.card.replace(/\s/g,'').slice(-4):'0000  0000  0000  0000'}</div></div><div class="sf-f"><label>Kart Numarası</label><input class="sf-inp" type="text" id="f-card" placeholder="0000  0000  0000  0000" maxlength="19" value="${state.odeme.card}" oninput="formatCard(this)"></div><div class="sf-f"><label>Kart Sahibi</label><input class="sf-inp" type="text" id="f-holder" placeholder="Ad Soyad" value="${state.odeme.holder}"></div><div class="sf-row2"><div class="sf-f"><label>Son Kullanma</label><input class="sf-inp" type="text" id="f-expiry" placeholder="AA/YY" maxlength="5"></div><div class="sf-f"><label>CVV</label><input class="sf-inp" type="text" id="f-cvc" placeholder="000" maxlength="3"></div></div><button class="sf-apply" onclick="applySheet('odeme')">Kartı Kaydet</button>`
+};
+
+function openSheet(t){const sh=document.getElementById('ov-sh1');const ov=document.getElementById('ov1');sh.innerHTML=formTpl[t]();ov.classList.add('open');setTimeout(()=>{const fi=sh.querySelector('input:not([type=time]),textarea');if(fi)fi.focus();},460);}
+function closeSheet(){document.getElementById('ov1').classList.remove('open');}
+function onFromInput(){const v=document.getElementById('f-from')?.value||'';state.guzergah.from=v;document.getElementById('disp-from').textContent=v||'—';document.getElementById('pmap-from').textContent=clip(v,18);animateArc();}
+function onToInput(){const v=document.getElementById('f-to')?.value||'';state.guzergah.to=v;document.getElementById('disp-to').textContent=v||'—';document.getElementById('pmap-to').textContent=clip(v,18);animateArc();}
+function onTimeInput(){const v=document.getElementById('f-time')?.value||'';state.guzergah.time=v;document.getElementById('disp-time').textContent=v;}
+function selectDate(d){state.guzergah.date=d;document.getElementById('disp-date').textContent=d;document.querySelectorAll('.date-p').forEach(p=>p.classList.toggle('active',p.dataset.date===d));}
+function selectClass(n,p){state.sinif.selected=n;state.sinif.price=p;document.getElementById('disp-class').textContent=n;document.getElementById('disp-price').textContent='CHF '+p;document.querySelectorAll('.cc').forEach(c=>c.classList.toggle('active',c.dataset.name===n));}
+function formatCard(input){let v=input.value.replace(/\D/g,'').slice(0,16);v=v.replace(/(.{4})/g,'$1 ').trim();input.value=v;const cv=document.getElementById('cv-num');if(cv)cv.textContent=v||'0000  0000  0000  0000';}
+function applySheet(t){if(t==='yolcu'){const n=document.getElementById('f-name')?.value||'';const p=document.getElementById('f-phone')?.value||'';state.yolcu={name:n,phone:p,note:document.getElementById('f-note')?.value||'',done:!!(n&&p)};if(state.yolcu.done)setCardDone('sc-yolcu',n);}else if(t==='guzergah'){state.guzergah.done=true;setCardDone('sc-guzergah',clip(state.guzergah.from,7)+'→'+clip(state.guzergah.to,7));}else if(t==='sinif'){state.sinif.done=true;setCardDone('sc-sinif',state.sinif.selected+' · CHF '+state.sinif.price);}else if(t==='odeme'){const c=document.getElementById('f-card')?.value||'';const h=document.getElementById('f-holder')?.value||'';state.odeme={card:c,holder:h,done:!!(c.replace(/\s/g,'').length===16&&h)};if(state.odeme.done)setCardDone('sc-odeme','••••'+c.replace(/\s/g,'').slice(-4));}closeSheet();}
+function animateArc(){const a=document.getElementById('pmap-arc');if(!a)return;a.style.animation='none';void a.offsetHeight;a.style.strokeDashoffset='280';a.style.animation='draw 0.7s cubic-bezier(.4,0,.2,1) forwards';}
+function setCardDone(id,sub){const c=document.getElementById(id);if(!c)return;c.classList.add('done');const s=c.querySelector('.scard-sub');if(s)s.textContent=sub;const b=c.querySelector('.scard-badge svg');if(b)b.innerHTML='<path d="M1.5 4.5L3.5 6.5L7.5 2.5" stroke-linecap="round" stroke-linejoin="round"/>';}
+function clip(s,n){return s.length>n?s.slice(0,n)+'…':s;}
+function onBook(btn){const sp=btn.querySelector('span');sp.textContent='Onaylandı ✓';setTimeout(()=>sp.textContent='Rezervasyonu Tamamla',2200);}
+</script>
+</body>
+</html>
