@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="tr">
+<html lang="de">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Pamoox — Özel Şoför Rezervasyonu</title>
+<title>Pamoox — Privatchauffeur</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,200;0,300;0,400;1,200;1,300&family=Jost:wght@200;300;400;500&display=swap" rel="stylesheet">
 <style>
@@ -38,7 +38,7 @@ body{background:#080C15;min-height:100vh;display:flex;align-items:center;justify
 /* ── HEADER ── */
 .hdr{padding:8px 28px 0;display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:18px}
 .brand-eyebrow{font-family:var(--ff-b);font-size:8.5px;font-weight:400;letter-spacing:0.42em;text-transform:uppercase;color:var(--gold);margin-bottom:4px}
-.brand-title{font-family:var(--ff-d);font-size:28px;font-weight:200;color:var(--cream);line-height:1;letter-spacing:0.02em}
+.brand-title{font-family:var(--ff-d);font-size:30px;font-weight:200;color:var(--cream);line-height:1;letter-spacing:0.12em}
 .brand-title em{font-style:italic;color:var(--gold);font-weight:200}
 .hdr-av{width:38px;height:38px;border-radius:50%;background:var(--bg2);border:0.5px solid var(--goldbdr);display:flex;align-items:center;justify-content:center;cursor:pointer;margin-top:2px;flex-shrink:0}
 .hdr-av svg{width:17px;height:17px;stroke:var(--gold);fill:none;stroke-width:1.2}
@@ -359,6 +359,18 @@ body{background:#080C15;min-height:100vh;display:flex;align-items:center;justify
 .th-drv-rate span{font-family:var(--ff-d);font-size:13px;font-weight:200;color:var(--gold)}
 .th-back{width:100%;padding:14px;background:transparent;border:0.5px solid rgba(184,153,90,0.24);border-radius:12px;cursor:pointer;font-family:var(--ff-b);font-size:9.5px;font-weight:400;letter-spacing:0.24em;text-transform:uppercase;color:var(--t2);transition:all 0.2s}
 .th-back:hover{border-color:rgba(184,153,90,0.44);color:var(--goldb)}
+
+/* ── FARE ZONE ── */
+.fare-zone{padding:16px 20px 0;opacity:0;transform:translateY(8px);pointer-events:none;transition:opacity 0.45s ease,transform 0.45s cubic-bezier(0.4,0,0.2,1)}
+.fare-zone.on{opacity:1;transform:translateY(0);pointer-events:auto}
+.fare-strip{background:var(--bg2);border:0.5px solid rgba(184,153,90,0.24);border-radius:16px;padding:16px 20px;display:flex;align-items:center;justify-content:space-between;position:relative;overflow:hidden}
+.fare-strip::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(184,153,90,0.035),transparent)}
+.fare-left{}
+.fare-label{font-family:var(--ff-b);font-size:8px;font-weight:400;letter-spacing:0.30em;text-transform:uppercase;color:var(--gold);margin-bottom:3px}
+.fare-vat{font-family:var(--ff-b);font-size:7.5px;font-weight:300;letter-spacing:0.10em;color:var(--t3)}
+.fare-right{display:flex;align-items:baseline;gap:4px}
+.fare-currency{font-family:var(--ff-d);font-size:16px;font-weight:200;color:rgba(184,153,90,0.65)}
+.fare-num{font-family:var(--ff-d);font-size:30px;font-weight:200;color:var(--cream);letter-spacing:0.02em}
 </style>
 </head>
 <body>
@@ -382,8 +394,8 @@ body{background:#080C15;min-height:100vh;display:flex;align-items:center;justify
     <!-- Header -->
     <div class="hdr">
       <div>
-        <div class="brand-eyebrow">Özel Şoför</div>
-        <div class="brand-title">Rezerv<em>asyon</em></div>
+        <div class="brand-eyebrow">Privatchauffeur · Reservierung</div>
+        <div class="brand-title">PAMO<em>OX</em></div>
       </div>
       <div class="hdr-av">
         <svg viewBox="0 0 24 24" stroke-width="1.2"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
@@ -392,7 +404,7 @@ body{background:#080C15;min-height:100vh;display:flex;align-items:center;justify
 
     <!-- ── RESERVATION PREVIEW CARD ── -->
     <div class="prev-card" id="prev-card">
-      <div class="prev-eyebrow">Rezervasyon Önizleme</div>
+      <div class="prev-eyebrow">Reservierungsübersicht</div>
 
       <!-- Route visualization -->
       <div class="prev-route-wrap">
@@ -406,11 +418,11 @@ body{background:#080C15;min-height:100vh;display:flex;align-items:center;justify
         </svg>
         <div class="prev-route-labels">
           <div class="prev-rl-item">
-            <div class="prev-lbl">Kalkış</div>
+            <div class="prev-lbl">Abfahrt</div>
             <div class="pv empty" id="pv-from"></div>
           </div>
           <div class="prev-rl-item" style="text-align:right">
-            <div class="prev-lbl" style="text-align:right">Varış</div>
+            <div class="prev-lbl" style="text-align:right">Ziel</div>
             <div class="pv empty" id="pv-to" style="justify-content:flex-end"></div>
           </div>
         </div>
@@ -418,7 +430,7 @@ body{background:#080C15;min-height:100vh;display:flex;align-items:center;justify
 
       <!-- Date/time -->
       <div style="margin-top:10px">
-        <div class="prev-lbl">Tarih & Saat</div>
+        <div class="prev-lbl">Datum & Uhrzeit</div>
         <div class="pv empty" id="pv-dt"></div>
       </div>
 
@@ -427,17 +439,17 @@ body{background:#080C15;min-height:100vh;display:flex;align-items:center;justify
       <!-- 3-col meta strip -->
       <div class="prev-meta">
         <div class="prev-meta-item">
-          <div class="prev-lbl">Araç</div>
+          <div class="prev-lbl">Fahrzeug</div>
           <div class="pv empty" id="pv-arac"></div>
         </div>
         <div class="prev-meta-divider"></div>
         <div class="prev-meta-item">
-          <div class="prev-lbl">Yolcu</div>
+          <div class="prev-lbl">Reisender</div>
           <div class="pv empty" id="pv-pax"></div>
         </div>
         <div class="prev-meta-divider"></div>
         <div class="prev-meta-item">
-          <div class="prev-lbl">Ödeme</div>
+          <div class="prev-lbl">Zahlung</div>
           <div class="pv empty" id="pv-pay"></div>
         </div>
       </div>
@@ -447,8 +459,8 @@ body{background:#080C15;min-height:100vh;display:flex;align-items:center;justify
     <div class="prog">
       <div class="prog-track"><div class="prog-fill" id="prog-fill"></div></div>
       <div class="prog-meta">
-        <span class="prog-txt">Adım adım doldurun</span>
-        <span class="prog-count"><b id="prog-n">0</b> / 4 tamamlandı</span>
+        <span class="prog-txt">Schritt für Schritt ausfüllen</span>
+        <span class="prog-count"><b id="prog-n">0</b> / 4 abgeschlossen</span>
       </div>
     </div>
 
@@ -464,8 +476,8 @@ body{background:#080C15;min-height:100vh;display:flex;align-items:center;justify
           </div>
         </div>
         <div class="ch-bottom">
-          <div class="ch-label">Rota & Zaman</div>
-          <div class="ch-value" id="v-1">Güzergah ve tarih belirleyin</div>
+          <div class="ch-label">Route & Zeit</div>
+          <div class="ch-value" id="v-1">Route und Datum wählen</div>
         </div>
       </div>
 
@@ -478,8 +490,8 @@ body{background:#080C15;min-height:100vh;display:flex;align-items:center;justify
           </div>
         </div>
         <div class="ch-bottom">
-          <div class="ch-label">Araç Sınıfı</div>
-          <div class="ch-value" id="v-2">Konfor seviyesi seçin</div>
+          <div class="ch-label">Fahrzeugklasse</div>
+          <div class="ch-value" id="v-2">Komforklasse wählen</div>
         </div>
       </div>
 
@@ -492,8 +504,8 @@ body{background:#080C15;min-height:100vh;display:flex;align-items:center;justify
           </div>
         </div>
         <div class="ch-bottom">
-          <div class="ch-label">Yolcu Bilgileri</div>
-          <div class="ch-value" id="v-3">Kişi bilgilerini girin</div>
+          <div class="ch-label">Reisendaten</div>
+          <div class="ch-value" id="v-3">Personendaten eingeben</div>
         </div>
       </div>
 
@@ -506,23 +518,37 @@ body{background:#080C15;min-height:100vh;display:flex;align-items:center;justify
           </div>
         </div>
         <div class="ch-bottom">
-          <div class="ch-label">Ödeme</div>
-          <div class="ch-value" id="v-4">Ödeme yöntemi seçin</div>
+          <div class="ch-label">Zahlung</div>
+          <div class="ch-value" id="v-4">Zahlungsart wählen</div>
         </div>
       </div>
 
     </div>
 
+    <!-- Fare display -->
+    <div class="fare-zone" id="fare-zone">
+      <div class="fare-strip">
+        <div class="fare-left">
+          <div class="fare-label">Reisegebühr</div>
+          <div class="fare-vat">inkl. 20 % Mehrwertsteuer</div>
+        </div>
+        <div class="fare-right">
+          <span class="fare-currency">₺</span>
+          <span class="fare-num" id="fare-num">—</span>
+        </div>
+      </div>
+    </div>
+
     <!-- Final CTA -->
     <div class="cta-zone" id="cta-zone">
       <button class="btn-book" onclick="show_thank()">
-        <span class="btn-book-lbl">Siparişi Onayla</span>
+        <span class="btn-book-lbl">Fahrt beauftragen</span>
         <svg viewBox="0 0 24 24" stroke-width="1.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
       </button>
     </div>
 
     <div class="foot-rule"></div>
-    <div class="foot-note">Pamoox · Özel Şoför Hizmeti · İstanbul</div>
+    <div class="foot-note">Pamoox · Privatchauffeur · Istanbul</div>
 
   </div><!-- /screen -->
 
@@ -535,7 +561,7 @@ body{background:#080C15;min-height:100vh;display:flex;align-items:center;justify
     <div class="ov-sheet">
       <div class="ov-handle"><div class="ov-bar"></div></div>
       <div class="ov-hdr">
-        <div class="ov-hdr-l"><span class="ov-cn">I</span><span class="ov-cl">Rota & Zaman</span></div>
+        <div class="ov-hdr-l"><span class="ov-cn">I</span><span class="ov-cl">Route & Zeit</span></div>
         <div class="ov-x" onclick="close_ov('1')"><svg viewBox="0 0 24 24" stroke-width="1.8"><path d="M18 6L6 18M6 6l12 12"/></svg></div>
       </div>
       <div class="ov-rule"></div>
@@ -546,25 +572,25 @@ body{background:#080C15;min-height:100vh;display:flex;align-items:center;justify
           </div>
           <div class="rc-fields">
             <div class="sf" style="margin:0">
-              <label>Kalkış Noktası</label>
+              <label>Abfahrtsort</label>
               <div class="loc-pill" onclick="use_loc()">
                 <div class="loc-dot"></div>
-                <span class="loc-txt" id="pickup-lbl">Mevcut konumunuz</span>
+                <span class="loc-txt" id="pickup-lbl">Aktueller Standort</span>
               </div>
             </div>
             <div class="sf" style="margin:0">
-              <label>Varış Noktası</label>
-              <input class="sf-inp" id="dest-inp" placeholder="Nereye gidiyorsunuz?" type="text" autocomplete="off">
+              <label>Zielort</label>
+              <input class="sf-inp" id="dest-inp" placeholder="Wohin fahren Sie?" type="text" autocomplete="off">
             </div>
           </div>
         </div>
         <div class="ov-sep"></div>
         <div class="row2">
-          <div class="sf"><label>Tarih</label><input class="sf-inp" id="date-inp" type="date" value="2026-04-29"></div>
-          <div class="sf"><label>Saat</label><input class="sf-inp" id="time-inp" type="time" value="14:30"></div>
+          <div class="sf"><label>Datum</label><input class="sf-inp" id="date-inp" type="date" value="2026-04-29"></div>
+          <div class="sf"><label>Uhrzeit</label><input class="sf-inp" id="time-inp" type="time" value="14:30"></div>
         </div>
       </div>
-      <button class="ov-btn" onclick="confirm(1)">Güzergahı Onayla</button>
+      <button class="ov-btn" onclick="confirm(1)">Route bestätigen</button>
     </div>
   </div>
 
@@ -577,7 +603,7 @@ body{background:#080C15;min-height:100vh;display:flex;align-items:center;justify
     <div class="ov-sheet">
       <div class="ov-handle"><div class="ov-bar"></div></div>
       <div class="ov-hdr">
-        <div class="ov-hdr-l"><span class="ov-cn">II</span><span class="ov-cl">Araç Sınıfı</span></div>
+        <div class="ov-hdr-l"><span class="ov-cn">II</span><span class="ov-cl">Fahrzeugklasse</span></div>
         <div class="ov-x" onclick="close_ov('2')"><svg viewBox="0 0 24 24" stroke-width="1.8"><path d="M18 6L6 18M6 6l12 12"/></svg></div>
       </div>
       <div class="ov-rule"></div>
@@ -585,7 +611,7 @@ body{background:#080C15;min-height:100vh;display:flex;align-items:center;justify
         <div class="vtype-tabs">
           <div class="vtype-tab sel" id="vt-sedan" onclick="set_vtype('sedan')">
             <div class="vtype-tab-ico"><svg viewBox="0 0 24 24"><path d="M3 13l1.8-6h14.4L21 13"/><rect x="2" y="13" width="20" height="5" rx="2"/><circle cx="6.5" cy="18.5" r="1.5"/><circle cx="17.5" cy="18.5" r="1.5"/></svg></div>
-            <div class="vtype-tab-lbl">Sedan</div>
+            <div class="vtype-tab-lbl">Limousine</div>
           </div>
           <div class="vtype-tab" id="vt-van" onclick="set_vtype('van')">
             <div class="vtype-tab-ico"><svg viewBox="0 0 24 24"><rect x="2" y="8" width="20" height="10" rx="2"/><path d="M2 13h20"/><circle cx="6" cy="19" r="1.5"/><circle cx="18" cy="19" r="1.5"/><path d="M14 8V5a1 1 0 0 0-1-1H5a1 1 0 0 0-1 1v3"/></svg></div>
@@ -597,9 +623,9 @@ body{background:#080C15;min-height:100vh;display:flex;align-items:center;justify
           </div>
         </div>
         <div class="cls-list" id="sub-cls-list"></div>
-        <div class="price-note">Rota bilgisine göre tahmini fiyatlardır</div>
+        <div class="price-note">Geschätzte Preise auf Basis der Route</div>
       </div>
-      <button class="ov-btn" onclick="confirm(2)">Aracı Onayla</button>
+      <button class="ov-btn" onclick="confirm(2)">Fahrzeug bestätigen</button>
     </div>
   </div>
 
@@ -612,7 +638,7 @@ body{background:#080C15;min-height:100vh;display:flex;align-items:center;justify
     <div class="ov-sheet">
       <div class="ov-handle"><div class="ov-bar"></div></div>
       <div class="ov-hdr">
-        <div class="ov-hdr-l"><span class="ov-cn">III</span><span class="ov-cl">Yolcu Bilgileri</span></div>
+        <div class="ov-hdr-l"><span class="ov-cn">III</span><span class="ov-cl">Reisendaten</span></div>
         <div class="ov-x" onclick="close_ov('3')"><svg viewBox="0 0 24 24" stroke-width="1.8"><path d="M18 6L6 18M6 6l12 12"/></svg></div>
       </div>
       <div class="ov-rule"></div>
@@ -620,36 +646,36 @@ body{background:#080C15;min-height:100vh;display:flex;align-items:center;justify
         <div class="who-toggle">
           <div class="who-opt sel" id="who-self" onclick="set_who('self')">
             <div class="who-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg></div>
-            <div class="who-lbl">Kendim için</div>
+            <div class="who-lbl">Für mich</div>
           </div>
           <div class="who-opt" id="who-other" onclick="set_who('other')">
             <div class="who-icon"><svg viewBox="0 0 24 24"><circle cx="9" cy="7" r="3.5"/><path d="M2 20c0-3.5 3.1-6 7-6"/><circle cx="17" cy="9" r="3"/><path d="M11 21c0-3 2.7-5 6-5s6 2 6 5"/></svg></div>
-            <div class="who-lbl">Başkası için</div>
+            <div class="who-lbl">Für Dritte</div>
           </div>
         </div>
         <div id="pax-fields">
-          <div class="sf"><label>Ad Soyad</label><input class="sf-inp" id="pax-name" value="Şaban Pamuk" placeholder="Ad Soyad"></div>
+          <div class="sf"><label>Name</label><input class="sf-inp" id="pax-name" value="Şaban Pamuk" placeholder="Vor- und Nachname"></div>
           <div class="sf"><label>Telefon</label><input class="sf-inp" id="pax-phone" value="+90 555 123 45 67" placeholder="+90 ___"></div>
-          <div class="sf"><label>E-posta</label><input class="sf-inp" id="pax-email" value="pamuk.saban.ch@gmail.com" placeholder="E-posta"></div>
+          <div class="sf"><label>E-Mail</label><input class="sf-inp" id="pax-email" value="pamuk.saban.ch@gmail.com" placeholder="E-Mail-Adresse"></div>
         </div>
         <div class="ov-sep"></div>
         <div class="sf">
-          <label>Uçuş Numarası<span class="opt-hint">İsteğe bağlı</span></label>
+          <label>Flugnummer<span class="opt-hint">Optional</span></label>
           <input class="sf-inp" id="flight-inp" placeholder="TK 0042" autocomplete="off">
         </div>
         <div class="sf">
-          <label>Şoföre Not<span class="opt-hint">İsteğe bağlı</span></label>
-          <textarea class="sf-ta" rows="2" id="note-inp" placeholder="Özel talepler, bagaj bilgisi…"></textarea>
+          <label>Notiz für den Fahrer<span class="opt-hint">Optional</span></label>
+          <textarea class="sf-ta" rows="2" id="note-inp" placeholder="Besondere Wünsche, Gepäckinfo…"></textarea>
         </div>
         <div class="sf">
-          <label>İndirim Kodu<span class="opt-hint">İsteğe bağlı</span></label>
+          <label>Rabattcode<span class="opt-hint">Optional</span></label>
           <div class="promo-wrap">
             <input class="sf-inp" id="promo-inp" placeholder="PMXVIP2026">
-            <button class="promo-apply" onclick="apply_promo()">Uygula</button>
+            <button class="promo-apply" onclick="apply_promo()">Einlösen</button>
           </div>
         </div>
       </div>
-      <button class="ov-btn" onclick="confirm(3)">Bilgileri Onayla</button>
+      <button class="ov-btn" onclick="confirm(3)">Daten bestätigen</button>
     </div>
   </div>
 
@@ -662,7 +688,7 @@ body{background:#080C15;min-height:100vh;display:flex;align-items:center;justify
     <div class="ov-sheet">
       <div class="ov-handle"><div class="ov-bar"></div></div>
       <div class="ov-hdr">
-        <div class="ov-hdr-l"><span class="ov-cn">IV</span><span class="ov-cl">Ödeme</span></div>
+        <div class="ov-hdr-l"><span class="ov-cn">IV</span><span class="ov-cl">Zahlung</span></div>
         <div class="ov-x" onclick="close_ov('4')"><svg viewBox="0 0 24 24" stroke-width="1.8"><path d="M18 6L6 18M6 6l12 12"/></svg></div>
       </div>
       <div class="ov-rule"></div>
@@ -670,11 +696,11 @@ body{background:#080C15;min-height:100vh;display:flex;align-items:center;justify
         <div class="pay-methods">
           <div class="pay-m" id="pm-cash" onclick="set_pm('cash')">
             <div class="pay-m-icon"><svg viewBox="0 0 24 24"><rect x="2" y="6" width="20" height="13" rx="2"/><path d="M2 10h20"/><circle cx="12" cy="15" r="2"/></svg></div>
-            <div class="pay-m-lbl">Nakit</div>
+            <div class="pay-m-lbl">Barzahlung</div>
           </div>
           <div class="pay-m sel" id="pm-card" onclick="set_pm('card')">
             <div class="pay-m-icon"><svg viewBox="0 0 24 24"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/><path d="M6 15h4"/></svg></div>
-            <div class="pay-m-lbl">Kart ile Öde</div>
+            <div class="pay-m-lbl">Mit Karte zahlen</div>
           </div>
         </div>
         <div id="card-section">
@@ -682,28 +708,28 @@ body{background:#080C15;min-height:100vh;display:flex;align-items:center;justify
             <div class="sc-chip"></div>
             <div class="sc-info">
               <div class="sc-num">•••• •••• •••• 3901</div>
-              <div class="sc-brand">Visa · Son Kullanma 04/28</div>
+              <div class="sc-brand">Visa · Gültig bis 04/28</div>
             </div>
             <div class="sc-check"><svg viewBox="0 0 24 24" stroke-width="1.8"><polyline points="20 6 9 17 4 12"/></svg></div>
           </div>
-          <div class="new-card-toggle" onclick="toggle_new_card()">+ Yeni kart ekle</div>
+          <div class="new-card-toggle" onclick="toggle_new_card()">+ Neue Karte hinzufügen</div>
           <div id="new-card-form">
-            <div class="sf" style="margin-top:16px"><label>Kart Numarası</label><input class="sf-inp" placeholder="•••• •••• •••• ••••" type="text" inputmode="numeric"></div>
-            <div class="sf"><label>Kart Üzerindeki İsim</label><input class="sf-inp" placeholder="Ad Soyad"></div>
+            <div class="sf" style="margin-top:16px"><label>Kartennummer</label><input class="sf-inp" placeholder="•••• •••• •••• ••••" type="text" inputmode="numeric"></div>
+            <div class="sf"><label>Name auf der Karte</label><input class="sf-inp" placeholder="Vor- und Nachname"></div>
             <div class="g2">
-              <div class="sf"><label>Son Kullanma</label><input class="sf-inp" placeholder="AA / YY"></div>
+              <div class="sf"><label>Gültig bis</label><input class="sf-inp" placeholder="MM / JJ"></div>
               <div class="sf"><label>CVV</label><input class="sf-inp" placeholder="•••" type="password" maxlength="4"></div>
             </div>
           </div>
         </div>
         <div id="cash-section" style="display:none">
           <div style="background:var(--bg3);border:0.5px solid var(--line);border-radius:12px;padding:16px 18px">
-            <div style="font-family:var(--ff-b);font-size:8.5px;font-weight:300;letter-spacing:0.14em;color:var(--t3);margin-bottom:8px">ÖDEME BİLGİSİ</div>
-            <div style="font-family:var(--ff-d);font-size:15px;font-weight:300;color:var(--t1);line-height:1.5">Ödemenizi seyahat sonunda doğrudan şoförünüze nakit olarak yapabilirsiniz.</div>
+            <div style="font-family:var(--ff-b);font-size:8.5px;font-weight:300;letter-spacing:0.14em;color:var(--t3);margin-bottom:8px">ZAHLUNGSHINWEIS</div>
+            <div style="font-family:var(--ff-d);font-size:15px;font-weight:300;color:var(--t1);line-height:1.5">Sie zahlen am Ende Ihrer Fahrt direkt an den Fahrer.</div>
           </div>
         </div>
       </div>
-      <button class="ov-btn" id="pay-confirm-btn" onclick="confirm(4)">Ödemeyi Onayla</button>
+      <button class="ov-btn" id="pay-confirm-btn" onclick="confirm(4)">Zahlung bestätigen</button>
     </div>
   </div>
 
@@ -714,34 +740,35 @@ body{background:#080C15;min-height:100vh;display:flex;align-items:center;justify
   <div class="thank-screen" id="thank-screen">
     <div class="th-inner">
       <div class="th-seal"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
-      <div class="th-label">Rezervasyon Alındı</div>
-      <div class="th-h">Teşekkür<br><em>ederiz</em></div>
-      <div class="th-sub">Rezervasyon numaranız</div>
+      <div class="th-label">Buchung eingegangen</div>
+      <div class="th-h">Vielen<br><em>Dank</em></div>
+      <div class="th-sub">Ihre Buchungsnummer</div>
       <div class="th-refno" id="booking-no">PMX · 2026 · 8472</div>
       <div class="th-card">
-        <div class="th-card-hdr"><span class="th-card-title">Seyahat Özeti</span></div>
-        <div class="th-row"><span class="th-rk">Güzergah</span><span class="th-rv" id="th-rota">—</span></div>
-        <div class="th-row"><span class="th-rk">Tarih & Saat</span><span class="th-rv" id="th-zaman">—</span></div>
-        <div class="th-row"><span class="th-rk">Araç</span><span class="th-rv" id="th-arac">—</span></div>
-        <div class="th-row"><span class="th-rk">Yolcu</span><span class="th-rv" id="th-pax">—</span></div>
-        <div class="th-row"><span class="th-rk">Ödeme</span><span class="th-rv" id="th-pay">—</span></div>
+        <div class="th-card-hdr"><span class="th-card-title">Reiseübersicht</span></div>
+        <div class="th-row"><span class="th-rk">Route</span><span class="th-rv" id="th-rota">—</span></div>
+        <div class="th-row"><span class="th-rk">Datum & Zeit</span><span class="th-rv" id="th-zaman">—</span></div>
+        <div class="th-row"><span class="th-rk">Fahrzeug</span><span class="th-rv" id="th-arac">—</span></div>
+        <div class="th-row"><span class="th-rk">Reisender</span><span class="th-rv" id="th-pax">—</span></div>
+        <div class="th-row"><span class="th-rk">Zahlung</span><span class="th-rv" id="th-pay">—</span></div>
+        <div class="th-row"><span class="th-rk">Gesamtpreis</span><span class="th-rv" style="color:var(--goldb)" id="th-price">—</span></div>
       </div>
       <div class="th-driver">
         <div class="th-drv-av"><svg viewBox="0 0 24 24" stroke-width="1.2"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg></div>
         <div class="th-drv-info">
           <div class="th-drv-name">Thomas Meier</div>
-          <div class="th-drv-sub" id="th-drv-sub">BMW 7 Series · ZH·445·M</div>
+          <div class="th-drv-sub" id="th-drv-sub">BMW 7er · ZH·445·M</div>
           <div class="th-drv-rate">
             <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
             <span>4.97</span>
           </div>
         </div>
         <div class="th-drv-eta">
-          <div class="th-drv-eta-n">~12 dk</div>
-          <div class="th-drv-eta-l">Tahmini varış</div>
+          <div class="th-drv-eta-n">~12 Min.</div>
+          <div class="th-drv-eta-l">Geschätzte Ankunft</div>
         </div>
       </div>
-      <button class="th-back" onclick="back_hub()">Ana Ekrana Dön</button>
+      <button class="th-back" onclick="back_hub()">Zur Startseite</button>
     </div>
   </div>
 
@@ -749,33 +776,34 @@ body{background:#080C15;min-height:100vh;display:flex;align-items:center;justify
 
 <script>
 /* ─── State ─── */
-const done = {1:false,2:false,3:false,4:false};
+const done={1:false,2:false,3:false,4:false};
 let vtype='sedan', vsub='first';
 const vehicleDB={
   sedan:{
-    business:{name:'Business',       car:'Toyota Camry veya muadili',      price:'₺1.240',eta:'~38 dk',cap:'4 kişi'},
-    exec:    {name:'Business Exec.', car:'Mercedes C-Class veya muadili',  price:'₺1.980',eta:'~38 dk',cap:'4 kişi'},
-    first:   {name:'First Class',    car:'Mercedes S-Class veya muadili',  price:'₺3.120',eta:'~38 dk',cap:'4 kişi'},
+    business:{name:'Business',       car:'Toyota Camry o. Ä.',        price:1240, eta:'~38 Min.',cap:'4 Pers.'},
+    exec:    {name:'Business Exec.', car:'Mercedes C-Klasse o. Ä.',   price:1980, eta:'~38 Min.',cap:'4 Pers.'},
+    first:   {name:'First Class',    car:'Mercedes S-Klasse o. Ä.',   price:3120, eta:'~38 Min.',cap:'4 Pers.'},
   },
   van:{
-    business:{name:'Business',       car:'Volkswagen Caravelle veya muad.',price:'₺1.840',eta:'~38 dk',cap:'6 kişi'},
-    exec:    {name:'Business Exec.', car:'Mercedes Vito veya muadili',     price:'₺2.680',eta:'~38 dk',cap:'6 kişi'},
-    first:   {name:'First Class',    car:'Mercedes V-Class veya muadili',  price:'₺4.240',eta:'~38 dk',cap:'7 kişi'},
+    business:{name:'Business',       car:'VW Caravelle o. Ä.',        price:1840, eta:'~38 Min.',cap:'6 Pers.'},
+    exec:    {name:'Business Exec.', car:'Mercedes Vito o. Ä.',       price:2680, eta:'~38 Min.',cap:'6 Pers.'},
+    first:   {name:'First Class',    car:'Mercedes V-Klasse o. Ä.',   price:4240, eta:'~38 Min.',cap:'7 Pers.'},
   },
   suv:{
-    business:{name:'Business',       car:'BMW X3 veya muadili',            price:'₺1.640',eta:'~38 dk',cap:'5 kişi'},
-    exec:    {name:'Business Exec.', car:'BMW X5 veya muadili',            price:'₺2.540',eta:'~38 dk',cap:'5 kişi'},
-    first:   {name:'First Class',    car:'Range Rover veya muadili',       price:'₺3.980',eta:'~38 dk',cap:'5 kişi'},
+    business:{name:'Business',       car:'BMW X3 o. Ä.',              price:1640, eta:'~38 Min.',cap:'5 Pers.'},
+    exec:    {name:'Business Exec.', car:'BMW X5 o. Ä.',              price:2540, eta:'~38 Min.',cap:'5 Pers.'},
+    first:   {name:'First Class',    car:'Range Rover o. Ä.',         price:3980, eta:'~38 Min.',cap:'5 Pers.'},
   }
 };
 let who='self', pm='card', useSavedCard=true, newCardShown=false;
+let currentPrice=0;
 
 /* ─── Overlay ─── */
 function open_ov(id){document.getElementById('ov-'+id).classList.add('open')}
 function close_ov(id){document.getElementById('ov-'+id).classList.remove('open')}
 
 /* ─── Step I ─── */
-function use_loc(){document.getElementById('pickup-lbl').textContent='Beşiktaş Meydanı, İstanbul'}
+function use_loc(){document.getElementById('pickup-lbl').textContent='Beşiktaş Platz, Istanbul'}
 
 /* ─── Step II ─── */
 function render_sub_cls(){
@@ -786,7 +814,7 @@ function render_sub_cls(){
     <div class="cls-item${key===vsub?' sel':''}" id="cls-${key}" onclick="pick_sub('${key}')">
       <div class="cls-ico-wrap"><svg viewBox="0 0 24 24">${svgInner}</svg></div>
       <div class="cls-meta"><div class="cls-name">${d.name}</div><div class="cls-desc">${d.car} · ${d.cap}</div></div>
-      <div class="cls-right"><div class="cls-price">${d.price}</div><div class="cls-note">${d.eta}</div></div>
+      <div class="cls-right"><div class="cls-price">₺ ${d.price.toLocaleString('de-DE')}</div><div class="cls-note">${d.eta}</div></div>
     </div>`).join('');
 }
 function set_vtype(t){
@@ -794,6 +822,7 @@ function set_vtype(t){
   ['sedan','van','suv'].forEach(v=>document.getElementById('vt-'+v).classList.toggle('sel',v===t));
   render_sub_cls();
 }
+
 function pick_sub(key){
   vsub=key;
   document.querySelectorAll('#sub-cls-list .cls-item').forEach(el=>el.classList.toggle('sel',el.id==='cls-'+key));
@@ -814,6 +843,7 @@ function set_who(w){
     document.getElementById('pax-email').value='';
   }
 }
+
 function apply_promo(){
   const v=document.getElementById('promo-inp').value.trim();
   if(v) document.getElementById('promo-inp').style.borderColor='rgba(184,153,90,0.50)';
@@ -826,7 +856,7 @@ function set_pm(m){
   document.getElementById('pm-card').classList.toggle('sel',m==='card');
   document.getElementById('card-section').style.display=m==='card'?'block':'none';
   document.getElementById('cash-section').style.display=m==='cash'?'block':'none';
-  document.getElementById('pay-confirm-btn').textContent=m==='cash'?'Nakit ile Onayla':'Ödemeyi Onayla';
+  document.getElementById('pay-confirm-btn').textContent=m==='cash'?'Barzahlung bestätigen':'Zahlung bestätigen';
 }
 function sel_saved(){useSavedCard=true;document.getElementById('saved-card-pill').classList.add('active')}
 function toggle_new_card(){
@@ -842,68 +872,56 @@ function set_pv(id,text,filled){
   else{el.textContent='';el.classList.add('empty')}
 }
 function update_preview(){
-  /* Route & time (Step I) */
   if(done[1]){
-    const dest=document.getElementById('dest-inp').value.trim()||'Varış belirsiz';
+    const dest=document.getElementById('dest-inp').value.trim()||'Ziel unbekannt';
     const origin=document.getElementById('pickup-lbl').textContent;
-    const from=origin==='Mevcut konumunuz'?'Beşiktaş Meydanı':origin.split(',')[0];
+    const from=origin==='Aktueller Standort'?'Beşiktaş Platz':origin.split(',')[0];
     set_pv('pv-from',from,true);
     set_pv('pv-to',dest,true);
-    /* SVG: solid line, filled dest dot */
     const ln=document.getElementById('pv-svg-line');
-    ln.setAttribute('stroke','#B8995A');
-    ln.setAttribute('stroke-opacity','0.55');
-    ln.removeAttribute('stroke-dasharray');
+    ln.setAttribute('stroke','#B8995A');ln.setAttribute('stroke-opacity','0.55');ln.removeAttribute('stroke-dasharray');
     const db=document.getElementById('pv-svg-dotb');
-    db.setAttribute('fill','#B8995A');
-    db.removeAttribute('stroke');
-    /* Date/time */
+    db.setAttribute('fill','#B8995A');db.removeAttribute('stroke');
     const d=document.getElementById('date-inp').value;
     const t=document.getElementById('time-inp').value;
     let ds='—';
-    if(d){const dt=new Date(d+'T00:00:00');ds=dt.toLocaleDateString('tr-TR',{day:'numeric',month:'long'})}
+    if(d){const dt=new Date(d+'T00:00:00');ds=dt.toLocaleDateString('de-DE',{day:'numeric',month:'long'})}
     set_pv('pv-dt',ds+' · '+t,true);
-  }else{
-    set_pv('pv-from','',false); set_pv('pv-to','',false); set_pv('pv-dt','',false);
-  }
-  /* Vehicle (Step II) */
+  }else{set_pv('pv-from','',false);set_pv('pv-to','',false);set_pv('pv-dt','',false)}
   if(done[2]){
-    const vtName={sedan:'Sedan',van:'Van',suv:'SUV'}[vtype];
-    const d=vehicleDB[vtype][vsub];
-    set_pv('pv-arac',vtName+' · '+d.name,true);
+    const vtName={sedan:'Limousine',van:'Van',suv:'SUV'}[vtype];
+    set_pv('pv-arac',vtName+' · '+vehicleDB[vtype][vsub].name,true);
   }else set_pv('pv-arac','',false);
-  /* Passenger (Step III) */
   if(done[3]){
-    const n=document.getElementById('pax-name').value.trim()||'Yolcu';
-    set_pv('pv-pax',n,true);
+    set_pv('pv-pax',document.getElementById('pax-name').value.trim()||'Reisender',true);
   }else set_pv('pv-pax','',false);
-  /* Payment (Step IV) */
   if(done[4]){
-    set_pv('pv-pay',pm==='cash'?'Nakit':'Visa •••• 3901',true);
+    set_pv('pv-pay',pm==='cash'?'Barzahlung':'Visa •••• 3901',true);
   }else set_pv('pv-pay','',false);
-  /* Card border */
-  const allDone=Object.values(done).every(Boolean);
-  document.getElementById('prev-card').classList.toggle('complete',allDone);
+  document.getElementById('prev-card').classList.toggle('complete',Object.values(done).every(Boolean));
 }
 
 /* ─── Confirm a chapter ─── */
 function confirm(n){
   done[n]=true;
   if(n===1){
-    const dest=document.getElementById('dest-inp').value.trim()||'Varış belirsiz';
+    const dest=document.getElementById('dest-inp').value.trim()||'Ziel unbekannt';
     const origin=document.getElementById('pickup-lbl').textContent;
-    const from=origin==='Mevcut konumunuz'?'Konumunuz':origin.split(',')[0];
+    const from=origin==='Aktueller Standort'?'Ihr Standort':origin.split(',')[0];
     document.getElementById('v-1').textContent=from+' → '+dest;
   }else if(n===2){
-    const vtName={sedan:'Sedan',van:'Van',suv:'SUV'}[vtype];
+    const vtName={sedan:'Limousine',van:'Van',suv:'SUV'}[vtype];
     const d=vehicleDB[vtype][vsub];
-    document.getElementById('v-2').textContent=vtName+' · '+d.name+' · '+d.price;
+    document.getElementById('v-2').textContent=vtName+' · '+d.name;
+    currentPrice=Math.round(d.price*1.20);
+    document.getElementById('fare-num').textContent=currentPrice.toLocaleString('de-DE');
+    document.getElementById('fare-zone').classList.add('on');
   }else if(n===3){
-    const name=document.getElementById('pax-name').value.trim()||'Yolcu';
-    const for_=who==='self'?'Kendiniz':'Başkası';
-    document.getElementById('v-3').textContent=name+' · '+for_;
+    const name=document.getElementById('pax-name').value.trim()||'Reisender';
+    const forW=who==='self'?'Für Sie':'Für Drittperson';
+    document.getElementById('v-3').textContent=name+' · '+forW;
   }else if(n===4){
-    document.getElementById('v-4').textContent=pm==='cash'?'Nakit ödeme':useSavedCard?'Visa •••• 3901':'Yeni kart';
+    document.getElementById('v-4').textContent=pm==='cash'?'Barzahlung':useSavedCard?'Visa •••• 3901':'Neue Karte';
   }
   document.getElementById('ch-'+n).classList.add('filled');
   close_ov(n+'');
@@ -925,13 +943,14 @@ function show_thank(){
   const d=document.getElementById('date-inp').value;
   const t=document.getElementById('time-inp').value;
   let ds='—';
-  if(d){const dt=new Date(d+'T00:00:00');ds=dt.toLocaleDateString('tr-TR',{day:'numeric',month:'long',year:'numeric'})}
-  document.getElementById('th-zaman').textContent=ds+' · '+t;
+  if(d){const dt=new Date(d+'T00:00:00');ds=dt.toLocaleDateString('de-DE',{day:'numeric',month:'long',year:'numeric'})}
+  document.getElementById('th-zaman').textContent=ds+' · '+t+' Uhr';
   const _d=vehicleDB[vtype][vsub];
-  document.getElementById('th-arac').textContent={sedan:'Sedan',van:'Van',suv:'SUV'}[vtype]+' · '+_d.name+' · '+_d.car;
-  document.getElementById('th-pax').textContent=document.getElementById('pax-name').value.trim()||'Yolcu';
+  document.getElementById('th-arac').textContent={sedan:'Limousine',van:'Van',suv:'SUV'}[vtype]+' · '+_d.name+' · '+_d.car;
+  document.getElementById('th-pax').textContent=document.getElementById('pax-name').value.trim()||'Reisender';
   document.getElementById('th-pay').textContent=document.getElementById('v-4').textContent;
-  document.getElementById('th-drv-sub').textContent=_d.car.split(' veya')[0]+' · ZH·445·M';
+  document.getElementById('th-price').textContent='₺ '+currentPrice.toLocaleString('de-DE')+' inkl. MwSt.';
+  document.getElementById('th-drv-sub').textContent=_d.car.split(' o.')[0]+' · ZH·445·M';
   const r=Math.floor(1000+Math.random()*8999);
   document.getElementById('booking-no').textContent='PMX · 2026 · '+r;
   document.getElementById('thank-screen').classList.add('show');
