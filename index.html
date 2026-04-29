@@ -26,16 +26,16 @@ body{
   display:flex;flex-direction:column;align-items:center;justify-content:center;
   padding:64px 24px 88px;
   /* 3-tone: white mix + light anthracite + dark anthracite */
-  background:#1A1A28;
+  background:#2C2C3C;
   background-image:
-    radial-gradient(ellipse 58% 42% at 20% 7%,  rgba(255,255,255,0.094) 0%, transparent 52%),
-    radial-gradient(ellipse 40% 30% at 82% 92%,  rgba(6,6,18,0.55)       0%, transparent 55%),
+    radial-gradient(ellipse 58% 42% at 20% 7%,  rgba(255,255,255,0.130) 0%, transparent 52%),
+    radial-gradient(ellipse 40% 30% at 82% 92%,  rgba(6,6,18,0.38)       0%, transparent 55%),
     linear-gradient(148deg,
-      #50505E 0%,
-      #383848 22%,
-      #222232 48%,
-      #111120 75%,
-      #070710 100%
+      #717180 0%,
+      #525264 22%,
+      #343448 48%,
+      #1E1E30 75%,
+      #121220 100%
     );
 }
 .pg-label{color:var(--t3);font-family:var(--ff-d);font-size:11.5px;letter-spacing:0.28em;text-transform:uppercase;margin-bottom:56px;font-style:italic;opacity:.85;}
@@ -65,12 +65,12 @@ body{
   display:flex;flex-direction:column;padding-top:58px;
   /* Zemin: beyaz → açık antrasit → koyu antrasit */
   background:
-    radial-gradient(ellipse 90% 24% at 50% 0%, rgba(255,255,255,0.13) 0%, transparent 100%),
+    radial-gradient(ellipse 90% 24% at 50% 0%, rgba(255,255,255,0.18) 0%, transparent 100%),
     linear-gradient(175deg,
-      #565664 0%,
-      #363644 28%,
-      #1E1E2C 56%,
-      #0C0C18 100%
+      #797988 0%,
+      #4E4E60 28%,
+      #2C2C3E 56%,
+      #161624 100%
     );
 }
 
@@ -87,22 +87,22 @@ body{
   background:linear-gradient(155deg,
     rgba(0,148,82,0.34) 0%,rgba(0,116,64,0.18) 34%,
     rgba(0,84,46,0.08) 55%,rgba(0,0,0,0.04) 100%);
-  backdrop-filter:blur(60px) saturate(185%) brightness(1.08);
-  -webkit-backdrop-filter:blur(60px) saturate(185%) brightness(1.08);
-  border-top:    2.5px solid rgba(0,252,138,0.48);
-  border-left:   2px   solid rgba(0,232,124,0.30);
+  backdrop-filter:blur(75px) saturate(210%) brightness(1.10);
+  -webkit-backdrop-filter:blur(75px) saturate(210%) brightness(1.10);
+  border-top:    2.5px solid rgba(0,255,144,0.60);
+  border-left:   2px   solid rgba(0,235,128,0.38);
   border-right:  1.5px solid rgba(0,72,38,0.42);
   border-bottom: 1.5px solid rgba(0,48,24,0.52);
   box-shadow:
-    inset 0  5px  0 rgba(0,255,144,0.200),
-    inset 5px 0   0 rgba(0,235,130,0.100),
+    inset 0  5px  0 rgba(0,255,144,0.250),
+    inset 5px 0   0 rgba(0,235,130,0.125),
     inset 0 -3px 20px rgba(0,0,0,0.34),
     inset -2px -2px 0  rgba(0,0,0,0.18),
     0  1px  3px  rgba(0,0,0,0.62),
-    0  5px 18px  rgba(0,60,30,0.24),
+    0  5px 18px  rgba(0,80,40,0.30),
     0 18px 48px  rgba(0,0,0,0.28),
     0 36px 80px  rgba(0,0,0,0.17),
-    0  0   2px   rgba(0,200,106,0.08);
+    0  0   6px   rgba(0,200,106,0.12);
 }
 
 /* ── SECONDARY green glass ── */
@@ -110,19 +110,19 @@ body{
   background:linear-gradient(155deg,
     rgba(0,130,72,0.26) 0%,rgba(0,100,56,0.13) 37%,
     rgba(0,72,38,0.05) 57%,rgba(0,0,0,0.025) 100%);
-  backdrop-filter:blur(44px) saturate(170%) brightness(1.06);
-  -webkit-backdrop-filter:blur(44px) saturate(170%) brightness(1.06);
-  border-top:    2px   solid rgba(0,248,134,0.38);
-  border-left:   2px   solid rgba(0,228,120,0.24);
+  backdrop-filter:blur(55px) saturate(200%) brightness(1.08);
+  -webkit-backdrop-filter:blur(55px) saturate(200%) brightness(1.08);
+  border-top:    2px   solid rgba(0,255,140,0.48);
+  border-left:   2px   solid rgba(0,235,126,0.30);
   border-right:  1px   solid rgba(0,64,34,0.36);
   border-bottom: 1px   solid rgba(0,42,20,0.44);
   box-shadow:
-    inset 0  4px  0 rgba(0,255,144,0.160),
-    inset 4px 0   0 rgba(0,235,130,0.080),
+    inset 0  4px  0 rgba(0,255,144,0.200),
+    inset 4px 0   0 rgba(0,235,130,0.100),
     inset 0 -2px 14px rgba(0,0,0,0.28),
     inset -1.5px -1.5px 0 rgba(0,0,0,0.14),
     0  1px  2px  rgba(0,0,0,0.56),
-    0  3px 10px  rgba(0,50,26,0.20),
+    0  3px 10px  rgba(0,70,36,0.25),
     0 10px 28px  rgba(0,0,0,0.22),
     0 22px 54px  rgba(0,0,0,0.13);
 }
@@ -207,30 +207,31 @@ body{
 /* ─────────── STEP GRID 2×2 ─────────── */
 .sgrid{display:grid;grid-template-columns:1fr 1fr;gap:12px;flex-shrink:0;}
 
-/* STEP CARD — large green glass button */
+/* STEP CARD — VIVID solid green glass button */
 .scard{
   border-radius:20px;padding:14px 14px 13px;
   display:flex;flex-direction:column;gap:8px;
   cursor:pointer;position:relative;overflow:hidden;
   transition:transform .20s cubic-bezier(.22,.9,.36,1),box-shadow .20s ease;
   background:linear-gradient(155deg,
-    rgba(0,144,80,0.30) 0%,rgba(0,112,62,0.15) 35%,
-    rgba(0,80,42,0.06) 55%,rgba(0,0,0,0.030) 100%);
-  backdrop-filter:blur(52px) saturate(175%) brightness(1.06);
-  -webkit-backdrop-filter:blur(52px) saturate(175%) brightness(1.06);
-  border-top:    2.5px solid rgba(0,250,136,0.44);
-  border-left:   2px   solid rgba(0,230,122,0.27);
-  border-right:  1.5px solid rgba(0,68,36,0.40);
-  border-bottom: 1.5px solid rgba(0,46,22,0.50);
+    rgba(0,148,82,0.72) 0%,rgba(0,118,64,0.58) 38%,
+    rgba(0,90,48,0.44) 65%,rgba(0,62,32,0.30) 100%);
+  backdrop-filter:blur(65px) saturate(215%) brightness(1.12);
+  -webkit-backdrop-filter:blur(65px) saturate(215%) brightness(1.12);
+  border-top:    2.5px solid rgba(0,255,144,0.80);
+  border-left:   2px   solid rgba(0,240,130,0.52);
+  border-right:  1.5px solid rgba(0,40,20,0.54);
+  border-bottom: 1.5px solid rgba(0,24,12,0.64);
   box-shadow:
-    inset 0  4.5px 0 rgba(0,255,144,0.185),
-    inset 4.5px 0  0 rgba(0,235,130,0.092),
-    inset 0 -3px 16px rgba(0,0,0,0.32),
-    inset -2px -2px 0  rgba(0,0,0,0.16),
-    0  1px  3px  rgba(0,0,0,0.62),
-    0  4px 14px  rgba(0,50,26,0.22),
-    0 14px 38px  rgba(0,0,0,0.26),
-    0 28px 66px  rgba(0,0,0,0.15);
+    inset 0  5px  0 rgba(0,255,144,0.420),
+    inset 5px 0   0 rgba(0,235,130,0.210),
+    inset 0 -4px 22px rgba(0,0,0,0.38),
+    inset -2px -2px 0  rgba(0,0,0,0.22),
+    0  2px  5px  rgba(0,0,0,0.64),
+    0  6px 20px  rgba(0,100,50,0.44),
+    0 18px 46px  rgba(0,0,0,0.28),
+    0 32px 72px  rgba(0,0,0,0.17),
+    0  0   24px  rgba(0,180,90,0.20);
 }
 /* top-left face sheen */
 .scard::after{content:'';position:absolute;inset:0;
